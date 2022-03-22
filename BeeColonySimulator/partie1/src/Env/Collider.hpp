@@ -15,7 +15,7 @@ private:
     Vec2d position;
     double radius;
 public:
-    Collider(Vec2d coordinates, double rad);
-
+    Collider(Vec2d const& coordinates, double const& rad);
 };
 
+void clamping(Vec2d& position);
