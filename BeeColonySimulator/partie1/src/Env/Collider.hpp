@@ -16,6 +16,12 @@ private:
     double radius;
 public:
     Collider(Vec2d const& coordinates, double const& rad);
+    Collider(Collider const& other);
+    Collider& operator=(const Collider& source);
+
+    Vec2d const& getPosition() const;
+    double getRadius() const;
+    Vec2d positionTo(Vec2d to);
 };
 
 void clamping(Vec2d& position);

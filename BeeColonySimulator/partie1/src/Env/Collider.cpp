@@ -10,10 +10,34 @@
 #include <Utility/Constants.hpp>
 #include <Utility/Vec2d.hpp>
 #include <Application.hpp>
+#include <utility>
 
 Collider::Collider(Vec2d const& coordinates, double const& rad)
     : position(coordinates), radius(rad) {
     clamping(position);
+}
+
+Collider::Collider(Collider const& other)
+    : position(other.position), radius(other.radius) {
+    // body of copy-constructor
+}
+
+Vec2d const& Collider::getPosition() const {
+    return position;
+}
+
+double Collider::getRadius() const {
+    return radius;
+}
+
+Collider& Collider::operator=(const Collider& source) {
+    this->position = source.position;
+    this->radius = source.radius;
+    return *this;
+}
+
+Vec2d Collider::positionTo(Vec2d to) {
+    // to complete code
 }
 
 void clamping(Vec2d& position) {
