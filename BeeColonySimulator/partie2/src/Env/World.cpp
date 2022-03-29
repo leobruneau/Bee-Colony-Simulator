@@ -11,3 +11,7 @@ void World::reloadConfig() {
     cellSize_ = getAppConfig().world_size/nbCells_;
     cells_ = std::vector<Kind> ( nbCells_*nbCells_, Kind::Rocks);
 }
+
+void World::drawOn(sf::RenderTarget &target) {
+
+}

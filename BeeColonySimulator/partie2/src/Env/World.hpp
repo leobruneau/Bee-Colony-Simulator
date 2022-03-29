@@ -5,13 +5,14 @@
 #ifndef BEE_COLONY_SIMULATOR_SSV_2022_STEP2_WORLD_HPP
 #define BEE_COLONY_SIMULATOR_SSV_2022_STEP2_WORLD_HPP
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 enum class Kind : short {Grass, Water, Rocks};
 
 class World {
 public:
     void reloadConfig();
-
+    void drawOn(sf::RenderTarget& target);
 private:
     int nbCells_;
     float cellSize_;

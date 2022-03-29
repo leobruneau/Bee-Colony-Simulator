@@ -44,6 +44,9 @@ All of them.
 ##SECOND PART (2)
 
 ###A2.1
-Well the size of `cells_` is going to be `(nbCells_)^2`
+Well the size of `cells_` is going to be `(nbCells_)^2` because the grid is said to
+be a square.
 
 ###A2.2
+For `getAppConfig().world_size` it would be the sequence `["simulation"]["world"]["default size"]`
+and for `getAppConfig().world_cells` it would be the sequence `["simulation"]["world"]["default cells"]`
