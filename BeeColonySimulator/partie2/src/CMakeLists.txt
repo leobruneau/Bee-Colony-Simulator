@@ -107,8 +107,8 @@ find_package(SFML 2.5 QUIET COMPONENTS graphics window system)
 
 	    ##Units tests:
 	    ## Collider
-	     add_executable (colliderTest ${TEST_DIR}/UnitTests/ColliderTest.cpp ${SOURCES} ${CACHE_SOURCES})
-             target_link_libraries(colliderTest ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+#	     add_executable (colliderTest ${TEST_DIR}/UnitTests/ColliderTest.cpp ${SOURCES} ${CACHE_SOURCES} ../../partie1/src/Env/World.cpp ../../partie1/src/Env/World.hpp)
+#             target_link_libraries(colliderTest ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 	     ## JSON parser
 	     #add_executable (jsonTest ${TEST_DIR}/UnitTests/JSONTest.cpp ${SOURCES} ${CACHE_SOURCES})
              #target_link_libraries(jsonTest ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
