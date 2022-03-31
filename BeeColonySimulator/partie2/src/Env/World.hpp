@@ -15,8 +15,10 @@ public:
     void drawOn(sf::RenderTarget& target);
     void updateCache();
     void reloadCacheStructure();
+    void reset(bool const& regenerate);
+    float getSize() const;
 private:
-    unsigned int nbCells_;
+    int nbCells_;
     float cellSize_;
     std::vector<Kind> cells_;
     std::vector<sf::Vertex> grassVertexes_;

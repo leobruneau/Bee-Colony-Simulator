@@ -6,10 +6,11 @@
 #include "Application.hpp"
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "Utility/Vertex.hpp"
 
 void World::reloadConfig() {
     nbCells_ = getAppConfig().world_cells;
-    cellSize_ = getAppConfig().world_size/nbCells_;
+    cellSize_ = getAppConfig().world_size/(float)nbCells_;
     cells_ = std::vector<Kind> ( nbCells_*nbCells_, Kind::Rocks);
 }
 
@@ -24,23 +25,30 @@ void World::updateCache() {
     grass.texture = &getAppTexture(getAppConfig().grass_texture);
     water.texture = &getAppTexture(getAppConfig().water_texture);
     rock.texture = &getAppTexture(getAppConfig().rock_texture);
-    renderingCache_.draw(grassVertexes_.data(), grassVertexes_.size(), sf::Quads, grass);
-    renderingCache_.draw(waterVertexes_.data(), waterVertexes_.size(), sf::Quads, water);
+//    renderingCache_.draw(grassVertexes_.data(), grassVertexes_.size(), sf::Quads, grass);
+//    renderingCache_.draw(waterVertexes_.data(), waterVertexes_.size(), sf::Quads, water);
     renderingCache_.draw(rockVertexes_.data(), rockVertexes_.size(), sf::Quads, rock);
+    renderingCache_.display();
 }
 
 void World::reloadCacheStructure() {
-    for (size_t i(0); i < nbCells_; ++i) {
-        for (size_t j(0); j < nbCells_; ++j) {
-
-            grassVertexes_.emplace_back(sf::Vertex(sf::Vector2f(i*cellSize_, j*cellSize_)));
-            grassVertexes_.emplace_back(sf::Vertex(sf::Vector2f(cellSize_*(i+1), j*cellSize_)));
-            grassVertexes_.emplace_back(sf::Vertex(sf::Vector2f(cellSize_*(i+1), cellSize_*(j+1))));
-            grassVertexes_.emplace_back(sf::Vertex(sf::Vector2f(cellSize_*i, cellSize_*(j+1))));
-
-        }
-    }
-
+    grassVertexes_ = generateVertexes(getValueConfig()["simulation"]["world"]["textures"], nbCells_, cellSize_);
     waterVertexes_ = grassVertexes_;
     rockVertexes_ = grassVertexes_;
+    float size = (float)nbCells_*cellSize_;
+    renderingCache_.create(size, size);
+}
+
+void World::reset(bool const& regenerate) {
+    if (regenerate) {
+        // still to code...
+    } else {
+        reloadConfig();
+        reloadCacheStructure();
+        updateCache();
+    }
+}
+
+float World::getSize() const {
+    return (float)nbCells_*cellSize_;
 }

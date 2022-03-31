@@ -50,3 +50,7 @@ be a square.
 ###A2.2
 For `getAppConfig().world_size` it would be the sequence `["simulation"]["world"]["default size"]`
 and for `getAppConfig().world_cells` it would be the sequence `["simulation"]["world"]["default cells"]`
+
+###A2.3
+The methods' calls will be 1)`reloadConfig()` 2)`reloadCacheStructure()`
+and 3)`updateCache()`. The order is justified by the fact that 

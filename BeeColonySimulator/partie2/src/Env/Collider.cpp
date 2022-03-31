@@ -137,21 +137,26 @@ void clamping(Vec2d& position) {
     auto width  = worldSize.x(); // largeur
     auto height = worldSize.y(); // hauteur
 
-    double mod_x = fmod(position.x(), width), mod_y = fmod(position.y(), height);
+    do { // this loop we ensure that the clamping works even if the coordinates of
+        //  the position are over bounds by more than one time the width and/or height
 
-    if(mod_x < 0 and mod_y < 0) {
-        Vec2d clamped(mod_x + width, mod_y + height);
-        position = clamped;
-    } else if(mod_x < 0 and mod_y >= 0) {
-        Vec2d clamped(mod_x + width, mod_y);
-        position = clamped;
-    } else if(mod_x >= 0 and mod_y < 0) {
-        Vec2d clamped(mod_x, mod_y + height);
-        position = clamped;
-    } else if(mod_x >= 0 and mod_y >= 0) {
-        Vec2d clamped(mod_x, mod_y);
-        position = clamped;
-    }
+        double mod_x = fmod(position.x(), width), mod_y = fmod(position.y(), height);
+
+        if(mod_x < 0 and mod_y < 0) {
+            Vec2d clamped(mod_x + width, mod_y + height);
+            position = clamped;
+        } else if(mod_x < 0 and mod_y >= 0) {
+            Vec2d clamped(mod_x + width, mod_y);
+            position = clamped;
+        } else if(mod_x >= 0 and mod_y < 0) {
+            Vec2d clamped(mod_x, mod_y + height);
+            position = clamped;
+        } else if(mod_x >= 0 and mod_y >= 0) {
+            Vec2d clamped(mod_x, mod_y);
+            position = clamped;
+        }
+
+    } while (position.x() > width or position.y() > height);
 }
 
 std::ostream& operator<<(std::ostream& out, Collider const& other) {
