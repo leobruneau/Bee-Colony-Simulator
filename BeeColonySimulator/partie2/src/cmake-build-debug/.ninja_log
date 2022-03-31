@@ -52,3 +52,8 @@
 332	380	1648747111684541231	worldTest	bbfd582f1aac7a33
 1	335	1648747122615687270	CMakeFiles/worldTest.dir/Tests/GraphicalTests/WorldTest.cpp.o	89a8a66c9a25880
 335	372	1648747122654212989	worldTest	bbfd582f1aac7a33
+3	362	1648751522368120230	CMakeFiles/colliderTest.dir/Env/World.cpp.o	4e70f56d8fc0ddea
+3	388	1648751522394006586	CMakeFiles/colliderTest.dir/Env/Collider.cpp.o	6f7a7f7c77fb3add
+388	452	1648751522460261124	colliderTest	2fbc143d4e631176
+2	360	1648751657170457376	CMakeFiles/colliderTest.dir/Env/Collider.cpp.o	6f7a7f7c77fb3add
+360	420	1648751657232373107	colliderTest	2fbc143d4e631176

@@ -156,7 +156,7 @@ void clamping(Vec2d& position) {
             position = clamped;
         }
 
-    } while (position.x() > width or position.y() > height);
+    } while (!(position.x() <= width and position.x() >= 0) or !(position.y() <= height and position.y() >= 0));
 }
 
 std::ostream& operator<<(std::ostream& out, Collider const& other) {
