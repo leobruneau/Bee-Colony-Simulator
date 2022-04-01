@@ -12,14 +12,6 @@
 # =============================================================================
 
 #############################################
-# Rule for running custom commands.
-
-rule CUSTOM_COMMAND
-  command = $COMMAND
-  description = $DESC
-
-
-#############################################
 # Rule for compiling CXX files.
 
 rule CXX_COMPILER__vec2dTest_Debug
@@ -39,10 +31,37 @@ rule CXX_EXECUTABLE_LINKER__vec2dTest_Debug
 
 
 #############################################
+# Rule for running custom commands.
+
+rule CUSTOM_COMMAND
+  command = $COMMAND
+  description = $DESC
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER__colliderTest_Debug
+  depfile = $DEP_FILE
+  deps = gcc
+  command = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX executable.
+
+rule CXX_EXECUTABLE_LINKER__colliderTest_Debug
+  command = $PRE_LINK && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $FLAGS -Wl,-search_paths_first -Wl,-headerpad_max_install_names $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  description = Linking CXX executable $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/BeeColonySimulator/partie1/src -B/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/BeeColonySimulator/partie1/src/cmake-build-debug
+  command = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie1/src -B/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie1/src/cmake-build-debug
   description = Re-running CMake...
   generator = 1
 
