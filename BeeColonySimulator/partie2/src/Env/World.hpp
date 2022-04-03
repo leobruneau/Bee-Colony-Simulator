@@ -17,6 +17,7 @@ public:
     void reloadCacheStructure();
     void reset(bool const& regenerate);
     float getSize() const;
+    void loadFromFile();
 private:
     int nbCells_;
     float cellSize_;
