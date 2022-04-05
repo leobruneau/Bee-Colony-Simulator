@@ -9,6 +9,7 @@
 #include "Utility/Vertex.hpp"
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
 
 void World::reloadConfig() {
     nbCells_ = getAppConfig().world_cells;
@@ -28,49 +29,39 @@ void World::updateCache() {
     water.texture = &getAppTexture(getAppConfig().water_texture);
     rock.texture = &getAppTexture(getAppConfig().rock_texture);
 
-//    #### Commented out code must be reviewed ####
-
     std::vector<size_t> vertexCoordinates;
     int counter(0);
-
-    std::cerr << "size cells_: " << cells_.size() << std::endl;
-    std::cerr << "grass size: " << grassVertexes_.size() << std::endl;
-    std::cerr << "water size: " << waterVertexes_.size() << std::endl;
-    std::cerr << "rocks size: " << rockVertexes_.size() << std::endl;
 
     for (auto var: cells_) {
 
         vertexCoordinates.clear();
-        vertexCoordinates = indexesForCellVertexes(counter, (int)trunc(counter/nbCells_), nbCells_);
+        vertexCoordinates = indexesForCellVertexes(counter%nbCells_, (int)trunc(counter/nbCells_), nbCells_);
 
-        switch (var) {
-            case Kind::Grass:
-                for (auto i: vertexCoordinates) {
-                    grassVertexes_[i].color.a = 255;
-                    waterVertexes_[i].color.a = 0;
-                    rockVertexes_[i].color.a = 0;
-                }
-                break;
+        for (auto index: vertexCoordinates) {
+            switch (var) {
+                case Kind::Grass:
+                    grassVertexes_[index].color.a = 255;
+                    waterVertexes_[index].color.a = 0;
+                    rockVertexes_[index].color.a = 0;
+                    break;
 
-            case Kind::Water:
-                for (auto i: vertexCoordinates) {
-                    grassVertexes_[i].color.a = 0;
-                    waterVertexes_[i].color.a = 255;
-                    rockVertexes_[i].color.a = 0;
-                }
-                break;
+                case Kind::Water:
+                    grassVertexes_[index].color.a = 0;
+                    waterVertexes_[index].color.a = 255;
+                    rockVertexes_[index].color.a = 0;
+                    break;
 
-            case Kind::Rocks:
-                for (auto i: vertexCoordinates) {
-                    grassVertexes_[i].color.a = 0;
-                    waterVertexes_[i].color.a = 0;
-                    rockVertexes_[i].color.a = 255;
-                }
-                break;
+                case Kind::Rocks:
+                    grassVertexes_[index].color.a = 0;
+                    waterVertexes_[index].color.a = 0;
+                    rockVertexes_[index].color.a = 255;
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
+
         ++counter;
     }
 
@@ -84,7 +75,7 @@ void World::reloadCacheStructure() {
     grassVertexes_ = generateVertexes(getValueConfig()["simulation"]["world"]["textures"], nbCells_, cellSize_);
     waterVertexes_ = grassVertexes_;
     rockVertexes_ = grassVertexes_;
-    int size = nbCells_*cellSize_;
+    float size = (float)nbCells_*cellSize_;
     renderingCache_.create(size, size);
 }
 
@@ -104,55 +95,41 @@ float World::getSize() const {
 
 void World::loadFromFile() {
 
-    std::string filePath_ (getApp().getResPath() + getAppConfig().world_init_file);
-    std::ifstream mapFile_;
+    std::string fileName (getApp().getResPath() + getAppConfig().world_init_file);
     std::string nbCells, cellSize, mapStructure;
 
     try {
-        mapFile_.open(filePath_);
-        if (mapFile_.is_open()) {
-            std::getline(mapFile_, nbCells);
-            std::getline(mapFile_, cellSize);
 
-            // #### Everything after this line must be reviewed ####
+        std::ifstream worldMap (fileName);
 
-            std::getline(mapFile_, mapStructure);
+        if (!worldMap.is_open()) {
+            throw std::runtime_error("ERROR: failed to open " + fileName + ". File doesn't exist.");
+        } else {
+
+            std::cerr << std::endl << "File opened - file name: " << fileName << std::endl;
+
+            std::getline(worldMap, nbCells);
+            std::getline(worldMap, cellSize);
+
             nbCells_ = stoi(nbCells);
             cellSize_ = (float)stoi(cellSize);
 
-            for (auto var: mapStructure) {
-                switch (var) {
-                    case '0':
-                        cells_.push_back(static_cast<Kind>(0));
-                        break;
-                    case '1':
-                        cells_.push_back(static_cast<Kind>(1));
-                        break;
-                    case '2':
-                        cells_.push_back(static_cast<Kind>(2));
-                        break;
-                    default:
-                        break;
-                }
-            }
-            for(auto var:cells_) {
-                if (var==Kind::Grass) {
-                    std::cout << '0';
-                } else if (var==Kind::Water) {
-                    std::cout << '1';
-                } else if (var==Kind::Rocks) {
-                    std::cout << '2';
-                }
+            short var(0);
+            cells_.clear();
+
+            for (int i(0); i < nbCells_*nbCells_; ++i) {
+                worldMap >> var >> std::ws;
+                cells_.push_back(static_cast<Kind>(var));
             }
 
-            reset(false);
-            mapFile_.close();
+            reloadCacheStructure();
+            updateCache();
 
-        } else {
-            throw std::runtime_error("ERROR: Unable to open " + filePath_ + ". File does not exist.");
         }
     }
+
     catch (std::runtime_error&) {
         throw;
     }
+
 }
