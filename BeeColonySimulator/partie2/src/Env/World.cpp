@@ -135,6 +135,15 @@ void World::loadFromFile() {
                         break;
                 }
             }
+            for(auto var:cells_) {
+                if (var==Kind::Grass) {
+                    std::cout << '0';
+                } else if (var==Kind::Water) {
+                    std::cout << '1';
+                } else if (var==Kind::Rocks) {
+                    std::cout << '2';
+                }
+            }
 
             reset(false);
             mapFile_.close();
