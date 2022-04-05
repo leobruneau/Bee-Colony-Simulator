@@ -63,7 +63,7 @@ void WorldTest::onEvent(sf::Event event, sf::RenderWindow&)
 
         case sf::Keyboard::P:
 	   // TODO : UNCOMMENT WHEN THE METHOD IS CODED
-	  //mWorld.steps(event.key.shift ? 100 : 1, true);
+	  mWorld.steps(event.key.shift ? 100 : 1, true);
             break;
         }
     }

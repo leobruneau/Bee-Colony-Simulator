@@ -7,6 +7,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Utility/Vertex.hpp"
+#include "Random/Random.hpp"
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
@@ -15,6 +16,9 @@ void World::reloadConfig() {
     nbCells_ = getAppConfig().world_cells;
     cellSize_ = getAppConfig().world_size/(float)nbCells_;
     cells_ = std::vector<Kind> ( nbCells_*nbCells_, Kind::Rocks);
+    initialGrassSeeds_ = getAppConfig().world_nb_grass_seeds;
+    initialWaterSeeds_ = getAppConfig().world_nb_water_seeds;
+    seeds_.clear();
 }
 
 void World::drawOn(sf::RenderTarget &target) {
@@ -85,7 +89,37 @@ void World::reset(bool const& regenerate) {
     } else {
         reloadConfig();
         reloadCacheStructure();
+
+        Seed seed;
+        int randomX_ (0), randomY_ (0);
+
+        seed.seedNature_ = Kind::Grass;
+        for (size_t i(0); i < initialGrassSeeds_; ++i) {
+            randomX_ = uniform(0, nbCells_-1);
+            randomY_ = uniform(0, nbCells_-1);
+            seed.coordinates_ = sf::Vector2i(randomX_, randomY_);
+            seeds_.push_back(seed);
+        }
+
+        seed.seedNature_ = Kind::Water;
+        for (size_t i(0); i < initialWaterSeeds_; ++i) {
+            randomX_ = uniform(0, nbCells_-1);
+            randomY_ = uniform(0, nbCells_-1);
+            seed.coordinates_ = sf::Vector2i(randomX_, randomY_);
+            seeds_.push_back(seed);
+        }
+
+        int index(0);
+        for (auto s: seeds_) {
+
+            index = s.coordinates_.x + s.coordinates_.y*nbCells_;
+
+            if (cells_[index] != Kind::Water) cells_[index] = s.seedNature_;
+
+        }
+
         updateCache();
+
     }
 }
 
@@ -103,7 +137,7 @@ void World::loadFromFile() {
         std::ifstream worldMap (fileName);
 
         if (!worldMap.is_open()) {
-            throw std::runtime_error("ERROR: failed to open " + fileName + ". File doesn't exist.");
+            throw std::runtime_error("failed to open " + fileName + " - File doesn't exist.");
         } else {
 
             std::cerr << std::endl << "File opened - file name: " << fileName << std::endl;
@@ -130,6 +164,101 @@ void World::loadFromFile() {
 
     catch (std::runtime_error&) {
         throw;
+    }
+
+}
+
+void World::step() {
+
+    Direction rDirection;
+    int index (0);
+    std::vector<Seed> newSeeds;
+
+    for (auto s: seeds_) {
+        if (s.seedNature_ == Kind::Grass) {
+
+            moveSeed(s, index, newSeeds);
+            cells_[index] = Kind::Grass;
+
+        } else if (s.seedNature_ == Kind::Water) {
+
+            if (bernoulli(getAppConfig().water_seeds_teleport_proba) == 0) {
+                moveSeed(s, index, newSeeds);
+                cells_[index] = Kind::Water;
+            } else {
+                int randomX (0), randomY (0);
+                randomX = uniform(0, nbCells_-1); randomY = uniform(0, nbCells_-1);
+                cells_[randomX + randomY*nbCells_] = Kind::Water;
+                Seed seed;
+                seed.coordinates_.x = randomX; seed.coordinates_.y = randomY;
+                seed.seedNature_ = Kind::Water;
+                newSeeds.push_back(seed);
+            }
+        }
+    }
+
+    for (auto newSeed: newSeeds) {
+        seeds_.push_back(newSeed);
+    }
+
+}
+
+void World::moveSeed(Seed const& s, int &index, std::vector<Seed> &add) {
+
+    index = s.coordinates_.x + s.coordinates_.y*nbCells_;
+
+    // we use numbers from 0 to 3 as
+    Direction rDirection;
+    rDirection = static_cast<Direction>(uniform(0, 3));
+
+    Seed seedAdded;
+
+    switch (rDirection) {
+        case Direction::North:
+            if (index - nbCells_ >= 0) index -= nbCells_;
+            seedAdded = s;
+            seedAdded.coordinates_.y -= 1;
+            add.push_back(seedAdded);
+            break;
+
+        case Direction::East:
+            if ((index % nbCells_) != (nbCells_-1)) ++index;
+            seedAdded = s;
+            seedAdded.coordinates_.x += 1;
+            add.push_back(seedAdded);
+            break;
+
+        case Direction::South:
+            if (index + nbCells_ < nbCells_*nbCells_) index += nbCells_;
+            seedAdded = s;
+            seedAdded.coordinates_.y += 1;
+            add.push_back(seedAdded);
+            break;
+
+        case Direction::West:
+            if ((index % nbCells_) != 0) --index;
+            seedAdded = s;
+            seedAdded.coordinates_.x -= 1;
+            add.push_back(seedAdded);
+            break;
+
+        default:
+            break;
+    }
+
+}
+
+void World::steps(int nb, bool update) {
+
+    if (update) {
+        for (int i(1); i <= nb; ++i) {
+            step();
+        }
+        updateCache();
+    } else {
+        for (int i(1); i <= nb; ++i) {
+            step();
+        }
     }
 
 }
