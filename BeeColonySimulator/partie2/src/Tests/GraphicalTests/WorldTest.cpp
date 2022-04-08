@@ -58,7 +58,7 @@ void WorldTest::onEvent(sf::Event event, sf::RenderWindow&)
 
         case sf::Keyboard::S:
 	   // TODO : UNCOMMENT WHEN THE METHOD IS CODED
-	  //mWorld.smooths(event.key.shift ? 10 : 1, true);
+	  mWorld.smooths(event.key.shift ? 10 : 1, true);
             break;
 
         case sf::Keyboard::P:

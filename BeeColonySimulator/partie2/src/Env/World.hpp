@@ -26,9 +26,13 @@ public:
     void reset(bool const& regenerate);
     float getSize() const;
     void loadFromFile();
-    void moveSeed(Seed const& seed, int &ind, std::vector<Seed> &add);
+    void moveSeed(Seed &seed, int &ind) const;
     void step();
     void steps(int nb, bool update = false);
+    void smooth();
+    void smooths(int nb, bool update = false);
+    std::vector<unsigned int>findViableCells(int x) const;
+    bool isViable(int index, int x) const;
 
 private:
     int nbCells_;

@@ -113,7 +113,6 @@ void World::reset(bool const& regenerate) {
         for (auto s: seeds_) {
 
             index = s.coordinates_.x + s.coordinates_.y*nbCells_;
-
             if (cells_[index] != Kind::Water) cells_[index] = s.seedNature_;
 
         }
@@ -140,7 +139,7 @@ void World::loadFromFile() {
             throw std::runtime_error("failed to open " + fileName + " - File doesn't exist.");
         } else {
 
-            std::cerr << std::endl << "File opened - file name: " << fileName << std::endl;
+            std::cerr << std::endl << "File opened. File name: " << fileName << std::endl;
 
             std::getline(worldMap, nbCells);
             std::getline(worldMap, cellSize);
@@ -170,95 +169,155 @@ void World::loadFromFile() {
 
 void World::step() {
 
-    Direction rDirection;
     int index (0);
-    std::vector<Seed> newSeeds;
 
-    for (auto s: seeds_) {
+    for (auto &s: seeds_) {
         if (s.seedNature_ == Kind::Grass) {
 
-            moveSeed(s, index, newSeeds);
-            cells_[index] = Kind::Grass;
+            moveSeed(s, index);
+            if (cells_[index] != Kind::Water)
+                cells_[index] = Kind::Grass;
 
         } else if (s.seedNature_ == Kind::Water) {
 
             if (bernoulli(getAppConfig().water_seeds_teleport_proba) == 0) {
-                moveSeed(s, index, newSeeds);
+
+                moveSeed(s, index);
                 cells_[index] = Kind::Water;
+
             } else {
+
                 int randomX (0), randomY (0);
                 randomX = uniform(0, nbCells_-1); randomY = uniform(0, nbCells_-1);
                 cells_[randomX + randomY*nbCells_] = Kind::Water;
-                Seed seed;
-                seed.coordinates_.x = randomX; seed.coordinates_.y = randomY;
-                seed.seedNature_ = Kind::Water;
-                newSeeds.push_back(seed);
+                s.coordinates_.x = randomX;
+                s.coordinates_.y = randomY;
+
             }
         }
-    }
 
-    for (auto newSeed: newSeeds) {
-        seeds_.push_back(newSeed);
     }
-
 }
 
-void World::moveSeed(Seed const& s, int &index, std::vector<Seed> &add) {
+void World::moveSeed(Seed &s, int &index) const {
 
     index = s.coordinates_.x + s.coordinates_.y*nbCells_;
+//    int index_check(index);
 
-    // we use numbers from 0 to 3 as
     Direction rDirection;
     rDirection = static_cast<Direction>(uniform(0, 3));
 
-    Seed seedAdded;
-
     switch (rDirection) {
         case Direction::North:
-            if (index - nbCells_ >= 0) index -= nbCells_;
-            seedAdded = s;
-            seedAdded.coordinates_.y -= 1;
-            add.push_back(seedAdded);
+            if (index - nbCells_ >= 0) {
+                index -= nbCells_;
+                --s.coordinates_.y;
+            }
             break;
 
         case Direction::East:
-            if ((index % nbCells_) != (nbCells_-1)) ++index;
-            seedAdded = s;
-            seedAdded.coordinates_.x += 1;
-            add.push_back(seedAdded);
+            if ((index % nbCells_) != (nbCells_ - 1)) {
+                ++index;
+                ++s.coordinates_.x;
+            }
             break;
 
         case Direction::South:
-            if (index + nbCells_ < nbCells_*nbCells_) index += nbCells_;
-            seedAdded = s;
-            seedAdded.coordinates_.y += 1;
-            add.push_back(seedAdded);
+            if (index + nbCells_ < nbCells_*nbCells_) {
+                index += nbCells_;
+                ++s.coordinates_.y;
+            }
             break;
 
         case Direction::West:
-            if ((index % nbCells_) != 0) --index;
-            seedAdded = s;
-            seedAdded.coordinates_.x -= 1;
-            add.push_back(seedAdded);
+            if ((index % nbCells_) != 0) {
+                --index;
+                --s.coordinates_.x;
+            }
             break;
 
         default:
             break;
     }
 
+//    if (s.seedNature_ == Kind::Grass and cells_[index] == Kind::Water) index = index_check;
+
 }
 
 void World::steps(int nb, bool update) {
+    for (int i(0); i < nb; ++i) {step();}
+    if (update) updateCache();
+}
 
-    if (update) {
-        for (int i(1); i <= nb; ++i) {
-            step();
-        }
-        updateCache();
-    } else {
-        for (int i(1); i <= nb; ++i) {
-            step();
+void World::smooth() {
+
+    auto cellsCopy_(cells_);
+    unsigned int waterCount(0), grassCount(0);
+    std::vector<unsigned int> neighborhoodCells;
+
+    for (size_t i(0); i < cellsCopy_.size(); ++i) {
+        if (cells_[i] == Kind::Grass or cells_[i] == Kind::Rocks) {
+            neighborhoodCells.clear();
+            neighborhoodCells = findViableCells((int)i);
+            for (auto w: neighborhoodCells) {
+                if (cells_[w] == Kind::Water) ++waterCount;
+            }
+            if ((double)waterCount/(double)neighborhoodCells.size() > getAppConfig().smoothness_water_neighbor_ratio)
+                cellsCopy_[i] = Kind::Water;
         }
     }
 
+    std::swap(cells_, cellsCopy_);
+
+    for (size_t i(0); i < cellsCopy_.size(); ++i) {
+        if (cells_[i] == Kind::Rocks) {
+            neighborhoodCells.clear();
+            neighborhoodCells = findViableCells((int)i);
+            for (auto g: neighborhoodCells) {
+                if (cells_[g] == Kind::Grass) ++grassCount;
+            }
+            if ((double)grassCount/(double)neighborhoodCells.size() > getAppConfig().smoothness_grass_neighbor_ratio)
+                cellsCopy_[i] = Kind::Grass;
+        }
+    }
+
+    std::swap(cells_, cellsCopy_);
+
+}
+
+std::vector<unsigned int> World::findViableCells(int x) const {
+
+    std::vector<unsigned int> viableIndexes;
+
+    if (isViable(x-1-nbCells_, x)) viableIndexes.push_back(x-nbCells_-1);
+    if (isViable(x-nbCells_, x)) viableIndexes.push_back(x-nbCells_);
+    if (isViable(x-nbCells_+1, x)) viableIndexes.push_back(x-nbCells_+1);
+    if (isViable(x-1, x)) viableIndexes.push_back(x-1);
+    if (isViable(x+1, x)) viableIndexes.push_back(x+1);
+    if (isViable(x+nbCells_-1, x)) viableIndexes.push_back(x+nbCells_-1);
+    if (isViable(x+nbCells_, x)) viableIndexes.push_back(x+nbCells_);
+    if (isViable(x+nbCells_+1, x)) viableIndexes.push_back(x+nbCells_+1);
+
+    return viableIndexes;
+
+}
+
+bool World::isViable(int index, int x) const{
+
+    if (index < 0 or index > nbCells_*nbCells_-1) {
+       return false;
+    } else if (x%nbCells_ == 0) {
+        if (index%nbCells_ == nbCells_-1) {
+            return false;
+        } else return true;
+    } else if (x%nbCells_ == nbCells_-1) {
+        if (index%nbCells_ == 0) {
+            return false;
+        } else return true;
+    } else return true;
+}
+
+void World::smooths(int nb, bool update) {
+    for (int i(0); i < nb; ++i) {smooth();}
+    if (update) updateCache();
 }
