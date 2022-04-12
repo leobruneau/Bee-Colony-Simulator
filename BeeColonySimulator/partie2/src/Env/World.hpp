@@ -31,8 +31,9 @@ public:
     void steps(int nb, bool update = false);
     void smooth();
     void smooths(int nb, bool update = false);
-    std::vector<unsigned int>findViableCells(int x) const;
+    std::vector<int>findViableCells(int x) const;
     bool isViable(int index, int x) const;
+    void saveToFile() const;
 
 private:
     int nbCells_;
