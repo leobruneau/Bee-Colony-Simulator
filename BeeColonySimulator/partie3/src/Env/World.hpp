@@ -7,6 +7,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
+
 enum class Kind : short {Grass, Water, Rocks};
 
 // North: 0, East: 1, South: 2, West: 3 - used to define the direction of propagation of seeds
@@ -34,7 +35,7 @@ public:
     std::vector<int>findViableCells(int x) const;
     bool isViable(int index, int x) const;
     void saveToFile() const;
-    void setHumidity();
+    void setHumidity(double eta, double lambda);
 
 private:
     int nbCells_;
@@ -43,7 +44,9 @@ private:
     std::vector<sf::Vertex> grassVertexes_;
     std::vector<sf::Vertex> waterVertexes_;
     std::vector<sf::Vertex> rockVertexes_;
+    std::vector<sf::Vertex> humidityVertexes_;
     sf::RenderTexture renderingCache_;
+    sf::RenderTexture renderingHumidity_;
     std::vector<Seed> seeds_;
     unsigned int initialWaterSeeds_;
     unsigned int initialGrassSeeds_;

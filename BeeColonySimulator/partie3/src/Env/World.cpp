@@ -17,6 +17,7 @@ void World::reloadConfig() {
     nbCells_ = getAppConfig().world_cells;
     cellSize_ = (float)getAppConfig().world_size/(float)nbCells_;
     cells_ = std::vector<Kind> ( nbCells_*nbCells_, Kind::Rocks);
+    cellsHumidity_ = std::vector<double> (nbCells_*nbCells_,.0);
     initialGrassSeeds_ = getAppConfig().world_nb_grass_seeds;
     initialWaterSeeds_ = getAppConfig().world_nb_water_seeds;
     seeds_.clear();
@@ -32,27 +33,42 @@ void World::reloadConfig() {
 }
 
 void World::drawOn(sf::RenderTarget &target) {
-    sf::Sprite cache(renderingCache_.getTexture());
-    target.draw(cache);
+    if (getAppConfig().showHumidity()) {
+        sf::Sprite humidity(renderingHumidity_.getTexture());
+        target.draw(humidity);
+    } else {
+        sf::Sprite cache(renderingCache_.getTexture());
+        target.draw(cache);
+    }
 }
 
 void World::updateCache() {
     sf::RenderStates grass; sf::RenderStates water; sf::RenderStates rock;
     renderingCache_.clear();
+    renderingHumidity_.clear();
     grass.texture = &getAppTexture(getAppConfig().grass_texture);
     water.texture = &getAppTexture(getAppConfig().water_texture);
     rock.texture = &getAppTexture(getAppConfig().rock_texture);
 
     std::vector<size_t> vertexCoordinates;
     int counter(0);
+    double blueLevel(.0), minHumidity(9999999999.9), maxHumidity(.0);
 
-    for (auto var: cells_) {
+    for (auto const& hLevel: cellsHumidity_) {
+        if (hLevel > maxHumidity) maxHumidity = hLevel;
+        if (hLevel < minHumidity) minHumidity = hLevel;
+    }
+
+    for (size_t i(0); i < cells_.size(); ++i) {
 
         vertexCoordinates.clear();
         vertexCoordinates = indexesForCellVertexes(counter%nbCells_, (int)trunc(counter/nbCells_), nbCells_);
 
+        blueLevel = (cellsHumidity_[i]-minHumidity)/(maxHumidity-minHumidity) * 255;
+
         for (auto index: vertexCoordinates) {
-            switch (var) {
+
+            switch (cells_[i]) {
                 case Kind::Grass:
                     grassVertexes_[index].color.a = 255;
                     waterVertexes_[index].color.a = 0;
@@ -74,6 +90,8 @@ void World::updateCache() {
                 default:
                     break;
             }
+
+            humidityVertexes_[index].color = sf::Color(0, 0, int(blueLevel));
         }
 
         ++counter;
@@ -83,14 +101,19 @@ void World::updateCache() {
     renderingCache_.draw(waterVertexes_.data(), waterVertexes_.size(), sf::Quads, water);
     renderingCache_.draw(rockVertexes_.data(), rockVertexes_.size(), sf::Quads, rock);
     renderingCache_.display();
+
+    renderingHumidity_.draw(humidityVertexes_.data(), humidityVertexes_.size(), sf::Quads);
+    renderingHumidity_.display();
 }
 
 void World::reloadCacheStructure() {
     grassVertexes_ = generateVertexes(getValueConfig()["simulation"]["world"]["textures"], nbCells_, cellSize_);
     waterVertexes_ = grassVertexes_;
     rockVertexes_ = grassVertexes_;
+    humidityVertexes_ = grassVertexes_;
     float size = (float)nbCells_*cellSize_;
-    renderingCache_.create(size, size);
+    renderingCache_.create((unsigned int)size, (unsigned int)size);
+    renderingHumidity_.create((unsigned int)size, (unsigned int)size);
 }
 
 void World::reset(bool const& regenerate) {
@@ -121,6 +144,9 @@ void World::reset(bool const& regenerate) {
         index = s.coordinates_.x + s.coordinates_.y*nbCells_;
         if (cells_[index] != Kind::Water) cells_[index] = s.seedNature_;
     }
+
+    // Setting the initial state of humidity levels when the initial seeds are generated
+//    setHumidity(getAppConfig().world_humidity_init_level, getAppConfig().world_humidity_decay_rate);
 
     if (regenerate) {
         steps(getAppConfig().world_generation_steps, false);
@@ -157,11 +183,18 @@ void World::loadFromFile() {
             cellSize_ = (float)stoi(cellSize);
 
             short var(0);
+            double varH(0);
             cells_.clear();
 
             for (int i(0); i < nbCells_*nbCells_; ++i) {
                 worldMap >> var >> std::ws;
                 cells_.push_back(static_cast<Kind>(var));
+            }
+
+            // Read Humidity levels from existing file
+            for (int i(0); i < nbCells_*nbCells_; ++i) {
+                worldMap >> varH >> std::ws;
+                cellsHumidity_.push_back(varH);
             }
 
             reloadCacheStructure();
@@ -195,6 +228,9 @@ void World::step() {
                 moveSeed(s, index);
                 cells_[index] = Kind::Water;
 
+                // Update Humidity
+                setHumidity(getAppConfig().world_humidity_init_level, getAppConfig().world_humidity_decay_rate);
+
             } else {
 
                 int randomX (0), randomY (0);
@@ -203,6 +239,8 @@ void World::step() {
                 s.coordinates_.x = randomX;
                 s.coordinates_.y = randomY;
 
+                // Update Humidity
+                setHumidity(getAppConfig().world_humidity_init_level, getAppConfig().world_humidity_decay_rate);
             }
         }
     }
@@ -369,6 +407,13 @@ void World::saveToFile() const {
         }
 
         newMap << std::endl;
+
+        // Writing humidity levels to file
+        for (auto const& hLevel: cellsHumidity_) {
+            newMap << hLevel << " ";
+        }
+
+        newMap << std::endl;
         newMap.close();
     }
 
@@ -378,8 +423,23 @@ void World::saveToFile() const {
 
 }
 
-void World::setHumidity() {
+void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, double lambda = getAppConfig().world_humidity_decay_rate) {
 
+    size_t xStart, xStop, yStart, yStop;
 
+    for (auto const& seed: seeds_) {
+        if (seed.seedNature_ == Kind::Water) {
 
+            xStart = seed.coordinates_.x - humidityRange_; xStop = seed.coordinates_.x + humidityRange_ + 1;
+            yStart = seed.coordinates_.y - humidityRange_; yStop = seed.coordinates_.y + humidityRange_ + 1;
+
+            for (size_t x(xStart); x <= xStop; ++x) {
+                for (size_t y(yStart); y <= yStop; ++y) {
+
+                    cellsHumidity_[y*nbCells_+x] += eta*exp(-std::hypot(seed.coordinates_.x-x,seed.coordinates_.y-y)/lambda);
+                }
+            }
+            break;
+        }
+    }
 }
