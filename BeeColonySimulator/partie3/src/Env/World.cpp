@@ -287,7 +287,10 @@ void World::moveSeed(Seed &s, int &index) const {
 }
 
 void World::steps(int nb, bool update) {
-    for (int i(0); i < nb; ++i) {step();}
+    for (int i(0); i < nb; ++i) {
+        step();
+//        setHumidity(getAppConfig().world_humidity_init_level, getAppConfig().world_humidity_decay_rate);
+    }
     if (update) updateCache();
 }
 
@@ -420,18 +423,20 @@ void World::saveToFile() const {
 
 //void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, double lambda = getAppConfig().world_humidity_decay_rate) {
 //
-//    size_t xStart, xStop, yStart, yStop;
+//    int xStart, xStop, yStart, yStop;
 //
 //    for (auto const& seed: seeds_) {
 //        if (seed.seedNature_ == Kind::Water) {
 //
+////            cellsHumidity_[seed.coordinates_.x + seed.coordinates_.y*nbCells_] += eta;
+//
 //            xStart = seed.coordinates_.x - humidityRange_; xStop = seed.coordinates_.x + humidityRange_;
 //            yStart = seed.coordinates_.y - humidityRange_; yStop = seed.coordinates_.y + humidityRange_;
 //
-//            for (size_t x(xStart); x <= xStop; ++x) {
-//                for (size_t y(yStart); y <= yStop; ++y) {
-//
-//                    cellsHumidity_[y*nbCells_+x] += eta*exp(-std::hypot(seed.coordinates_.x-x,seed.coordinates_.y-y)/lambda);
+//            for (int x(xStart); x <= xStop; ++x) {
+//                for (int y(yStart); y <= yStop; ++y) {
+//                    if ((x >= 0 and x < nbCells_) and (y >= 0 and y < nbCells_))
+//                        cellsHumidity_[y*nbCells_+x] += eta*exp(-std::hypot(seed.coordinates_.x-x,seed.coordinates_.y-y)/lambda);
 //                }
 //            }
 //            break;
@@ -448,7 +453,7 @@ void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, d
 
             if (cells_[y*nbCells_+x] == Kind::Water) {
 
-                cellsHumidity_[y*nbCells_+x] += eta;
+//                cellsHumidity_[y*nbCells_+x] += eta;
 
                 xStart = x - humidityRange_; xStop = x + humidityRange_ + 1;
                 yStart = y - humidityRange_; yStop = y + humidityRange_ + 1;
