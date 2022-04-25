@@ -153,6 +153,8 @@ void World::reset(bool const& regenerate) {
         smooths(getAppConfig().world_generation_smoothness_level, false);
     }
 
+    setHumidity(getAppConfig().world_humidity_init_level, getAppConfig().world_humidity_decay_rate);
+
     updateCache();
 
 }
@@ -227,10 +229,6 @@ void World::step() {
 
                 moveSeed(s, index);
                 cells_[index] = Kind::Water;
-
-                // Update Humidity
-                setHumidity(getAppConfig().world_humidity_init_level, getAppConfig().world_humidity_decay_rate);
-
             } else {
 
                 int randomX (0), randomY (0);
@@ -238,9 +236,6 @@ void World::step() {
                 cells_[randomX + randomY*nbCells_] = Kind::Water;
                 s.coordinates_.x = randomX;
                 s.coordinates_.y = randomY;
-
-                // Update Humidity
-                setHumidity(getAppConfig().world_humidity_init_level, getAppConfig().world_humidity_decay_rate);
             }
         }
     }
@@ -423,23 +418,48 @@ void World::saveToFile() const {
 
 }
 
+//void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, double lambda = getAppConfig().world_humidity_decay_rate) {
+//
+//    size_t xStart, xStop, yStart, yStop;
+//
+//    for (auto const& seed: seeds_) {
+//        if (seed.seedNature_ == Kind::Water) {
+//
+//            xStart = seed.coordinates_.x - humidityRange_; xStop = seed.coordinates_.x + humidityRange_;
+//            yStart = seed.coordinates_.y - humidityRange_; yStop = seed.coordinates_.y + humidityRange_;
+//
+//            for (size_t x(xStart); x <= xStop; ++x) {
+//                for (size_t y(yStart); y <= yStop; ++y) {
+//
+//                    cellsHumidity_[y*nbCells_+x] += eta*exp(-std::hypot(seed.coordinates_.x-x,seed.coordinates_.y-y)/lambda);
+//                }
+//            }
+//            break;
+//        }
+//    }
+//}
+
 void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, double lambda = getAppConfig().world_humidity_decay_rate) {
 
-    size_t xStart, xStop, yStart, yStop;
+    int xStart, xStop, yStart, yStop;
 
-    for (auto const& seed: seeds_) {
-        if (seed.seedNature_ == Kind::Water) {
+    for (int x(0); x < nbCells_; ++x) {
+        for (int y(0); y < nbCells_; ++y) {
 
-            xStart = seed.coordinates_.x - humidityRange_; xStop = seed.coordinates_.x + humidityRange_ + 1;
-            yStart = seed.coordinates_.y - humidityRange_; yStop = seed.coordinates_.y + humidityRange_ + 1;
+            if (cells_[y*nbCells_+x] == Kind::Water) {
 
-            for (size_t x(xStart); x <= xStop; ++x) {
-                for (size_t y(yStart); y <= yStop; ++y) {
+                cellsHumidity_[y*nbCells_+x] += eta;
 
-                    cellsHumidity_[y*nbCells_+x] += eta*exp(-std::hypot(seed.coordinates_.x-x,seed.coordinates_.y-y)/lambda);
+                xStart = x - humidityRange_; xStop = x + humidityRange_ + 1;
+                yStart = y - humidityRange_; yStop = y + humidityRange_ + 1;
+
+                for (int a(xStart); a < xStop; ++a) {
+                    for (int b(yStart); b < yStop; ++b) {
+                        if ((a >= 0 and a < nbCells_) and (b >= 0 and b < nbCells_))
+                            cellsHumidity_[b*nbCells_+a] += eta*exp(-std::hypot(x-a,y-b)/lambda);
+                    }
                 }
             }
-            break;
         }
     }
 }
