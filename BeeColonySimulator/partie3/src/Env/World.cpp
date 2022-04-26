@@ -4,10 +4,11 @@
 
 #include "World.hpp"
 #include "Application.hpp"
-#include <vector>
-#include <SFML/Graphics.hpp>
 #include "Utility/Vertex.hpp"
 #include "Random/Random.hpp"
+#include "Utility/Utility.hpp"
+#include <SFML/Graphics.hpp>
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
@@ -36,6 +37,7 @@ void World::drawOn(sf::RenderTarget &target) {
     if (getAppConfig().showHumidity()) {
         sf::Sprite humidity(renderingHumidity_.getTexture());
         target.draw(humidity);
+        if (isDebugOn()) showDebugHumidity(target);
     } else {
         sf::Sprite cache(renderingCache_.getTexture());
         target.draw(cache);
@@ -153,6 +155,7 @@ void World::reset(bool const& regenerate) {
         smooths(getAppConfig().world_generation_smoothness_level, false);
     }
 
+    // Evaluating final humidity after generating random environment
     setHumidity(getAppConfig().world_humidity_init_level, getAppConfig().world_humidity_decay_rate);
 
     updateCache();
@@ -194,6 +197,7 @@ void World::loadFromFile() {
             }
 
             // Read Humidity levels from existing file
+            cellsHumidity_.clear();
             for (int i(0); i < nbCells_*nbCells_; ++i) {
                 worldMap >> varH >> std::ws;
                 cellsHumidity_.push_back(varH);
@@ -421,6 +425,8 @@ void World::saveToFile() const {
 
 }
 
+// Main version of setHumidity() that is called each time a water seed moves
+
 //void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, double lambda = getAppConfig().world_humidity_decay_rate) {
 //
 //    int xStart, xStop, yStart, yStop;
@@ -428,7 +434,7 @@ void World::saveToFile() const {
 //    for (auto const& seed: seeds_) {
 //        if (seed.seedNature_ == Kind::Water) {
 //
-////            cellsHumidity_[seed.coordinates_.x + seed.coordinates_.y*nbCells_] += eta;
+//            cellsHumidity_[seed.coordinates_.x + seed.coordinates_.y*nbCells_] += eta;
 //
 //            xStart = seed.coordinates_.x - humidityRange_; xStop = seed.coordinates_.x + humidityRange_;
 //            yStart = seed.coordinates_.y - humidityRange_; yStop = seed.coordinates_.y + humidityRange_;
@@ -444,6 +450,8 @@ void World::saveToFile() const {
 //    }
 //}
 
+// Version of setHumidity() that is called only one time at the end of the reset() method
+
 void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, double lambda = getAppConfig().world_humidity_decay_rate) {
 
     int xStart, xStop, yStart, yStop;
@@ -453,7 +461,7 @@ void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, d
 
             if (cells_[y*nbCells_+x] == Kind::Water) {
 
-//                cellsHumidity_[y*nbCells_+x] += eta;
+                cellsHumidity_[y*nbCells_+x] += eta;
 
                 xStart = x - humidityRange_; xStop = x + humidityRange_ + 1;
                 yStart = y - humidityRange_; yStop = y + humidityRange_ + 1;
@@ -468,3 +476,20 @@ void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, d
         }
     }
 }
+
+void World::showDebugHumidity(sf::RenderTarget &target) {
+    Vec2d mouse (getApp().getCursorPositionInView()), textPosition (mouse.x()-20, mouse.y()-20);
+    int index (mouse.x()/cellSize_ + (mouse.y()/cellSize_)*nbCells_);
+    std::string toWrite(to_nice_string(cellsHumidity_[index]));
+    auto const text = buildText(toWrite, textPosition, getAppFont(), 25, sf::Color::Red);
+    target.draw(text);
+}
+
+
+
+
+
+
+
+
+

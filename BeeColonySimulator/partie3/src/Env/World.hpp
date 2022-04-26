@@ -36,6 +36,7 @@ public:
     bool isViable(int index, int x) const;
     void saveToFile() const;
     void setHumidity(double eta, double lambda);
+    void showDebugHumidity(sf::RenderTarget &target);
 
 private:
     int nbCells_;
