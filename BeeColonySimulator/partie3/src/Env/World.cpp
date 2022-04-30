@@ -10,7 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
-#include <fstream>
+//#include <fstream>
 #include <stdexcept>
 #include <cmath>
 
@@ -35,8 +35,7 @@ void World::reloadConfig() {
 
 void World::drawOn(sf::RenderTarget &target) {
     if (getAppConfig().showHumidity()) {
-        sf::Sprite humidity(renderingHumidity_.getTexture());
-        target.draw(humidity);
+        target.draw(humidityVertexes_.data(), humidityVertexes_.size(), sf::Quads);
         if (isDebugOn()) showDebugHumidity(target);
     } else {
         sf::Sprite cache(renderingCache_.getTexture());
@@ -103,9 +102,6 @@ void World::updateCache() {
     renderingCache_.draw(waterVertexes_.data(), waterVertexes_.size(), sf::Quads, water);
     renderingCache_.draw(rockVertexes_.data(), rockVertexes_.size(), sf::Quads, rock);
     renderingCache_.display();
-
-    renderingHumidity_.draw(humidityVertexes_.data(), humidityVertexes_.size(), sf::Quads);
-    renderingHumidity_.display();
 }
 
 void World::reloadCacheStructure() {
@@ -212,7 +208,6 @@ void World::loadFromFile() {
     catch (std::runtime_error&) {
         throw;
     }
-
 }
 
 void World::step() {
@@ -287,7 +282,6 @@ void World::moveSeed(Seed &s, int &index) const {
     }
 
 //    if (s.seedNature_ == Kind::Grass and cells_[index] == Kind::Water) index = index_check;
-
 }
 
 void World::steps(int nb, bool update) {
@@ -329,7 +323,6 @@ void World::smooth() {
     }
 
     std::swap(cells_, cellsCopy_);
-
 }
 
 std::vector<int> World::findViableCells(int x) const {
@@ -346,7 +339,6 @@ std::vector<int> World::findViableCells(int x) const {
     if (isViable(x+nbCells_+1, x)) viableIndexes.push_back(x+nbCells_+1);   // bottom right tile
 
     return viableIndexes;
-
 }
 
 bool World::isViable(int index, int x) const{
@@ -370,7 +362,6 @@ bool World::isViable(int index, int x) const{
             return true;
 
     } else return true;
-
 }
 
 void World::smooths(int nb, bool update) {
@@ -379,7 +370,6 @@ void World::smooths(int nb, bool update) {
 }
 
 void World::saveToFile() const {
-
     try {
 
         std::string mapName(getApp().getResPath() + "userRandomWorld.map");
@@ -422,11 +412,9 @@ void World::saveToFile() const {
     catch(std::runtime_error&) {
         throw;
     }
-
 }
 
 // Main version of setHumidity() that is called each time a water seed moves
-
 //void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, double lambda = getAppConfig().world_humidity_decay_rate) {
 //
 //    int xStart, xStop, yStart, yStop;
@@ -451,7 +439,6 @@ void World::saveToFile() const {
 //}
 
 // Version of setHumidity() that is called only one time at the end of the reset() method
-
 void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, double lambda = getAppConfig().world_humidity_decay_rate) {
 
     int xStart, xStop, yStart, yStop;
@@ -477,12 +464,23 @@ void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, d
     }
 }
 
+
+// Still doesn't work properly (BONUS)
 void World::showDebugHumidity(sf::RenderTarget &target) {
     Vec2d mouse (getApp().getCursorPositionInView()), textPosition (mouse.x()-20, mouse.y()-20);
     int index (mouse.x()/cellSize_ + (mouse.y()/cellSize_)*nbCells_);
     std::string toWrite(to_nice_string(cellsHumidity_[index]));
     auto const text = buildText(toWrite, textPosition, getAppFont(), 25, sf::Color::Red);
     target.draw(text);
+}
+
+bool World::isGrowable(const Vec2d &p) {
+    if (cells_[p.y()*nbCells_+p.x()] == Kind::Grass) return true;
+    else return false;
+}
+
+float World::getCellSize() const {
+    return cellSize_;
 }
 
 

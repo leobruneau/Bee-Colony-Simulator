@@ -6,6 +6,7 @@
 #define BEE_COLONY_SIMULATOR_SSV_2022_STEP2_WORLD_HPP
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "Utility/Vec2d.hpp"
 
 
 enum class Kind : short {Grass, Water, Rocks};
@@ -26,6 +27,7 @@ public:
     void reloadCacheStructure();
     void reset(bool const& regenerate);
     float getSize() const;
+    float getCellSize() const;
     void loadFromFile();
     void moveSeed(Seed &seed, int &ind) const;
     void step();
@@ -37,6 +39,7 @@ public:
     void saveToFile() const;
     void setHumidity(double eta, double lambda);
     void showDebugHumidity(sf::RenderTarget &target);
+    bool isGrowable(const Vec2d& p);
 
 private:
     int nbCells_;

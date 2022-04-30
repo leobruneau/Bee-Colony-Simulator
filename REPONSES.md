@@ -61,3 +61,6 @@ and 3)`updateCache()`. The order is justified by the fact that
 The algorithm to update (set) the humidity has to be called each time a water seed 
 moves and transmits its nature to the new cell. This happens in the method `Env::step()`
 in two different places: where `bernoulli(...) == 0` and where `bernoulli(...) != 0`
+
+### A3.5
+Since a Flower is a Collider the class Flower will inherit from the class Collider
