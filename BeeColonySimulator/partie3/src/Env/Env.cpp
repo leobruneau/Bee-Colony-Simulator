@@ -22,12 +22,17 @@ Env::~Env() {
 }
 
 void Env::update(sf::Time dt) {
-    // to be continued...
+    for (auto & f: flowers_) {
+        f->update(dt);
+    }
 }
 
 void Env::drawOn(sf::RenderTarget &target) {
     world_.drawOn(target);
     for (auto const& f: flowers_) {
+        f->drawOn(target);
+    }
+    for (auto const& f: newFlowers_) {
         f->drawOn(target);
     }
 }
@@ -50,12 +55,17 @@ void Env::loadWorldFromFile() {
     world_.loadFromFile();
 }
 
-bool Env::addFlowerAt(const Vec2d &p) {
+bool Env::addFlowerAt(const Vec2d &p, bool split) {
     if (world_.isGrowable(p) and (int)flowers_.size() < getAppConfig().max_flowers) {
         double flowerSize (getAppConfig().flower_manual_size);
         double pollen (uniform(getAppConfig().flower_nectar_min, getAppConfig().flower_nectar_max));
+
         // Dynamically allocating memory on the heap for a newly created flower
-        flowers_.push_back(new Flower(p, flowerSize, pollen));
+        if (split) {
+            newFlowers_.push_back(new Flower(p, flowerSize, pollen));
+        } else {
+            flowers_.push_back(new Flower(p , flowerSize, pollen));
+        }
         return true;
     } else return false;
 }
@@ -74,8 +84,38 @@ void Env::drawFlowerZone(sf::RenderTarget &target, const Vec2d &position) {
 void Env::flowerDestroyer() {
     if (!flowers_.empty())
         for (auto & flower : flowers_) {
+                delete flower;
+        }
+    flowers_.clear();
+
+    if (!newFlowers_.empty())
+        for (auto & flower: newFlowers_) {
             delete flower;
         }
+    newFlowers_.clear();
+}
+
+double Env::getPixelHumidity(Vec2d const& position) {
+    return world_.getHumidity(position);;
+}
+
+void Env::removeDeadFlowers() {
+    for (auto & f: flowers_) {
+        if (f->getPollen() <= 0) {
+            delete f;
+            f = nullptr;
+        }
+    }
+
+    for (auto & f: newFlowers_) {
+        if (f->getPollen() <= 0) {
+            delete f;
+            f = nullptr;
+        }
+    }
+
+    flowers_.erase(std::remove(flowers_.begin(), flowers_.end(), nullptr), flowers_.end());
+    newFlowers_.erase(std::remove(newFlowers_.begin(), newFlowers_.end(), nullptr), newFlowers_.end());
 }
 
 
