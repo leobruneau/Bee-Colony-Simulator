@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Bee_Colony_Simulator_SSV_2022_STEP2",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "application-run::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-application-run-Debug-8cd7c29b9ccd08c6ac7b.json",
+					"name" : "application-run",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "colliderTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-colliderTest-Debug-84b25292ea51bb177290.json",
+					"name" : "colliderTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "worldTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-worldTest-Debug-b0c86d870387463f4230.json",
+					"name" : "worldTest",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie2/src/cmake-build-debug",
+		"source" : "/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie2/src"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}
