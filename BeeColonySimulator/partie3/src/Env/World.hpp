@@ -7,6 +7,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Utility/Vec2d.hpp"
+#include "../Interface/Drawable.hpp"
 
 
 enum class Kind : short {Grass, Water, Rocks};
@@ -19,15 +20,16 @@ struct Seed {
     Kind seedNature_;
 };
 
-class World {
+class World : public Drawable {
 public:
+    World() = default;
+    World(const World&) = delete;
     void reloadConfig();
-    void drawOn(sf::RenderTarget& target);
+    void drawOn(sf::RenderTarget& target) const override;
     void updateCache();
     void reloadCacheStructure();
     void reset(bool const& regenerate);
     float getSize() const;
-    float getCellSize() const;
     void loadFromFile();
     void moveSeed(Seed &seed, int &ind) const;
     void step();
@@ -38,8 +40,9 @@ public:
     bool isViable(int index, int x) const;
     void saveToFile() const;
     void setHumidity(double eta, double lambda);
-    void showDebugHumidity(sf::RenderTarget &target);
+    void showDebugHumidity(sf::RenderTarget &target) const;
     bool isGrowable(const Vec2d& p);
+    double getHumidity(Vec2d const& p);
 
 private:
     int nbCells_;

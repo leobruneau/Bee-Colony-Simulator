@@ -112,7 +112,7 @@ find_package(SFML 2.5 QUIET COMPONENTS graphics window system)
 	    
 	    ##Units tests:
 	    ## Collider
-	     add_executable (colliderTest ${TEST_DIR}/UnitTests/ColliderTest.cpp ${SOURCES} ${CACHE_SOURCES} Env/Env.cpp Env/Env.hpp Env/Flower.cpp Env/Flower.hpp)
+	     add_executable (colliderTest ${TEST_DIR}/UnitTests/ColliderTest.cpp ${SOURCES} ${CACHE_SOURCES} Env/Env.cpp Env/Env.hpp Env/Flower.cpp Env/Flower.hpp Env/HelperFunctions.cpp Env/HelperFunctions.hpp Env/FlowerGenerator.cpp Env/FlowerGenerator.hpp)
              target_link_libraries(colliderTest ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 	     ## JSON parser
 	     #add_executable (jsonTest ${TEST_DIR}/UnitTests/JSONTest.cpp ${SOURCES} ${CACHE_SOURCES})

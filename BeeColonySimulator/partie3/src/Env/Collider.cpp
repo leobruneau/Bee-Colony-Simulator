@@ -134,10 +134,11 @@ Collider& Collider::operator+=(Vec2d const& dx) {
 
 void clamping(Vec2d& position) {
     auto worldSize = getApp().getEnvSize();
-    auto width  = worldSize.x(); // largeur
-    auto height = worldSize.y(); // hauteur
+    auto width  = worldSize.x(); // width
+    auto height = worldSize.y(); // height
 
-    do { // this loop we ensure that the clamping works even if the coordinates of
+    do {
+        // this loop we ensure that the clamping works even if the coordinates of
         //  the position are over bounds by more than one time the width and/or height
 
         double mod_x = fmod(position.x(), width), mod_y = fmod(position.y(), height);

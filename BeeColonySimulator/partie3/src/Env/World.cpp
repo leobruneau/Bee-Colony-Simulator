@@ -7,12 +7,13 @@
 #include "Utility/Vertex.hpp"
 #include "Random/Random.hpp"
 #include "Utility/Utility.hpp"
+#include "HelperFunctions.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
-//#include <fstream>
 #include <stdexcept>
 #include <cmath>
+
 
 void World::reloadConfig() {
     nbCells_ = getAppConfig().world_cells;
@@ -33,7 +34,7 @@ void World::reloadConfig() {
     }
 }
 
-void World::drawOn(sf::RenderTarget &target) {
+void World::drawOn(sf::RenderTarget &target) const {
     if (getAppConfig().showHumidity()) {
         target.draw(humidityVertexes_.data(), humidityVertexes_.size(), sf::Quads);
         if (isDebugOn()) showDebugHumidity(target);
@@ -464,24 +465,36 @@ void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, d
     }
 }
 
+void World::showDebugHumidity(sf::RenderTarget &target) const {
+    auto mouse = getApp().getCursorPositionInView();
+    Vec2d textPosition (mouse.x()-15, mouse.y()-15);
+    size_t index(help::getIndex(mouse, cellSize_, nbCells_));
 
-// Still doesn't work properly (BONUS)
-void World::showDebugHumidity(sf::RenderTarget &target) {
-    Vec2d mouse (getApp().getCursorPositionInView()), textPosition (mouse.x()-20, mouse.y()-20);
-    int index (mouse.x()/cellSize_ + (mouse.y()/cellSize_)*nbCells_);
-    std::string toWrite(to_nice_string(cellsHumidity_[index]));
+    int x ((int)trunc(mouse.x()/cellSize_)), y ((int)trunc(mouse.y()/cellSize_));
+    std::string toWrite(" ");
+    if ((x >= 0 and x < nbCells_) and (y >= 0 and y < nbCells_))
+        toWrite = to_nice_string(cellsHumidity_[index]);
+    else
+        toWrite = "-";
+
     auto const text = buildText(toWrite, textPosition, getAppFont(), 25, sf::Color::Red);
     target.draw(text);
 }
 
 bool World::isGrowable(const Vec2d &p) {
-    if (cells_[p.y()*nbCells_+p.x()] == Kind::Grass) return true;
-    else return false;
+    size_t index (help::getIndex(p, cellSize_, nbCells_));
+    int x ((int)trunc(p.x()/cellSize_)), y ((int)trunc(p.y()/cellSize_));
+
+    if ((x >= 0 and x < nbCells_) and (y >= 0 and y < nbCells_)) {
+        if (cells_[index] == Kind::Grass) return true;
+        else return false;
+    } else { return false; }
 }
 
-float World::getCellSize() const {
-    return cellSize_;
+double World::getHumidity(const Vec2d &p) {
+    return cellsHumidity_[help::getIndex(p, cellSize_, nbCells_)];
 }
+
 
 
 

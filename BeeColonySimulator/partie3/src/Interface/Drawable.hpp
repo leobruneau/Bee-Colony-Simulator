@@ -18,6 +18,7 @@ class Drawable
 public:
     virtual ~Drawable() = default;
 
+    // pure virtual function
     virtual void drawOn(sf::RenderTarget& target) const = 0;
 };
 

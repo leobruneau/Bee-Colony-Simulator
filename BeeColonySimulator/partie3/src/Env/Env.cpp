@@ -22,12 +22,18 @@ Env::~Env() {
 }
 
 void Env::update(sf::Time dt) {
-    // to be continued...
+    for (auto & f: flowers_) {
+        f->update(dt);
+    }
+    flowerGenerator_.update(dt);
 }
 
-void Env::drawOn(sf::RenderTarget &target) {
+void Env::drawOn(sf::RenderTarget &target) const {
     world_.drawOn(target);
     for (auto const& f: flowers_) {
+        f->drawOn(target);
+    }
+    for (auto const& f: newFlowers_) {
         f->drawOn(target);
     }
 }
@@ -35,6 +41,7 @@ void Env::drawOn(sf::RenderTarget &target) {
 void Env::reset() {
     flowerDestroyer();
     world_.reset(true);
+    flowerGenerator_.reset();
 }
 
 float Env::getSize() {
@@ -50,12 +57,22 @@ void Env::loadWorldFromFile() {
     world_.loadFromFile();
 }
 
-bool Env::addFlowerAt(const Vec2d &p) {
-    if (world_.isGrowable(p) and (int)flowers_.size() < getAppConfig().max_flowers) {
+void Env::saveWorldToFile() const {
+    world_.saveToFile();
+}
+
+bool Env::addFlowerAt(const Vec2d &p, bool split) {
+    // checking that a flower can actually grow. Added the condition of strictly positive humidity for being able to grow
+    if ((world_.isGrowable(p) and (int)flowers_.size() < getAppConfig().max_flowers) and world_.getHumidity(p) > 0) {
         double flowerSize (getAppConfig().flower_manual_size);
         double pollen (uniform(getAppConfig().flower_nectar_min, getAppConfig().flower_nectar_max));
+
         // Dynamically allocating memory on the heap for a newly created flower
-        flowers_.push_back(new Flower(p, flowerSize, pollen));
+        if (split) {
+            newFlowers_.push_back(new Flower(p, flowerSize, pollen));
+        } else {
+            flowers_.push_back(new Flower(p , flowerSize, pollen));
+        }
         return true;
     } else return false;
 }
@@ -63,7 +80,7 @@ bool Env::addFlowerAt(const Vec2d &p) {
 void Env::drawFlowerZone(sf::RenderTarget &target, const Vec2d &position) {
     auto size = getAppConfig().flower_manual_size;
     sf::Color color;
-    if (world_.isGrowable(position)) color = sf::Color::Green;
+    if (world_.isGrowable(position) and world_.getHumidity(position) > 0) color = sf::Color::Green;
     else color = sf::Color::Red;
     auto thickness (3.0);
 
@@ -74,8 +91,38 @@ void Env::drawFlowerZone(sf::RenderTarget &target, const Vec2d &position) {
 void Env::flowerDestroyer() {
     if (!flowers_.empty())
         for (auto & flower : flowers_) {
+                delete flower;
+        }
+    flowers_.clear();
+
+    if (!newFlowers_.empty())
+        for (auto & flower: newFlowers_) {
             delete flower;
         }
+    newFlowers_.clear();
+}
+
+double Env::getPixelHumidity(Vec2d const& position) {
+    return world_.getHumidity(position);;
+}
+
+void Env::removeDeadFlowers() {
+    for (auto & f: flowers_) {
+        if (f->getPollen() <= 0) {
+            delete f;
+            f = nullptr;
+        }
+    }
+
+    for (auto & f: newFlowers_) {
+        if (f->getPollen() <= 0) {
+            delete f;
+            f = nullptr;
+        }
+    }
+
+    flowers_.erase(std::remove(flowers_.begin(), flowers_.end(), nullptr), flowers_.end());
+    newFlowers_.erase(std::remove(newFlowers_.begin(), newFlowers_.end(), nullptr), newFlowers_.end());
 }
 
 
