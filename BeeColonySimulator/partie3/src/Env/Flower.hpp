@@ -15,8 +15,8 @@ class Flower : public Collider, public Drawable, public Updatable {
 public:
     Flower(Vec2d position, double size, double pollen);
     double takePollen();
-    void drawOn(sf::RenderTarget& target) const;
-    void update(sf::Time dt);
+    void drawOn(sf::RenderTarget& target) const override;
+    void update(sf::Time dt) override;
     double getPollen() const;
 private:
     double pollen_;

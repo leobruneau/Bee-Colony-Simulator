@@ -34,7 +34,7 @@ void World::reloadConfig() {
     }
 }
 
-void World::drawOn(sf::RenderTarget &target) {
+void World::drawOn(sf::RenderTarget &target) const {
     if (getAppConfig().showHumidity()) {
         target.draw(humidityVertexes_.data(), humidityVertexes_.size(), sf::Quads);
         if (isDebugOn()) showDebugHumidity(target);
@@ -465,7 +465,7 @@ void World::setHumidity(double eta = getAppConfig().world_humidity_init_level, d
     }
 }
 
-void World::showDebugHumidity(sf::RenderTarget &target) {
+void World::showDebugHumidity(sf::RenderTarget &target) const {
     auto mouse = getApp().getCursorPositionInView();
     Vec2d textPosition (mouse.x()-15, mouse.y()-15);
     size_t index(help::getIndex(mouse, cellSize_, nbCells_));
@@ -494,6 +494,7 @@ bool World::isGrowable(const Vec2d &p) {
 double World::getHumidity(const Vec2d &p) {
     return cellsHumidity_[help::getIndex(p, cellSize_, nbCells_)];
 }
+
 
 
 

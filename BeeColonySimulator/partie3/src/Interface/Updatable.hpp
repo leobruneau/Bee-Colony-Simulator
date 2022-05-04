@@ -18,6 +18,7 @@ class Updatable
 public:
     virtual ~Updatable() = default;
 
+    // pure virtual function
     virtual void update(sf::Time dt) = 0;
 };
 

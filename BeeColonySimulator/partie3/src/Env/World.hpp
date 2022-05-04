@@ -22,8 +22,10 @@ struct Seed {
 
 class World : public Drawable {
 public:
+    World() = default;
+    World(const World&) = delete;
     void reloadConfig();
-    void drawOn(sf::RenderTarget& target);
+    void drawOn(sf::RenderTarget& target) const override;
     void updateCache();
     void reloadCacheStructure();
     void reset(bool const& regenerate);
@@ -38,7 +40,7 @@ public:
     bool isViable(int index, int x) const;
     void saveToFile() const;
     void setHumidity(double eta, double lambda);
-    void showDebugHumidity(sf::RenderTarget &target);
+    void showDebugHumidity(sf::RenderTarget &target) const;
     bool isGrowable(const Vec2d& p);
     double getHumidity(Vec2d const& p);
 
