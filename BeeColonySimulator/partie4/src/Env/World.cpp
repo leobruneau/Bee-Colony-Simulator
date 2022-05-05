@@ -495,15 +495,15 @@ double World::getHumidity(const Vec2d &p) const {
 }
 
 bool World::isHiveable(const Vec2d &p, double radius) const {
-    auto toAdd (new Hive(p, radius));
-    if (getAppEnv().getCollidingHive(*toAdd) != nullptr) {
-        delete toAdd; toAdd = nullptr;
-        return false;
-    }
-    if (getAppEnv().getCollidingFlower(*toAdd) != nullptr) {
-        delete toAdd; toAdd = nullptr;
-        return false;
-    }
+//    auto toAdd (new Hive(p, radius));
+//    if (getAppEnv().getCollidingHive(*toAdd) != nullptr) {
+//        delete toAdd; toAdd = nullptr;
+//        return false;
+//    }
+//    if (getAppEnv().getCollidingFlower(*toAdd) != nullptr) {
+//        delete toAdd; toAdd = nullptr;
+//        return false;
+//    }
     return true;
 }
 

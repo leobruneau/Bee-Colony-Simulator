@@ -24,11 +24,8 @@ public:
     void showDebugNectar(sf::RenderTarget& target) const;
 
 private:
-    // We use a vector of pointers because we want
-    // to implement polymorphism for different types of bees
     std::vector<Bee*> bees_;
     double nectar_; // = pollen (the two are the same)
-    sf::Texture texture_;
 };
 
 #endif //BEE_COLONY_SIMULATOR_SSV_2022_STEP4_HIVE_HPP

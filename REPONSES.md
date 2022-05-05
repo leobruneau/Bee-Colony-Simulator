@@ -141,10 +141,10 @@ which needs virtual functions that operate on pointers
 
 ### A4.2
 The Hive class will inherit from the following classes: Collider, Updatable, Drawable. For the attributes we will have a collection of
-pointers on Bees, a double representing the amount of nectar of the hive. We also decided to add an attribute which will contain the texture of the Hive.
+pointers on Bees, a double representing the amount of nectar of the hive. (We also decided to add an attribute which will contain the texture of the Hive.
 It could be in fact fun (in the future) to have different types of Hives corresponding to different species of bees. We also did this so that
 when we call the `Env::drawOn()` method we don't have to use `getAppTexture(getAppConfig().hive_texture)` each time, but we can just use the `texture_`
-attribute.
+attribute.)
 
 ### A4.3
 We need to use the following lines of code: `Hive(Hive const& source) = delete` and `Hive& operator=(Hive const& source) = delete`

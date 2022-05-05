@@ -77,7 +77,7 @@ bool Env::addFlowerAt(const Vec2d &p, bool split) {
     // Checking if the flower collides with any hive
     if (!hives_.empty()) {
         for (auto& h: hives_) {
-            if (getCollidingHive(*toAdd) != nullptr) {
+            if (h->isColliding(*toAdd)) {
                 delete toAdd;
                 toAdd = nullptr;
                 return false;
@@ -115,9 +115,8 @@ void Env::drawFlowerZone(sf::RenderTarget &target, const Vec2d &position) {
     else color = sf::Color::Red;
 
     if (!hives_.empty()) {
-        for (auto& h: hives_) {
-            if (getCollidingHive(*toAdd) != nullptr) color = sf::Color::Red;
-        }
+        for (auto& h: hives_)
+            if (h->isColliding(*toAdd)) color = sf::Color::Red;
     }
 
     auto thickness (3.0);
@@ -130,15 +129,13 @@ void Env::drawFlowerZone(sf::RenderTarget &target, const Vec2d &position) {
 
 void Env::flowerDestroyer() {
     if (!flowers_.empty())
-        for (auto & flower : flowers_) {
+        for (auto & flower : flowers_)
                 delete flower;
-        }
     flowers_.clear();
 
     if (!newFlowers_.empty())
-        for (auto & flower: newFlowers_) {
+        for (auto & flower: newFlowers_)
             delete flower;
-        }
     newFlowers_.clear();
 }
 
@@ -167,22 +164,56 @@ void Env::removeDeadFlowers() {
 
 bool Env::addHiveAt(const Vec2d &position) {
     double randomSize (uniform(getAppConfig().hive_min_size, getAppConfig().hive_max_size));
-    if (world_.isHiveable(position, randomSize)) {
-        hives_.push_back(new Hive(position, randomSize));
-        return true;
+
+    if (position.x() >= 0 and position.x() < world_.getSize()) {
+        if (position.y() >= 0 and position.y() < world_.getSize()) {
+            Hive* toAdd (new Hive (position, randomSize));
+
+            if (!flowers_.empty()) {
+                for (auto const& f: flowers_) {
+                    if (toAdd->isColliding(*f)) {
+                        delete toAdd; toAdd = nullptr;
+                        return false;
+                    }
+                }
+            }
+
+            if (!newFlowers_.empty()) {
+                for (auto const& nf: newFlowers_) {
+                    if (toAdd->isColliding(*nf)) {
+                        delete toAdd; toAdd = nullptr;
+                        return false;
+                    }
+                }
+            }
+
+            if (!hives_.empty()) {
+                for (auto const& h: hives_) {
+                    if (toAdd->isColliding(*h)) {
+                        delete toAdd; toAdd = nullptr;
+                        return false;
+                    }
+                }
+            }
+
+            hives_.push_back(toAdd);
+            toAdd = nullptr;
+            return true;
+
+        } else return false;
     } else return false;
 }
 
 Hive* Env::getCollidingHive(const Collider &body) {
-    for (auto& h: hives_)
+    for (auto const& h: hives_)
         if (h->isColliding(body)) return h;
     return nullptr;
 }
 
 Flower* Env::getCollidingFlower(const Collider &body) {
-    for (auto& f: flowers_)
+    for (auto const& f: flowers_)
         if (f->isColliding(body)) return f;
-    for (auto& nf: newFlowers_)
+    for (auto const& nf: newFlowers_)
         if (nf->isColliding(body)) return nf;
     return nullptr;
 }
