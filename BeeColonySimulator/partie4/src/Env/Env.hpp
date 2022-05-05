@@ -8,6 +8,7 @@
 #include "Flower.hpp"
 #include "../Interface/Updatable.hpp"
 #include "FlowerGenerator.hpp"
+#include "Hive.hpp"
 
 class Env : public Drawable, public Updatable {
 public:
@@ -24,13 +25,18 @@ public:
     bool addFlowerAt(Vec2d const& p, bool split = false);
     void drawFlowerZone(sf::RenderTarget& target, Vec2d const& position);
     void flowerDestroyer();
-    double getPixelHumidity(Vec2d const& position);
+    double getCellHumidity(Vec2d const& position);
     void removeDeadFlowers();
+    bool addHiveAt(const Vec2d& position);
+    void hiveDestroyer();
+    Hive* getCollidingHive(const Collider& body);
+    Flower* getCollidingFlower(const Collider& body);
 
 private:
     World world_;
     std::vector<Flower*> flowers_;
     std::vector<Flower*> newFlowers_;
+    std::vector<Hive*> hives_;
     FlowerGenerator flowerGenerator_;
 };
 

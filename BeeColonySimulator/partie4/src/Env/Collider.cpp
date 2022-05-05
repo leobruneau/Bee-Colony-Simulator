@@ -90,7 +90,6 @@ void Collider::move(Vec2d const& dx) {
 }
 
 bool Collider::isColliderInside(Collider const& other) const {
-
     if ((other.radius <= radius) and (distanceTo(other) <= (radius - other.radius))) {
         return true;
     } else {

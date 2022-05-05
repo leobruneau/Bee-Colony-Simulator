@@ -30,7 +30,7 @@ public:
     void move(Vec2d const& dx);
 
     bool isColliderInside(Collider const& other) const;
-    bool isColliding(Collider const& other) const;
+    virtual bool isColliding(Collider const& other) const;
     bool isPointInside(Vec2d const& point) const;
 
     bool operator>(Collider const& other) const;

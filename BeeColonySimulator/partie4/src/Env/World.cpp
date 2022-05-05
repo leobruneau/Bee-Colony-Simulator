@@ -202,7 +202,6 @@ void World::loadFromFile() {
 
             reloadCacheStructure();
             updateCache();
-
         }
     }
 
@@ -481,7 +480,7 @@ void World::showDebugHumidity(sf::RenderTarget &target) const {
     target.draw(text);
 }
 
-bool World::isGrowable(const Vec2d &p) {
+bool World::isGrowable(const Vec2d &p) const {
     size_t index (help::getIndex(p, cellSize_, nbCells_));
     int x ((int)trunc(p.x()/cellSize_)), y ((int)trunc(p.y()/cellSize_));
 
@@ -491,8 +490,21 @@ bool World::isGrowable(const Vec2d &p) {
     } else { return false; }
 }
 
-double World::getHumidity(const Vec2d &p) {
+double World::getHumidity(const Vec2d &p) const {
     return cellsHumidity_[help::getIndex(p, cellSize_, nbCells_)];
+}
+
+bool World::isHiveable(const Vec2d &p, double radius) const {
+    auto toAdd (new Hive(p, radius));
+    if (getAppEnv().getCollidingHive(*toAdd) != nullptr) {
+        delete toAdd; toAdd = nullptr;
+        return false;
+    }
+    if (getAppEnv().getCollidingFlower(*toAdd) != nullptr) {
+        delete toAdd; toAdd = nullptr;
+        return false;
+    }
+    return true;
 }
 
 

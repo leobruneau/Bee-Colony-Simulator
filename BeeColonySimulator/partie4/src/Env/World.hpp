@@ -41,8 +41,9 @@ public:
     void saveToFile() const;
     void setHumidity(double eta, double lambda);
     void showDebugHumidity(sf::RenderTarget &target) const;
-    bool isGrowable(const Vec2d& p);
-    double getHumidity(Vec2d const& p);
+    bool isGrowable(const Vec2d& p) const;
+    double getHumidity(Vec2d const& p) const;
+    bool isHiveable(const Vec2d& p, double radius) const;
 
 private:
     int nbCells_;

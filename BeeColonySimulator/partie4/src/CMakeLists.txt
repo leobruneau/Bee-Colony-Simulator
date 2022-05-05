@@ -95,8 +95,8 @@ find_package(SFML 2.5 QUIET COMPONENTS graphics window system)
         target_link_libraries(flowerTest sfml-graphics sfml-window sfml-system)
 
 	## HiveTest
-        #add_executable (hiveTest  ${TEST_DIR}/GraphicalTests/HiveTest.cpp ${SOURCES_GFX})
-        #target_link_libraries(hiveTest sfml-graphics sfml-window sfml-system)
+        add_executable (hiveTest  ${TEST_DIR}/GraphicalTests/HiveTest.cpp ${SOURCES_GFX})
+        target_link_libraries(hiveTest sfml-graphics sfml-window sfml-system)
 
 
        
@@ -137,8 +137,8 @@ find_package(SFML 2.5 QUIET COMPONENTS graphics window system)
               target_link_libraries(flowerTest ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
 	      ## HiveTest
-	      #add_executable(hiveTest ${TEST_DIR}/GraphicalTests/HiveTest.cpp ${SOURCES_GFX})
-              #target_link_libraries(hiveTest ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+	      add_executable(hiveTest ${TEST_DIR}/GraphicalTests/HiveTest.cpp ${SOURCES_GFX})
+              target_link_libraries(hiveTest ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
         else()
             message(STATUS "SFML NOT FOUND ! ")

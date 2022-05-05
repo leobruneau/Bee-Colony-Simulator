@@ -25,7 +25,7 @@ void Flower::drawOn(sf::RenderTarget &target) const {
 
 void Flower::update(sf::Time dt) {
     double humidityThreshold (getAppConfig().flower_growth_threshold);
-    double humidity (getAppEnv().getPixelHumidity(getPosition()));
+    double humidity (getAppEnv().getCellHumidity(getPosition()));
     pollen_ += dt.asSeconds() * log(humidity/humidityThreshold);
 
     double splitThreshold (getAppConfig().flower_growth_split);

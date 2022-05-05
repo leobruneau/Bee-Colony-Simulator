@@ -7,7 +7,12 @@
 #include "Env.hpp"
 
 
-Env::Env() {
+Env::Env()
+    : world_(),
+      flowers_(std::vector<Flower*>()),
+      newFlowers_(std::vector<Flower*>()),
+      hives_(std::vector<Hive*>()) {
+
     try {
         Env::loadWorldFromFile();
     }
@@ -19,6 +24,7 @@ Env::Env() {
 
 Env::~Env() {
     flowerDestroyer();
+    hiveDestroyer();
 }
 
 void Env::update(sf::Time dt) {
@@ -30,16 +36,17 @@ void Env::update(sf::Time dt) {
 
 void Env::drawOn(sf::RenderTarget &target) const {
     world_.drawOn(target);
-    for (auto const& f: flowers_) {
+    for (auto const& f: flowers_)
         f->drawOn(target);
-    }
-    for (auto const& f: newFlowers_) {
-        f->drawOn(target);
-    }
+    for (auto const& nf: newFlowers_)
+        nf->drawOn(target);
+    for (auto const& h: hives_)
+        h->drawOn(target);
 }
 
 void Env::reset() {
     flowerDestroyer();
+    hiveDestroyer();
     world_.reset(true);
     flowerGenerator_.reset();
 }
@@ -54,6 +61,7 @@ void Env::resetControls() {
 
 void Env::loadWorldFromFile() {
     flowerDestroyer();
+    hiveDestroyer();
     world_.loadFromFile();
 }
 
@@ -62,30 +70,62 @@ void Env::saveWorldToFile() const {
 }
 
 bool Env::addFlowerAt(const Vec2d &p, bool split) {
+    double flowerSize (getAppConfig().flower_manual_size);
+    double pollen (uniform(getAppConfig().flower_nectar_min, getAppConfig().flower_nectar_max));
+    auto toAdd (new Flower(p, flowerSize, pollen));
+
+    // Checking if the flower collides with any hive
+    if (!hives_.empty()) {
+        for (auto& h: hives_) {
+            if (getCollidingHive(*toAdd) != nullptr) {
+                delete toAdd;
+                toAdd = nullptr;
+                return false;
+            }
+        }
+    }
+
     // checking that a flower can actually grow. Added the condition of strictly positive humidity for being able to grow
     if ((world_.isGrowable(p) and (int)flowers_.size() < getAppConfig().max_flowers) and world_.getHumidity(p) > 0) {
-        double flowerSize (getAppConfig().flower_manual_size);
-        double pollen (uniform(getAppConfig().flower_nectar_min, getAppConfig().flower_nectar_max));
 
         // Dynamically allocating memory on the heap for a newly created flower
         if (split) {
-            newFlowers_.push_back(new Flower(p, flowerSize, pollen));
+            newFlowers_.push_back(toAdd);
+            toAdd = nullptr;
         } else {
-            flowers_.push_back(new Flower(p , flowerSize, pollen));
+            flowers_.push_back(toAdd);
+            toAdd = nullptr;
         }
         return true;
-    } else return false;
+    } else { // deallocating memory if the flower cannot be added
+        delete toAdd;
+        toAdd = nullptr;
+        return false;
+    }
 }
 
 void Env::drawFlowerZone(sf::RenderTarget &target, const Vec2d &position) {
-    auto size = getAppConfig().flower_manual_size;
+
+    auto size (getAppConfig().flower_manual_size);
+    auto pollen (uniform(getAppConfig().flower_nectar_min, getAppConfig().flower_nectar_max));
+    auto toAdd (new Flower(position, size, pollen));
+
     sf::Color color;
     if (world_.isGrowable(position) and world_.getHumidity(position) > 0) color = sf::Color::Green;
     else color = sf::Color::Red;
-    auto thickness (3.0);
 
+    if (!hives_.empty()) {
+        for (auto& h: hives_) {
+            if (getCollidingHive(*toAdd) != nullptr) color = sf::Color::Red;
+        }
+    }
+
+    auto thickness (3.0);
     auto shape = buildAnnulus(position, size, color, thickness);
     target.draw(shape);
+
+    delete toAdd;
+    toAdd = nullptr;
 }
 
 void Env::flowerDestroyer() {
@@ -102,7 +142,7 @@ void Env::flowerDestroyer() {
     newFlowers_.clear();
 }
 
-double Env::getPixelHumidity(Vec2d const& position) {
+double Env::getCellHumidity(Vec2d const& position) {
     return world_.getHumidity(position);;
 }
 
@@ -123,6 +163,36 @@ void Env::removeDeadFlowers() {
 
     flowers_.erase(std::remove(flowers_.begin(), flowers_.end(), nullptr), flowers_.end());
     newFlowers_.erase(std::remove(newFlowers_.begin(), newFlowers_.end(), nullptr), newFlowers_.end());
+}
+
+bool Env::addHiveAt(const Vec2d &position) {
+    double randomSize (uniform(getAppConfig().hive_min_size, getAppConfig().hive_max_size));
+    if (world_.isHiveable(position, randomSize)) {
+        hives_.push_back(new Hive(position, randomSize));
+        return true;
+    } else return false;
+}
+
+Hive* Env::getCollidingHive(const Collider &body) {
+    for (auto& h: hives_)
+        if (h->isColliding(body)) return h;
+    return nullptr;
+}
+
+Flower* Env::getCollidingFlower(const Collider &body) {
+    for (auto& f: flowers_)
+        if (f->isColliding(body)) return f;
+    for (auto& nf: newFlowers_)
+        if (nf->isColliding(body)) return nf;
+    return nullptr;
+}
+
+void Env::hiveDestroyer() {
+    for (auto& h: hives_) {
+        delete h;
+        h = nullptr;
+    }
+    hives_.clear();
 }
 
 
