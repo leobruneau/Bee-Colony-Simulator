@@ -18,9 +18,12 @@ public:
     void drawOn(sf::RenderTarget& target) const override;
     void update(sf::Time dt) override;
     double getPollen() const;
+    double getFactor() const override;
+
 private:
     double pollen_;
     sf::Texture texture_;
+    double sizeFactor_;
 };
 
 #endif //BEE_COLONY_SIMULATOR_SSV_2022_STEP3_FLOWER_HPP

@@ -36,6 +36,8 @@ public:
     bool operator>(Collider const& other) const;
     bool operator|(Collider const& other) const;
     bool operator>(Vec2d const& point) const;
+
+    virtual double getFactor() const;
 };
 
 std::ostream& operator<<(std::ostream&, Collider const& other);

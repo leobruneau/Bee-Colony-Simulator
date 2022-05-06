@@ -8,7 +8,7 @@
 
 
 Flower::Flower(Vec2d position, double size, double pollen)
-    : Collider (position, size), pollen_ (pollen) {
+    : Collider (position, size), pollen_ (pollen), sizeFactor_ (1.0) {
     auto textures = getValueConfig()["simulation"]["flower"]["textures"];
     int index (uniform(0, (int)textures.size()-1));
     texture_ = getAppTexture(textures[index].toString());
@@ -48,5 +48,9 @@ void Flower::update(sf::Time dt) {
 
 double Flower::getPollen() const {
     return pollen_;
+}
+
+double Flower::getFactor() const {
+    return sizeFactor_;
 }
 

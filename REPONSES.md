@@ -157,5 +157,12 @@ clear the vector itself (just to be sure not to have any dangling pointers that 
 No. If the environment dies, so do all the hives, flowers and bees in it.
 
 ### A4.6
+Inside the method `Env::addFlowerAt()` we will use a for loop to go over the vector of hives an check for each one if it is colliding with the flower
+we want to add.
+
+### A4.7
+We need to modify the `Env::drawOn()` method (that now has to draw also the hives) and the `Env::reset()` and `Env::loadWorldFromFile()` methods that 
+both need to deallocate the hives and clear their vector each time they are called.
+
 
 

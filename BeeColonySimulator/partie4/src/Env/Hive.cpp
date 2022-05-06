@@ -7,7 +7,8 @@
 
 Hive::Hive(Vec2d const& p, double radius = getAppConfig().hive_manual_size)
     : Collider(p, radius),
-      nectar_ (getAppConfig().hive_initial_nectar) {}
+      nectar_ (getAppConfig().hive_initial_nectar),
+      sizeFactor_ (getAppConfig().hiveable_factor) {}
 
 void Hive::addBee() {
 
@@ -19,13 +20,13 @@ void Hive::update(sf::Time dt) {
 
 void Hive::drawOn(sf::RenderTarget &targetWindow) const {
     auto hiveSprite = buildSprite(getPosition(), getRadius(), getAppTexture(getAppConfig().hive_texture));
-//    auto shape = buildAnnulus(getPosition(), getRadius()*getAppConfig().hiveable_factor, sf::Color::Green, 1);
+    auto shape = buildAnnulus(getPosition(), getRadius()*getAppConfig().hiveable_factor, sf::Color::Green, 1);
 
     targetWindow.draw(hiveSprite);
 
     if (isDebugOn()) {
         showDebugNectar(targetWindow);
-//        targetWindow.draw(shape);
+        targetWindow.draw(shape);
     }
 }
 
@@ -42,8 +43,6 @@ bool Hive::takeNectar(double qte) {
 }
 
 Hive::~Hive() {
-    // since a bee cannot live without being attached to a hive,
-    // the Hive class must destroy all attached bees when it is destroyed
     for (auto& b: bees_) {
         delete b;
         b = nullptr;
@@ -61,11 +60,14 @@ void Hive::showDebugNectar(sf::RenderTarget &target) const {
 bool Hive::isColliding(const Collider &body) const {
 
     // Remark: if the other "body" is a Hive too, we need to consider getRadius()*getAppConfig().hiveable_factor as its radius
-
-    double radiusSum(getRadius()*getAppConfig().hiveable_factor + body.getRadius());
+    double radiusSum(getRadius()*getAppConfig().hiveable_factor + body.getRadius()*body.getFactor());
     if((distanceTo(body)) <= radiusSum) {
         return true;
     } else {
         return false;
     }
+}
+
+double Hive::getFactor() const {
+    return sizeFactor_;
 }

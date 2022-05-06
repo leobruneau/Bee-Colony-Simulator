@@ -22,10 +22,12 @@ public:
     void dropPollen(double qte);
     bool takeNectar(double qte);
     void showDebugNectar(sf::RenderTarget& target) const;
+    double getFactor() const override;
 
 private:
     std::vector<Bee*> bees_;
     double nectar_; // = pollen (the two are the same)
+    double sizeFactor_;
 };
 
 #endif //BEE_COLONY_SIMULATOR_SSV_2022_STEP4_HIVE_HPP

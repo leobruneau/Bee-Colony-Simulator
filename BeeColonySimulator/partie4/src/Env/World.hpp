@@ -30,6 +30,7 @@ public:
     void reloadCacheStructure();
     void reset(bool const& regenerate);
     float getSize() const;
+    float getCellSize() const;
     void loadFromFile();
     void moveSeed(Seed &seed, int &ind) const;
     void step();
@@ -44,6 +45,7 @@ public:
     bool isGrowable(const Vec2d& p) const;
     double getHumidity(Vec2d const& p) const;
     bool isHiveable(const Vec2d& p, double radius) const;
+    std::vector<std::size_t> indexesForRect(sf::Vector2i const& topLeft, sf::Vector2i const& bottomRight) const;
 
 private:
     int nbCells_;

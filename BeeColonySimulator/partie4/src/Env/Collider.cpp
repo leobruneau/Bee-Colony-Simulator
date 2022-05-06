@@ -131,6 +131,10 @@ Collider& Collider::operator+=(Vec2d const& dx) {
     return *this;
 }
 
+double Collider::getFactor() const {
+    return 1;
+}
+
 void clamping(Vec2d& position) {
     auto worldSize = getApp().getEnvSize();
     auto width  = worldSize.x(); // width

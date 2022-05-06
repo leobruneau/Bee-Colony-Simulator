@@ -5,6 +5,7 @@
 #include <Application.hpp>
 #include <iostream>
 #include "Env.hpp"
+#include "HelperFunctions.hpp"
 
 
 Env::Env()
@@ -165,9 +166,53 @@ void Env::removeDeadFlowers() {
 bool Env::addHiveAt(const Vec2d &position) {
     double randomSize (uniform(getAppConfig().hive_min_size, getAppConfig().hive_max_size));
 
+    if (isHiveable(position, randomSize)) {
+        hives_.push_back(new Hive (position, randomSize));
+        return true;
+    } else return false;
+}
+
+Hive* Env::getCollidingHive(const Collider &body) {
+    for (auto const& h: hives_)
+        if (h->isColliding(body)) return h;
+    return nullptr;
+}
+
+Flower* Env::getCollidingFlower(const Collider &body) {
+    for (auto const& f: flowers_)
+        if (f->isColliding(body)) return f;
+    for (auto const& nf: newFlowers_)
+        if (nf->isColliding(body)) return nf;
+    return nullptr;
+}
+
+void Env::hiveDestroyer() {
+    for (auto& h: hives_) {
+        delete h;
+        h = nullptr;
+    }
+    hives_.clear();
+}
+
+void Env::drawHiveableZone(sf::RenderTarget &target, const Vec2d &position) {
+    double randomSize (uniform(getAppConfig().hive_min_size, getAppConfig().hive_max_size));
+    double extRadius (randomSize*getAppConfig().hiveable_factor);
+    sf::Color color (sf::Color::Green);
+    Vec2d temp (extRadius, extRadius);
+    sf::Vector2i topLeft(help::getX(position-temp, world_.getCellSize()), help::getY(position-temp, world_.getCellSize()));
+    sf::Vector2i bottomRight(help::getX(position+temp, world_.getCellSize()), help::getY(position+temp, world_.getCellSize()));
+
+    if (!world_.isHiveable(position, randomSize)) color = sf::Color::Red;
+    if (!isHiveable(position, randomSize)) color = sf::Color::Blue;
+
+    sf::RectangleShape shape(buildRectangle(topLeft, bottomRight, color, 5.0));
+    target.draw(shape);
+}
+
+bool Env::isHiveable(const Vec2d &position, double radius) const {
     if (position.x() >= 0 and position.x() < world_.getSize()) {
         if (position.y() >= 0 and position.y() < world_.getSize()) {
-            Hive* toAdd (new Hive (position, randomSize));
+            Hive* toAdd (new Hive (position, radius));
 
             if (!flowers_.empty()) {
                 for (auto const& f: flowers_) {
@@ -196,34 +241,12 @@ bool Env::addHiveAt(const Vec2d &position) {
                 }
             }
 
-            hives_.push_back(toAdd);
+            delete toAdd;
             toAdd = nullptr;
             return true;
 
         } else return false;
     } else return false;
-}
-
-Hive* Env::getCollidingHive(const Collider &body) {
-    for (auto const& h: hives_)
-        if (h->isColliding(body)) return h;
-    return nullptr;
-}
-
-Flower* Env::getCollidingFlower(const Collider &body) {
-    for (auto const& f: flowers_)
-        if (f->isColliding(body)) return f;
-    for (auto const& nf: newFlowers_)
-        if (nf->isColliding(body)) return nf;
-    return nullptr;
-}
-
-void Env::hiveDestroyer() {
-    for (auto& h: hives_) {
-        delete h;
-        h = nullptr;
-    }
-    hives_.clear();
 }
 
 

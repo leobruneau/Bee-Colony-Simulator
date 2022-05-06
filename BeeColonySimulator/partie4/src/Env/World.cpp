@@ -495,16 +495,62 @@ double World::getHumidity(const Vec2d &p) const {
 }
 
 bool World::isHiveable(const Vec2d &p, double radius) const {
-//    auto toAdd (new Hive(p, radius));
-//    if (getAppEnv().getCollidingHive(*toAdd) != nullptr) {
-//        delete toAdd; toAdd = nullptr;
-//        return false;
-//    }
-//    if (getAppEnv().getCollidingFlower(*toAdd) != nullptr) {
-//        delete toAdd; toAdd = nullptr;
-//        return false;
-//    }
+    double extRadius (radius*getAppConfig().hiveable_factor);
+    sf::Color color (sf::Color::Green);
+    Vec2d temp (extRadius, extRadius);
+    sf::Vector2i topLeft(help::getX(p-temp, cellSize_), help::getY(p-temp, cellSize_));
+    sf::Vector2i bottomRight(help::getX(p+temp, cellSize_), help::getY(p+temp, cellSize_));
+
+    std::vector<std::size_t> zoneIndexes = indexesForRect(topLeft, bottomRight);
+    for (auto const& index: zoneIndexes) {
+        if (cells_[index] != Kind::Grass) return false;
+    }
+
     return true;
+}
+
+std::vector<std::size_t> World::indexesForRect(const sf::Vector2i &topLeft, const sf::Vector2i &bottomRight) const {
+
+    std::vector<std::size_t> rectCells;
+    if (topLeft.y < bottomRight.y) {
+        if (topLeft.x < bottomRight.x) { // case 1
+            for (int x (topLeft.x); x <= bottomRight.x; ++x) {
+                for (int y (topLeft.y); y <= bottomRight.y ; ++y) {
+                    rectCells.push_back(x + y*nbCells_);
+                }
+            }
+            return rectCells;
+        } else { // case 3
+            sf::Vector2i topLeft1(0, topLeft.y), bottomRight2(nbCells_-1, bottomRight.y);
+            std::vector<std::size_t> v1 = indexesForRect(topLeft1, bottomRight);
+            std::vector<std::size_t> v2 = indexesForRect(topLeft, bottomRight2);
+            v1.insert(v1.end(), v2.begin(), v2.end());
+            return v1;
+        }
+    } else {
+        if (topLeft.x < bottomRight.x) { // case 4
+            sf::Vector2i topLeft1(topLeft.x, 0), bottomRight2(bottomRight.x, nbCells_-1);
+            std::vector<std::size_t> v1 = indexesForRect(topLeft1, bottomRight);
+            std::vector<std::size_t> v2 = indexesForRect(topLeft, bottomRight2);
+            v1.insert(v1.end(), v2.begin(), v2.end());
+            return v1;
+        } else { // case 2
+            sf::Vector2i topLeft1(0, 0), topLeft2(topLeft.x, 0), topLeft3(0, topLeft.y);
+            sf::Vector2i bottomRight2(nbCells_-1, bottomRight.y), bottomRight3(bottomRight.x, nbCells_-1), bottomRight4(nbCells_-1, nbCells_-1);
+            std::vector<std::size_t> v1 = indexesForRect(topLeft1, bottomRight);
+            std::vector<std::size_t> v2 = indexesForRect(topLeft2, bottomRight2);
+            std::vector<std::size_t> v3 = indexesForRect(topLeft3, bottomRight3);
+            std::vector<std::size_t> v4 = indexesForRect(topLeft, bottomRight4);
+            v1.insert(v1.end(), v2.begin(), v2.end());
+            v1.insert(v1.end(), v3.begin(), v3.end());
+            v1.insert(v1.end(), v4.begin(), v4.end());
+            return v1;
+        }
+    }
+}
+
+float World::getCellSize() const {
+    return cellSize_;
 }
 
 

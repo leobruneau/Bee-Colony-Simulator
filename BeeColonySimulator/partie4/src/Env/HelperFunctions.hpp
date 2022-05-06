@@ -9,6 +9,8 @@
 namespace help {
 
     int getIndex(Vec2d const& p, float const& size, int const& nb);
+    int getX(Vec2d const& p, float const& size);
+    int getY(Vec2d const& p, float const& size);
 
 };
 
