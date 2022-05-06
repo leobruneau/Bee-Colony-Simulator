@@ -110,7 +110,7 @@ public:
   const double hive_manual_size;
   const double hiveable_factor;
   const double hive_initial_nectar;
-  const std::string hive_texture;
+  const sf::Texture hive_texture;
   const double hive_reproduction_nectar_threshold;
   const int hive_reproduction_max_bees;
   const double hive_reproduction_scout_proba;
