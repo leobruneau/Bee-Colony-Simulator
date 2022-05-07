@@ -29,10 +29,18 @@ Env::~Env() {
 }
 
 void Env::update(sf::Time dt) {
-    for (auto & f: flowers_) {
+    for (auto& f: flowers_) {
         f->update(dt);
     }
+
+    for (auto& h: hives_) {
+        h->update(dt);
+    }
+
     flowerGenerator_.update(dt);
+    removeDeadFlowers();
+    flowers_.insert(flowers_.end(), newFlowers_.begin(), newFlowers_.end());
+    newFlowers_.clear();
 }
 
 void Env::drawOn(sf::RenderTarget &target) const {
@@ -164,12 +172,15 @@ void Env::removeDeadFlowers() {
 }
 
 bool Env::addHiveAt(const Vec2d &position) {
-    double randomSize (uniform(getAppConfig().hive_min_size, getAppConfig().hive_max_size));
-
-    if (isHiveable(position, randomSize)) {
-        hives_.push_back(new Hive (position, randomSize));
-        return true;
-    } else return false;
+//    double randomSize (uniform(getAppConfig().hive_min_size, getAppConfig().hive_max_size));
+    double randomSize (getAppConfig().hive_manual_size);
+    if (position.x() < 0 or position.x() >= getSize() or position.y() < 0 or position.y() >= getSize()) return false;
+    else {
+        if (isHiveable(position, randomSize) and world_.isHiveable(position, randomSize)) {
+            hives_.push_back(new Hive (position, randomSize));
+            return true;
+        } else return false;
+    }
 }
 
 Hive* Env::getCollidingHive(const Collider &body) {
@@ -195,18 +206,47 @@ void Env::hiveDestroyer() {
 }
 
 void Env::drawHiveableZone(sf::RenderTarget &target, const Vec2d &position) {
-    double randomSize (uniform(getAppConfig().hive_min_size, getAppConfig().hive_max_size));
-    double extRadius (randomSize*getAppConfig().hiveable_factor);
-    sf::Color color (sf::Color::Green);
-    Vec2d temp (extRadius, extRadius);
-    sf::Vector2i topLeft(help::getX(position-temp, world_.getCellSize()), help::getY(position-temp, world_.getCellSize()));
-    sf::Vector2i bottomRight(help::getX(position+temp, world_.getCellSize()), help::getY(position+temp, world_.getCellSize()));
+    if ((position.x() < 0 or position.x() >= getSize()) or (position.y() < 0 or position.y() >= getSize()));
+    else {
+        double size (getAppConfig().hive_manual_size);
+//        double size (uniform(getAppConfig().hive_manual_size, getAppConfig().hive_max_size));
+        double extRadius (size*getAppConfig().hiveable_factor);
+        Vec2d temp (extRadius, extRadius), topLeft (position - temp), bottomRight (position + temp);
+        clamping(topLeft);
+        clamping(bottomRight);
 
-    if (!world_.isHiveable(position, randomSize)) color = sf::Color::Red;
-    if (!isHiveable(position, randomSize)) color = sf::Color::Blue;
+        sf::Color color (sf::Color::Green);
+        if (!world_.isHiveable(position, size)) color = sf::Color::Red;
+        if (!isHiveable(position, size)) color = sf::Color::Blue;
 
-    sf::RectangleShape shape(buildRectangle(topLeft, bottomRight, color, 5.0));
-    target.draw(shape);
+        if (topLeft.y() < bottomRight.y()) {
+            if (topLeft.x() < bottomRight.x()) { // case 1
+                sf::RectangleShape shape(buildRectangle(topLeft, bottomRight, color, 4.0));
+                target.draw(shape);
+            } else { // case 3
+                sf::RectangleShape shape1(buildRectangle(Vec2d(0, topLeft.y()), bottomRight, color, 4.0));
+                sf::RectangleShape shape2(buildRectangle(topLeft, Vec2d(getSize(), bottomRight.y()), color, 4.0));
+                target.draw(shape1);
+                target.draw(shape2);
+            }
+        } else {
+            if (topLeft.x() < bottomRight.x()) { // case 4
+                sf::RectangleShape shape1(buildRectangle(Vec2d(topLeft.x(), 0), bottomRight, color, 4.0));
+                sf::RectangleShape shape2(buildRectangle(topLeft, Vec2d(bottomRight.x(), getSize()), color, 4.0));
+                target.draw(shape1);
+                target.draw(shape2);
+            } else { // case 2
+                sf::RectangleShape shape1(buildRectangle(Vec2d(0,0), bottomRight, color, 4.0));
+                sf::RectangleShape shape2(buildRectangle(Vec2d(topLeft.x(), 0), Vec2d(getSize(), bottomRight.y()), color, 4.0));
+                sf::RectangleShape shape3(buildRectangle(Vec2d(0, topLeft.y()), Vec2d(bottomRight.x(), getSize()), color, 4.0));
+                sf::RectangleShape shape4(buildRectangle(topLeft, Vec2d(getSize(), getSize()), color, 4.0));
+                target.draw(shape1);
+                target.draw(shape2);
+                target.draw(shape3);
+                target.draw(shape4);
+            }
+        }
+    }
 }
 
 bool Env::isHiveable(const Vec2d &position, double radius) const {
@@ -247,6 +287,10 @@ bool Env::isHiveable(const Vec2d &position, double radius) const {
 
         } else return false;
     } else return false;
+}
+
+bool Env::isFlyable(const Vec2d &p) const {
+    return world_.isFlyable(p);
 }
 
 

@@ -164,5 +164,31 @@ we want to add.
 We need to modify the `Env::drawOn()` method (that now has to draw also the hives) and the `Env::reset()` and `Env::loadWorldFromFile()` methods that 
 both need to deallocate the hives and clear their vector each time they are called.
 
+### A4.8
+The Bee class will inherit from Collider, Drawable and Updatable. Its methods will be (for now) a constructor, a `move()` method, an `isDead()` method
+(that returns true if the bee is dead and false otherwise), a `drawOn()` method and an `update()` method. 
+Its attributes will be a reference on a Hive, a double representing the energy level and a vector representing the velocity.
+
+### A4.9
+The prototype of the `Bee::getConfig()` method has to include the reserved keyword virtual at the beginning of the prototype.
+
+### A4.10
+We will create a virtual function (named `Bee::getTexture()`) which will return the texture. Because it is virtual and we work on pointer on bees we will
+be able to override the method in subclasses and obtain a polymorphic behaviour.
+
+### A4.11
+([Question Q4.11] Quel est l'avantage ici d'accéder aux paramètres 
+au travers de la méthode getConfig() plutôt que par des raccourcis d'écriture permis par getAppConfig()  ?)
+
+### A4.12
+We need to modify the `Hive::update()` method that needs to call the `Bee::update()` method for each bee (in the Hive itself).
+We also need to modify the `Hive::drawOn()` method that needs to call the `Bee::drawOn()` method for each bee (in the Hive itself).
+
+
+### A4.13
+The `Hive::update()` method must be modified since it also needs to handle the deletion of dead bees. To do that (and make the code cleaner), we created
+ a method `Hive::removeDeadBees()` that, similarly as `Env::removeDeadFlowers()`, checks if a bee is dead and, if it is, it deallocates the linked memory and
+removes the pointer from the `bees_` vector.
+
 
 

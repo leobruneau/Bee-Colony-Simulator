@@ -12,7 +12,7 @@
 
 void FakeHive::addTestBee() {
   // TODO UNCOMMENT WHEN HIVE::ADDBEE IS CODED
-  //addBee();
+  addBee();
 }
 
 std::string HiveTest::getWindowTitle() const {
@@ -55,7 +55,7 @@ void HiveTest::onEvent(sf::Event event, sf::RenderWindow&)
 	  // Save the world  ─=≡ΣΞ(つಠل͜ಠ)つ
         case sf::Keyboard::O: 
 	  //UNCOMMENT IF CODED
-	  // getEnv().saveWorldToFile();
+	   getEnv().saveWorldToFile();
             break;
         case sf::Keyboard::B:
             if (mLastHive != nullptr) {
@@ -117,7 +117,7 @@ void HiveTest::onDraw(sf::RenderTarget& target)
      if (mShowFlowerZone) {
         auto pos = getCursorPositionInView();
 	// TODO: UNCOMMENT IF ENV::DRAWFLOWERZONE IS CODED
-        //getEnv().drawFlowerZone(target, pos);
+        getEnv().drawFlowerZone(target, pos);
     }
 }
 

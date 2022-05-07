@@ -4,6 +4,7 @@
 
 #include "Hive.hpp"
 #include "Application.hpp"
+#include "Bee.hpp"
 
 Hive::Hive(Vec2d const& p, double radius = getAppConfig().hive_manual_size)
     : Collider(p, radius),
@@ -11,11 +12,14 @@ Hive::Hive(Vec2d const& p, double radius = getAppConfig().hive_manual_size)
       sizeFactor_ (getAppConfig().hiveable_factor) {}
 
 void Hive::addBee() {
-
+    Vec2d position (getPosition());
+    bees_.push_back(new Bee(this, position, 10., 10., 10.));
 }
 
 void Hive::update(sf::Time dt) {
-
+    for (auto const& b: bees_)
+        b->update(dt);
+    removeDeadBees();
 }
 
 void Hive::drawOn(sf::RenderTarget &targetWindow) const {
@@ -28,6 +32,10 @@ void Hive::drawOn(sf::RenderTarget &targetWindow) const {
         showDebugNectar(targetWindow);
         targetWindow.draw(shape);
     }
+
+    // Drawing the bees of the Hive
+    for (auto const& b: bees_)
+        b->drawOn(targetWindow);
 }
 
 void Hive::dropPollen(double qte) {
@@ -70,4 +78,15 @@ bool Hive::isColliding(const Collider &body) const {
 
 double Hive::getFactor() const {
     return sizeFactor_;
+}
+
+void Hive::removeDeadBees() {
+    for (auto& b: bees_) {
+        if (b->isDead()) {
+            delete b;
+            b = nullptr;
+        }
+    }
+
+    bees_.erase(std::remove(bees_.begin(), bees_.end(), nullptr), bees_.end());
 }
