@@ -190,5 +190,14 @@ The `Hive::update()` method must be modified since it also needs to handle the d
  a method `Hive::removeDeadBees()` that, similarly as `Env::removeDeadFlowers()`, checks if a bee is dead and, if it is, it deallocates the linked memory and
 removes the pointer from the `bees_` vector.
 
+## FIFTH PART (5)
 
+### A5.1
+The modification to the method `Bee::getConfig()` will be to turn it into a virtual pure method with the following syntax:
+`virtual j::Value const& getConfig() = 0;`. This way the Bee class will become abstract and no instance of it will be able to be 
+created.
+
+### A5.2
+Because we cannot call a method on an object that doesn't exist. We can call methods of a class only when we already have an instance of it we can call them
+from.
 
