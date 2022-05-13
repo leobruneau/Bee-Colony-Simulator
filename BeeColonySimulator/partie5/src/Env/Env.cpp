@@ -120,7 +120,7 @@ void Env::drawFlowerZone(sf::RenderTarget &target, const Vec2d &position) {
     auto toAdd (new Flower(position, size, pollen));
 
     sf::Color color;
-    if (world_.isGrowable(position) and world_.getHumidity(position) > 0) color = sf::Color::Green;
+    if (world_.isGrowable(position) and world_.getHumidity(position) > 0 and (int)flowers_.size() < getAppConfig().max_flowers) color = sf::Color::Green;
     else color = sf::Color::Red;
 
     if (!hives_.empty()) {

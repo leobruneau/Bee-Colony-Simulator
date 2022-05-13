@@ -4,8 +4,10 @@
 
 #include "ScoutBee.hpp"
 
+State const ScoutBee::IN_HIVE = createUid();
+
 ScoutBee::ScoutBee(Hive *homeHive, Vec2d &position, double radius, double energy, double speed)
-    : Bee(homeHive,position, radius, energy, speed) {
+    : Bee(homeHive,position, radius, energy, speed, {IN_HIVE}) {
 
 }
 

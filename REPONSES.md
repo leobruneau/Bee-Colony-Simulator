@@ -176,7 +176,7 @@ The prototype of the `Bee::getConfig()` method has to include the reserved keywo
 We will create a virtual function (named `Bee::getTexture()`) which will return the texture. Because it is virtual and we work on pointer on bees we will
 be able to override the method in subclasses and obtain a polymorphic behaviour.
 
-### A4.11
+### A4.11 ???
 ([Question Q4.11] Quel est l'avantage ici d'accéder aux paramètres 
 au travers de la méthode getConfig() plutôt que par des raccourcis d'écriture permis par getAppConfig()  ?)
 
@@ -190,6 +190,11 @@ The `Hive::update()` method must be modified since it also needs to handle the d
  a method `Hive::removeDeadBees()` that, similarly as `Env::removeDeadFlowers()`, checks if a bee is dead and, if it is, it deallocates the linked memory and
 removes the pointer from the `bees_` vector.
 
+
+### A4.14
+It allows to keep encapsulation since the function returns a pointer to a Bee which is a private attribute. This way only the 
+class itself, and any subclass, can add bees to the hive.
+
 ## FIFTH PART (5)
 
 ### A5.1
@@ -200,4 +205,26 @@ created.
 ### A5.2
 Because we cannot call a method on an object that doesn't exist. We can call methods of a class only when we already have an instance of it we can call them
 from.
+
+### A5.3
+We need to add a new parameter `std::vector<State>` that then needs to be used as a parameter for the constructor of the Bee class.
+In fact in this constructor, there will be a call to the constructor of the Collider class and one to the constructor
+of the CFSM class to initialize the possible states.
+
+### A5.4
+To model this behaviour of forgetting, we will use a pointer on a Vec2d so that when the position is forgotten, the pointer's value
+will be `nullptr`. Since any bee has a memory, we will implement the new attribute in the Bee class. We need to modify the
+constructor of the Bee class that needs to initialize the "memory" of the newly created bee to `nullptr`.
+
+### A5.5
+The method that needs to be redefined inside the subclasses is `j::Value const& getConfig()` which is a purely virtual method 
+inside the Bee class.
+
+### A5.6
+For the current target we use a pointer on a Vec2d type. For the type of movement the bee is currently int, we
+chose an `enum type`.
+
+### A5.7
+Because we will use the polymorphic method getConfig() to get the correct parameters for each type of Bee.
+
 

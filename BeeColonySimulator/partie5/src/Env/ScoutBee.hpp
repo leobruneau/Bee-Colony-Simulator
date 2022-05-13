@@ -12,6 +12,7 @@ public:
     j::Value const& getConfig() const override;
 
 private:
+    static const State IN_HIVE;
 
 };
 

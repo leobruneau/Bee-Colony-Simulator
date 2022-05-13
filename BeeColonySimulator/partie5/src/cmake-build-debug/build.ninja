@@ -83,6 +83,13 @@ build CMakeFiles/colliderTest.dir/Env/Bee.cpp.o: CXX_COMPILER__colliderTest_Debu
   OBJECT_DIR = CMakeFiles/colliderTest.dir
   OBJECT_FILE_DIR = CMakeFiles/colliderTest.dir/Env
 
+build CMakeFiles/colliderTest.dir/Env/CFSM.cpp.o: CXX_COMPILER__colliderTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/CFSM.cpp || cmake_object_order_depends_target_colliderTest
+  DEP_FILE = CMakeFiles/colliderTest.dir/Env/CFSM.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/colliderTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/colliderTest.dir/Env
+
 build CMakeFiles/colliderTest.dir/Env/Collider.cpp.o: CXX_COMPILER__colliderTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/Collider.cpp || cmake_object_order_depends_target_colliderTest
   DEP_FILE = CMakeFiles/colliderTest.dir/Env/Collider.cpp.o.d
   FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
@@ -217,7 +224,7 @@ build CMakeFiles/colliderTest.dir/Tests/UnitTests/CatchTests.cpp.o: CXX_COMPILER
 #############################################
 # Link the executable colliderTest
 
-build colliderTest: CXX_EXECUTABLE_LINKER__colliderTest_Debug CMakeFiles/colliderTest.dir/Tests/UnitTests/ColliderTest.cpp.o CMakeFiles/colliderTest.dir/Application.cpp.o CMakeFiles/colliderTest.dir/Config.cpp.o CMakeFiles/colliderTest.dir/Env/Bee.cpp.o CMakeFiles/colliderTest.dir/Env/Collider.cpp.o CMakeFiles/colliderTest.dir/Env/Env.cpp.o CMakeFiles/colliderTest.dir/Env/Flower.cpp.o CMakeFiles/colliderTest.dir/Env/FlowerGenerator.cpp.o CMakeFiles/colliderTest.dir/Env/HelperFunctions.cpp.o CMakeFiles/colliderTest.dir/Env/Hive.cpp.o CMakeFiles/colliderTest.dir/Env/ScoutBee.cpp.o CMakeFiles/colliderTest.dir/Env/WorkerBee.cpp.o CMakeFiles/colliderTest.dir/Env/World.cpp.o CMakeFiles/colliderTest.dir/JSON/JSON.cpp.o CMakeFiles/colliderTest.dir/JSON/JSONImpl.cpp.o CMakeFiles/colliderTest.dir/JSON/JSONSerialiser.cpp.o CMakeFiles/colliderTest.dir/Random/Random.cpp.o CMakeFiles/colliderTest.dir/Random/RandomGenerator.cpp.o CMakeFiles/colliderTest.dir/Utility/Utility.cpp.o CMakeFiles/colliderTest.dir/Utility/Vec2d.cpp.o CMakeFiles/colliderTest.dir/Utility/Vertex.cpp.o CMakeFiles/colliderTest.dir/Tests/UnitTests/CatchTests.cpp.o | /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib /opt/homebrew/lib/libsfml-window.2.5.1.dylib /opt/homebrew/lib/libsfml-system.2.5.1.dylib
+build colliderTest: CXX_EXECUTABLE_LINKER__colliderTest_Debug CMakeFiles/colliderTest.dir/Tests/UnitTests/ColliderTest.cpp.o CMakeFiles/colliderTest.dir/Application.cpp.o CMakeFiles/colliderTest.dir/Config.cpp.o CMakeFiles/colliderTest.dir/Env/Bee.cpp.o CMakeFiles/colliderTest.dir/Env/CFSM.cpp.o CMakeFiles/colliderTest.dir/Env/Collider.cpp.o CMakeFiles/colliderTest.dir/Env/Env.cpp.o CMakeFiles/colliderTest.dir/Env/Flower.cpp.o CMakeFiles/colliderTest.dir/Env/FlowerGenerator.cpp.o CMakeFiles/colliderTest.dir/Env/HelperFunctions.cpp.o CMakeFiles/colliderTest.dir/Env/Hive.cpp.o CMakeFiles/colliderTest.dir/Env/ScoutBee.cpp.o CMakeFiles/colliderTest.dir/Env/WorkerBee.cpp.o CMakeFiles/colliderTest.dir/Env/World.cpp.o CMakeFiles/colliderTest.dir/JSON/JSON.cpp.o CMakeFiles/colliderTest.dir/JSON/JSONImpl.cpp.o CMakeFiles/colliderTest.dir/JSON/JSONSerialiser.cpp.o CMakeFiles/colliderTest.dir/Random/Random.cpp.o CMakeFiles/colliderTest.dir/Random/RandomGenerator.cpp.o CMakeFiles/colliderTest.dir/Utility/Utility.cpp.o CMakeFiles/colliderTest.dir/Utility/Vec2d.cpp.o CMakeFiles/colliderTest.dir/Utility/Vertex.cpp.o CMakeFiles/colliderTest.dir/Tests/UnitTests/CatchTests.cpp.o | /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib /opt/homebrew/lib/libsfml-window.2.5.1.dylib /opt/homebrew/lib/libsfml-system.2.5.1.dylib
   FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/lib  /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib  /opt/homebrew/lib/libsfml-window.2.5.1.dylib  /opt/homebrew/lib/libsfml-system.2.5.1.dylib
   OBJECT_DIR = CMakeFiles/colliderTest.dir
@@ -258,6 +265,13 @@ build CMakeFiles/worldTest.dir/Config.cpp.o: CXX_COMPILER__worldTest_Debug /User
 
 build CMakeFiles/worldTest.dir/Env/Bee.cpp.o: CXX_COMPILER__worldTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/Bee.cpp || cmake_object_order_depends_target_worldTest
   DEP_FILE = CMakeFiles/worldTest.dir/Env/Bee.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/worldTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/worldTest.dir/Env
+
+build CMakeFiles/worldTest.dir/Env/CFSM.cpp.o: CXX_COMPILER__worldTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/CFSM.cpp || cmake_object_order_depends_target_worldTest
+  DEP_FILE = CMakeFiles/worldTest.dir/Env/CFSM.cpp.o.d
   FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
   INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
   OBJECT_DIR = CMakeFiles/worldTest.dir
@@ -390,7 +404,7 @@ build CMakeFiles/worldTest.dir/Utility/Vertex.cpp.o: CXX_COMPILER__worldTest_Deb
 #############################################
 # Link the executable worldTest
 
-build worldTest: CXX_EXECUTABLE_LINKER__worldTest_Debug CMakeFiles/worldTest.dir/Tests/GraphicalTests/WorldTest.cpp.o CMakeFiles/worldTest.dir/Application.cpp.o CMakeFiles/worldTest.dir/Config.cpp.o CMakeFiles/worldTest.dir/Env/Bee.cpp.o CMakeFiles/worldTest.dir/Env/Collider.cpp.o CMakeFiles/worldTest.dir/Env/Env.cpp.o CMakeFiles/worldTest.dir/Env/Flower.cpp.o CMakeFiles/worldTest.dir/Env/FlowerGenerator.cpp.o CMakeFiles/worldTest.dir/Env/HelperFunctions.cpp.o CMakeFiles/worldTest.dir/Env/Hive.cpp.o CMakeFiles/worldTest.dir/Env/ScoutBee.cpp.o CMakeFiles/worldTest.dir/Env/WorkerBee.cpp.o CMakeFiles/worldTest.dir/Env/World.cpp.o CMakeFiles/worldTest.dir/JSON/JSON.cpp.o CMakeFiles/worldTest.dir/JSON/JSONImpl.cpp.o CMakeFiles/worldTest.dir/JSON/JSONSerialiser.cpp.o CMakeFiles/worldTest.dir/Random/Random.cpp.o CMakeFiles/worldTest.dir/Random/RandomGenerator.cpp.o CMakeFiles/worldTest.dir/Utility/Utility.cpp.o CMakeFiles/worldTest.dir/Utility/Vec2d.cpp.o CMakeFiles/worldTest.dir/Utility/Vertex.cpp.o | /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib /opt/homebrew/lib/libsfml-window.2.5.1.dylib /opt/homebrew/lib/libsfml-system.2.5.1.dylib
+build worldTest: CXX_EXECUTABLE_LINKER__worldTest_Debug CMakeFiles/worldTest.dir/Tests/GraphicalTests/WorldTest.cpp.o CMakeFiles/worldTest.dir/Application.cpp.o CMakeFiles/worldTest.dir/Config.cpp.o CMakeFiles/worldTest.dir/Env/Bee.cpp.o CMakeFiles/worldTest.dir/Env/CFSM.cpp.o CMakeFiles/worldTest.dir/Env/Collider.cpp.o CMakeFiles/worldTest.dir/Env/Env.cpp.o CMakeFiles/worldTest.dir/Env/Flower.cpp.o CMakeFiles/worldTest.dir/Env/FlowerGenerator.cpp.o CMakeFiles/worldTest.dir/Env/HelperFunctions.cpp.o CMakeFiles/worldTest.dir/Env/Hive.cpp.o CMakeFiles/worldTest.dir/Env/ScoutBee.cpp.o CMakeFiles/worldTest.dir/Env/WorkerBee.cpp.o CMakeFiles/worldTest.dir/Env/World.cpp.o CMakeFiles/worldTest.dir/JSON/JSON.cpp.o CMakeFiles/worldTest.dir/JSON/JSONImpl.cpp.o CMakeFiles/worldTest.dir/JSON/JSONSerialiser.cpp.o CMakeFiles/worldTest.dir/Random/Random.cpp.o CMakeFiles/worldTest.dir/Random/RandomGenerator.cpp.o CMakeFiles/worldTest.dir/Utility/Utility.cpp.o CMakeFiles/worldTest.dir/Utility/Vec2d.cpp.o CMakeFiles/worldTest.dir/Utility/Vertex.cpp.o | /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib /opt/homebrew/lib/libsfml-window.2.5.1.dylib /opt/homebrew/lib/libsfml-system.2.5.1.dylib
   FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/lib  /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib  /opt/homebrew/lib/libsfml-window.2.5.1.dylib  /opt/homebrew/lib/libsfml-system.2.5.1.dylib
   OBJECT_DIR = CMakeFiles/worldTest.dir
@@ -431,6 +445,13 @@ build CMakeFiles/flowerTest.dir/Config.cpp.o: CXX_COMPILER__flowerTest_Debug /Us
 
 build CMakeFiles/flowerTest.dir/Env/Bee.cpp.o: CXX_COMPILER__flowerTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/Bee.cpp || cmake_object_order_depends_target_flowerTest
   DEP_FILE = CMakeFiles/flowerTest.dir/Env/Bee.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/flowerTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/flowerTest.dir/Env
+
+build CMakeFiles/flowerTest.dir/Env/CFSM.cpp.o: CXX_COMPILER__flowerTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/CFSM.cpp || cmake_object_order_depends_target_flowerTest
+  DEP_FILE = CMakeFiles/flowerTest.dir/Env/CFSM.cpp.o.d
   FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
   INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
   OBJECT_DIR = CMakeFiles/flowerTest.dir
@@ -563,7 +584,7 @@ build CMakeFiles/flowerTest.dir/Utility/Vertex.cpp.o: CXX_COMPILER__flowerTest_D
 #############################################
 # Link the executable flowerTest
 
-build flowerTest: CXX_EXECUTABLE_LINKER__flowerTest_Debug CMakeFiles/flowerTest.dir/Tests/GraphicalTests/FlowerTest.cpp.o CMakeFiles/flowerTest.dir/Application.cpp.o CMakeFiles/flowerTest.dir/Config.cpp.o CMakeFiles/flowerTest.dir/Env/Bee.cpp.o CMakeFiles/flowerTest.dir/Env/Collider.cpp.o CMakeFiles/flowerTest.dir/Env/Env.cpp.o CMakeFiles/flowerTest.dir/Env/Flower.cpp.o CMakeFiles/flowerTest.dir/Env/FlowerGenerator.cpp.o CMakeFiles/flowerTest.dir/Env/HelperFunctions.cpp.o CMakeFiles/flowerTest.dir/Env/Hive.cpp.o CMakeFiles/flowerTest.dir/Env/ScoutBee.cpp.o CMakeFiles/flowerTest.dir/Env/WorkerBee.cpp.o CMakeFiles/flowerTest.dir/Env/World.cpp.o CMakeFiles/flowerTest.dir/JSON/JSON.cpp.o CMakeFiles/flowerTest.dir/JSON/JSONImpl.cpp.o CMakeFiles/flowerTest.dir/JSON/JSONSerialiser.cpp.o CMakeFiles/flowerTest.dir/Random/Random.cpp.o CMakeFiles/flowerTest.dir/Random/RandomGenerator.cpp.o CMakeFiles/flowerTest.dir/Utility/Utility.cpp.o CMakeFiles/flowerTest.dir/Utility/Vec2d.cpp.o CMakeFiles/flowerTest.dir/Utility/Vertex.cpp.o | /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib /opt/homebrew/lib/libsfml-window.2.5.1.dylib /opt/homebrew/lib/libsfml-system.2.5.1.dylib
+build flowerTest: CXX_EXECUTABLE_LINKER__flowerTest_Debug CMakeFiles/flowerTest.dir/Tests/GraphicalTests/FlowerTest.cpp.o CMakeFiles/flowerTest.dir/Application.cpp.o CMakeFiles/flowerTest.dir/Config.cpp.o CMakeFiles/flowerTest.dir/Env/Bee.cpp.o CMakeFiles/flowerTest.dir/Env/CFSM.cpp.o CMakeFiles/flowerTest.dir/Env/Collider.cpp.o CMakeFiles/flowerTest.dir/Env/Env.cpp.o CMakeFiles/flowerTest.dir/Env/Flower.cpp.o CMakeFiles/flowerTest.dir/Env/FlowerGenerator.cpp.o CMakeFiles/flowerTest.dir/Env/HelperFunctions.cpp.o CMakeFiles/flowerTest.dir/Env/Hive.cpp.o CMakeFiles/flowerTest.dir/Env/ScoutBee.cpp.o CMakeFiles/flowerTest.dir/Env/WorkerBee.cpp.o CMakeFiles/flowerTest.dir/Env/World.cpp.o CMakeFiles/flowerTest.dir/JSON/JSON.cpp.o CMakeFiles/flowerTest.dir/JSON/JSONImpl.cpp.o CMakeFiles/flowerTest.dir/JSON/JSONSerialiser.cpp.o CMakeFiles/flowerTest.dir/Random/Random.cpp.o CMakeFiles/flowerTest.dir/Random/RandomGenerator.cpp.o CMakeFiles/flowerTest.dir/Utility/Utility.cpp.o CMakeFiles/flowerTest.dir/Utility/Vec2d.cpp.o CMakeFiles/flowerTest.dir/Utility/Vertex.cpp.o | /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib /opt/homebrew/lib/libsfml-window.2.5.1.dylib /opt/homebrew/lib/libsfml-system.2.5.1.dylib
   FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/lib  /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib  /opt/homebrew/lib/libsfml-window.2.5.1.dylib  /opt/homebrew/lib/libsfml-system.2.5.1.dylib
   OBJECT_DIR = CMakeFiles/flowerTest.dir
@@ -604,6 +625,13 @@ build CMakeFiles/hiveTest.dir/Config.cpp.o: CXX_COMPILER__hiveTest_Debug /Users/
 
 build CMakeFiles/hiveTest.dir/Env/Bee.cpp.o: CXX_COMPILER__hiveTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/Bee.cpp || cmake_object_order_depends_target_hiveTest
   DEP_FILE = CMakeFiles/hiveTest.dir/Env/Bee.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/hiveTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/hiveTest.dir/Env
+
+build CMakeFiles/hiveTest.dir/Env/CFSM.cpp.o: CXX_COMPILER__hiveTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/CFSM.cpp || cmake_object_order_depends_target_hiveTest
+  DEP_FILE = CMakeFiles/hiveTest.dir/Env/CFSM.cpp.o.d
   FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
   INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
   OBJECT_DIR = CMakeFiles/hiveTest.dir
@@ -736,7 +764,7 @@ build CMakeFiles/hiveTest.dir/Utility/Vertex.cpp.o: CXX_COMPILER__hiveTest_Debug
 #############################################
 # Link the executable hiveTest
 
-build hiveTest: CXX_EXECUTABLE_LINKER__hiveTest_Debug CMakeFiles/hiveTest.dir/Tests/GraphicalTests/HiveTest.cpp.o CMakeFiles/hiveTest.dir/Application.cpp.o CMakeFiles/hiveTest.dir/Config.cpp.o CMakeFiles/hiveTest.dir/Env/Bee.cpp.o CMakeFiles/hiveTest.dir/Env/Collider.cpp.o CMakeFiles/hiveTest.dir/Env/Env.cpp.o CMakeFiles/hiveTest.dir/Env/Flower.cpp.o CMakeFiles/hiveTest.dir/Env/FlowerGenerator.cpp.o CMakeFiles/hiveTest.dir/Env/HelperFunctions.cpp.o CMakeFiles/hiveTest.dir/Env/Hive.cpp.o CMakeFiles/hiveTest.dir/Env/ScoutBee.cpp.o CMakeFiles/hiveTest.dir/Env/WorkerBee.cpp.o CMakeFiles/hiveTest.dir/Env/World.cpp.o CMakeFiles/hiveTest.dir/JSON/JSON.cpp.o CMakeFiles/hiveTest.dir/JSON/JSONImpl.cpp.o CMakeFiles/hiveTest.dir/JSON/JSONSerialiser.cpp.o CMakeFiles/hiveTest.dir/Random/Random.cpp.o CMakeFiles/hiveTest.dir/Random/RandomGenerator.cpp.o CMakeFiles/hiveTest.dir/Utility/Utility.cpp.o CMakeFiles/hiveTest.dir/Utility/Vec2d.cpp.o CMakeFiles/hiveTest.dir/Utility/Vertex.cpp.o | /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib /opt/homebrew/lib/libsfml-window.2.5.1.dylib /opt/homebrew/lib/libsfml-system.2.5.1.dylib
+build hiveTest: CXX_EXECUTABLE_LINKER__hiveTest_Debug CMakeFiles/hiveTest.dir/Tests/GraphicalTests/HiveTest.cpp.o CMakeFiles/hiveTest.dir/Application.cpp.o CMakeFiles/hiveTest.dir/Config.cpp.o CMakeFiles/hiveTest.dir/Env/Bee.cpp.o CMakeFiles/hiveTest.dir/Env/CFSM.cpp.o CMakeFiles/hiveTest.dir/Env/Collider.cpp.o CMakeFiles/hiveTest.dir/Env/Env.cpp.o CMakeFiles/hiveTest.dir/Env/Flower.cpp.o CMakeFiles/hiveTest.dir/Env/FlowerGenerator.cpp.o CMakeFiles/hiveTest.dir/Env/HelperFunctions.cpp.o CMakeFiles/hiveTest.dir/Env/Hive.cpp.o CMakeFiles/hiveTest.dir/Env/ScoutBee.cpp.o CMakeFiles/hiveTest.dir/Env/WorkerBee.cpp.o CMakeFiles/hiveTest.dir/Env/World.cpp.o CMakeFiles/hiveTest.dir/JSON/JSON.cpp.o CMakeFiles/hiveTest.dir/JSON/JSONImpl.cpp.o CMakeFiles/hiveTest.dir/JSON/JSONSerialiser.cpp.o CMakeFiles/hiveTest.dir/Random/Random.cpp.o CMakeFiles/hiveTest.dir/Random/RandomGenerator.cpp.o CMakeFiles/hiveTest.dir/Utility/Utility.cpp.o CMakeFiles/hiveTest.dir/Utility/Vec2d.cpp.o CMakeFiles/hiveTest.dir/Utility/Vertex.cpp.o | /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib /opt/homebrew/lib/libsfml-window.2.5.1.dylib /opt/homebrew/lib/libsfml-system.2.5.1.dylib
   FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/lib  /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib  /opt/homebrew/lib/libsfml-window.2.5.1.dylib  /opt/homebrew/lib/libsfml-system.2.5.1.dylib
   OBJECT_DIR = CMakeFiles/hiveTest.dir
@@ -744,6 +772,186 @@ build hiveTest: CXX_EXECUTABLE_LINKER__hiveTest_Debug CMakeFiles/hiveTest.dir/Te
   PRE_LINK = :
   TARGET_FILE = hiveTest
   TARGET_PDB = hiveTest.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target collaborationTest
+
+
+#############################################
+# Order-only phony target for collaborationTest
+
+build cmake_object_order_depends_target_collaborationTest: phony || CMakeFiles/collaborationTest.dir
+
+build CMakeFiles/collaborationTest.dir/Tests/GraphicalTests/CollaborationTest.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests/GraphicalTests/CollaborationTest.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Tests/GraphicalTests/CollaborationTest.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Tests/GraphicalTests
+
+build CMakeFiles/collaborationTest.dir/Application.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Application.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Application.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir
+
+build CMakeFiles/collaborationTest.dir/Config.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Config.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Config.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir
+
+build CMakeFiles/collaborationTest.dir/Env/Bee.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/Bee.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/Bee.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/Env/CFSM.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/CFSM.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/CFSM.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/Env/Collider.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/Collider.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/Collider.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/Env/Env.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/Env.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/Env.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/Env/Flower.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/Flower.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/Flower.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/Env/FlowerGenerator.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/FlowerGenerator.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/FlowerGenerator.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/Env/HelperFunctions.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/HelperFunctions.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/HelperFunctions.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/Env/Hive.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/Hive.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/Hive.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/Env/ScoutBee.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/ScoutBee.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/ScoutBee.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/Env/WorkerBee.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/WorkerBee.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/WorkerBee.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/Env/World.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Env/World.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Env/World.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Env
+
+build CMakeFiles/collaborationTest.dir/JSON/JSON.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/JSON/JSON.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/JSON/JSON.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/JSON
+
+build CMakeFiles/collaborationTest.dir/JSON/JSONImpl.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/JSON/JSONImpl.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/JSON/JSONImpl.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/JSON
+
+build CMakeFiles/collaborationTest.dir/JSON/JSONSerialiser.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/JSON/JSONSerialiser.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/JSON/JSONSerialiser.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/JSON
+
+build CMakeFiles/collaborationTest.dir/Random/Random.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Random/Random.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Random/Random.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Random
+
+build CMakeFiles/collaborationTest.dir/Random/RandomGenerator.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Random/RandomGenerator.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Random/RandomGenerator.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Random
+
+build CMakeFiles/collaborationTest.dir/Utility/Utility.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Utility/Utility.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Utility/Utility.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Utility
+
+build CMakeFiles/collaborationTest.dir/Utility/Vec2d.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Utility/Vec2d.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Utility/Vec2d.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Utility
+
+build CMakeFiles/collaborationTest.dir/Utility/Vertex.cpp.o: CXX_COMPILER__collaborationTest_Debug /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Utility/Vertex.cpp || cmake_object_order_depends_target_collaborationTest
+  DEP_FILE = CMakeFiles/collaborationTest.dir/Utility/Vertex.cpp.o.d
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++14
+  INCLUDES = -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/../extlib/Catch/include -I/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/Tests -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/collaborationTest.dir/Utility
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target collaborationTest
+
+
+#############################################
+# Link the executable collaborationTest
+
+build collaborationTest: CXX_EXECUTABLE_LINKER__collaborationTest_Debug CMakeFiles/collaborationTest.dir/Tests/GraphicalTests/CollaborationTest.cpp.o CMakeFiles/collaborationTest.dir/Application.cpp.o CMakeFiles/collaborationTest.dir/Config.cpp.o CMakeFiles/collaborationTest.dir/Env/Bee.cpp.o CMakeFiles/collaborationTest.dir/Env/CFSM.cpp.o CMakeFiles/collaborationTest.dir/Env/Collider.cpp.o CMakeFiles/collaborationTest.dir/Env/Env.cpp.o CMakeFiles/collaborationTest.dir/Env/Flower.cpp.o CMakeFiles/collaborationTest.dir/Env/FlowerGenerator.cpp.o CMakeFiles/collaborationTest.dir/Env/HelperFunctions.cpp.o CMakeFiles/collaborationTest.dir/Env/Hive.cpp.o CMakeFiles/collaborationTest.dir/Env/ScoutBee.cpp.o CMakeFiles/collaborationTest.dir/Env/WorkerBee.cpp.o CMakeFiles/collaborationTest.dir/Env/World.cpp.o CMakeFiles/collaborationTest.dir/JSON/JSON.cpp.o CMakeFiles/collaborationTest.dir/JSON/JSONImpl.cpp.o CMakeFiles/collaborationTest.dir/JSON/JSONSerialiser.cpp.o CMakeFiles/collaborationTest.dir/Random/Random.cpp.o CMakeFiles/collaborationTest.dir/Random/RandomGenerator.cpp.o CMakeFiles/collaborationTest.dir/Utility/Utility.cpp.o CMakeFiles/collaborationTest.dir/Utility/Vec2d.cpp.o CMakeFiles/collaborationTest.dir/Utility/Vertex.cpp.o | /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib /opt/homebrew/lib/libsfml-window.2.5.1.dylib /opt/homebrew/lib/libsfml-system.2.5.1.dylib
+  FLAGS = -Wall -Wextra -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
+  LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/lib  /opt/homebrew/lib/libsfml-graphics.2.5.1.dylib  /opt/homebrew/lib/libsfml-window.2.5.1.dylib  /opt/homebrew/lib/libsfml-system.2.5.1.dylib
+  OBJECT_DIR = CMakeFiles/collaborationTest.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = collaborationTest
+  TARGET_PDB = collaborationTest.dbg
 
 
 #############################################
@@ -786,7 +994,7 @@ build CMakeFiles/application-run | ${cmake_ninja_workdir}CMakeFiles/application-
 #############################################
 # Folder: /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/cmake-build-debug
 
-build all: phony colliderTest worldTest flowerTest hiveTest
+build all: phony colliderTest worldTest flowerTest hiveTest collaborationTest
 
 # =============================================================================
 # Built-in targets

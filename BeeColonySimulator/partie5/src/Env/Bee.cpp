@@ -4,11 +4,14 @@
 
 #include "Bee.hpp"
 
-Bee::Bee(Hive* homeHive, Vec2d &position, double radius, double energy, double speed)
-    : Collider(position, radius),
+Bee::Bee(Hive* homeHive, Vec2d &position, double radius, double energy, double speed, States const& states)
+    : Collider(position, radius), CFSM(states),
     homeHive_(homeHive),
     velocity_(Vec2d::fromRandomAngle()*speed),
-    energy_(energy) {
+    energy_(energy),
+    memory_(nullptr),
+    currentTarget_(nullptr),
+    currentMovement_(Movement::Rest) {
     // Constructor's body
 }
 
@@ -18,17 +21,17 @@ void Bee::drawOn(sf::RenderTarget &target) const {
     if (velocity_.angle() >= PI/2 or velocity_.angle() <= -PI/2) beeSprite.scale(1, -1);
     beeSprite.rotate(velocity_.angle()/DEG_TO_RAD);
 
+    if (isDebugOn()) showDebugMovement(target);
+
     target.draw(beeSprite);
 }
 
 void Bee::update(sf::Time dt) {
-    move(dt);
-
-    if (energy_ > 0) energy_ -= 0.1*dt.asSeconds();
-    else if (energy_ < 0) energy_ = 0;
+    onState(getState(), dt);
+    updateEnergy(dt);
 }
 
-void Bee::move(sf::Time dt) {
+void Bee::randomMove(sf::Time const& dt) {
     double p (getConfig()["moving behaviour"]["random"]["rotation probability"].toDouble());
     double alpha_max (getConfig()["moving behaviour"]["random"]["rotation angle max"].toDouble());
     double alpha(.0);
@@ -51,9 +54,44 @@ void Bee::move(sf::Time dt) {
     }
 }
 
-bool Bee::isDead() const {
-    if (energy_ == 0) return true;
-    else return false;
+void Bee::move(const sf::Time &dt) {
+    State currentState (getState());
+    onState(currentState, dt);
+
+    if (currentMovement_ == Movement::Random) randomMove(dt);
+    else if (currentMovement_ == Movement::Target) targetMove(dt);
 }
 
+bool Bee::isDead() const {
+//    if (energy_ == 0) return true;
+//    else return false;
+    return (energy_ == 0);
+}
+
+void Bee::targetMove(const sf::Time &dt) {
+    // TODO : to code
+}
+
+void Bee::updateEnergy(sf::Time const& dt) {
+    double idle (this->getConfig()["energy"]["consumption rates"]["idle"].toDouble());
+    double moving (this->getConfig()["energy"]["consumption rates"]["moving"].toDouble());
+
+    // branch-less programming implementation
+    energy_ -= dt.asSeconds()*idle*(currentMovement_ == Movement::Rest)
+            +  dt.asSeconds()*moving*(currentMovement_ == Movement::Target or currentMovement_ == Movement::Random);
+}
+
+void Bee::showDebugMovement(sf::RenderTarget& target) const {
+    sf::Color color (sf::Color::Black);
+    unsigned int thickness (0);
+
+    if (currentMovement_ == Movement::Random) thickness = 5;
+    else if (currentMovement_ == Movement::Target) {
+        color = sf::Color::Blue;
+        thickness = 3;
+    }
+
+    auto shape = buildAnnulus(getPosition(), getRadius()*getAppConfig().hiveable_factor, color, thickness);
+    target.draw(shape);
+}
 

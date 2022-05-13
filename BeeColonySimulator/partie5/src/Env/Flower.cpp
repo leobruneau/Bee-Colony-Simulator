@@ -24,24 +24,18 @@ void Flower::drawOn(sf::RenderTarget &target) const {
 }
 
 void Flower::update(sf::Time dt) {
-//    double humidityThreshold (getAppConfig().flower_growth_threshold);
-//    double humidity (getAppEnv().getCellHumidity(getPosition()));
-//    pollen_ += dt.asSeconds() * log(humidity/humidityThreshold);
+    double humidityThreshold (getAppConfig().flower_growth_threshold);
+    double humidity (getAppEnv().getCellHumidity(getPosition()));
+    pollen_ += dt.asSeconds() * log(humidity/humidityThreshold);
 
     double splitThreshold (getAppConfig().flower_growth_split);
     if (pollen_ >= splitThreshold) {
-        int i(100);
-
+        pollen_ /= 2;
         double randomDistance(uniform(1.5*getRadius(), 2.5*getRadius()));
         Vec2d position (getPosition() + Vec2d::fromRandomAngle()*randomDistance);
 
-        while (i != 0) {
-            if (getAppEnv().addFlowerAt(position, true)) {
-                pollen_ /= 2;
-                break;
-            }
-            else --i;
-        }
+        for (int i (0); i < 100; ++i)
+            if (getAppEnv().addFlowerAt(position, true)) break;
     }
     getAppEnv().removeDeadFlowers();
 }

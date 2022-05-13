@@ -66,11 +66,12 @@ bool Hive::isColliding(const Collider &body) const {
 
     // Remark: if the other "body" is a Hive too, we need to consider getRadius()*getAppConfig().hiveable_factor as its radius
     double radiusSum(getRadius()*getAppConfig().hiveable_factor + body.getRadius()*body.getFactor());
-    if((distanceTo(body)) <= radiusSum) {
-        return true;
-    } else {
-        return false;
-    }
+//    if((distanceTo(body)) <= radiusSum) {
+//        return true;
+//    } else {
+//        return false;
+//    }
+    return ((distanceTo(body)) <= radiusSum);
 }
 
 double Hive::getFactor() const {
@@ -97,7 +98,7 @@ Bee* Hive::addBee(double scoutProb) {
     if (bernoulli(scoutProb))
         bee = new ScoutBee(this, position, getAppConfig().scout_size, getAppConfig().scout_initial_energy, getAppConfig().scout_speed);
     else
-        bee = new ScoutBee(this, position, getAppConfig().worker_size, getAppConfig().worker_initial_energy, getAppConfig().worker_speed);
+        bee = new WorkerBee(this, position, getAppConfig().worker_size, getAppConfig().worker_initial_energy, getAppConfig().worker_speed);
     bees_.push_back(bee);
     return bee;
 }
