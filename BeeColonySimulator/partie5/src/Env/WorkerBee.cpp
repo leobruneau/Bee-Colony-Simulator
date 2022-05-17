@@ -93,7 +93,6 @@ void WorkerBee::learnFlowerLocation(const Vec2d &flowerPosition) {
 void WorkerBee::showDebugState(sf::RenderTarget &target) const {
     std::string debugState(" ");
     State state (getState());
-    // TODO check the logic
     if (state == IN_HIVE) {
         if (harvestedPollen_ > 0) debugState = "in_hive_pollen";
         else if (energy_ < getAppConfig().worker_energy_to_leave_hive) {
