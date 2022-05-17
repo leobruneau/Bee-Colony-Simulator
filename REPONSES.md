@@ -227,4 +227,24 @@ chose an `enum type`.
 ### A5.7
 Because we will use the polymorphic method getConfig() to get the correct parameters for each type of Bee.
 
+### A5.8
+We need to update the constructor of the ScoutBee class with a vector containing the possible sates for a ScoutBee.
+
+### A5.9
+The scout bee needs to empty her memory when going from the "in hive" state to the "flower quest" mode.
+The scout bee needs to target the hive to move towards it during the transition from "flower quest" to "go home".
+
+### A5.10
+In the bee class we would add a method called flowersInRange() that returns the vector containing pointers to all flowers in the visibility range of the bee.
+We would also add ad method, called findBestFlower(), that sets the memory of the bee to the best possible flower encountered up until the moment she 
+needs to go back to the hive.
+
+### A5.11
+A worker bee needs to:
+ • forget the flower she had in memory once she stops harvesting pollen and starts going back home
+ • target the flower in memory when she has enough energy to leave the hive
+ • target her home hive when she stops harvesting the target flower's pollen
+ • go in random movement mode when, whilst going back, she encounters obstacles. She has to switch to target movement mode when she leaves the hive to 
+   go to a flower or when, after clearing out of an obstacle, she continues going back to the hive
+The modifications above are to be made in the `onEnterState()` and the `onState()` methods.
 

@@ -8,10 +8,10 @@ Bee::Bee(Hive* homeHive, Vec2d &position, double radius, double energy, double s
     : Collider(position, radius), CFSM(states),
     homeHive_(homeHive),
     velocity_(Vec2d::fromRandomAngle()*speed),
-    energy_(energy),
-    memory_(nullptr),
     currentTarget_(nullptr),
-    currentMovement_(Movement::Rest) {
+    currentMovement_(Movement::Rest),
+    energy_(energy),
+    memory_(nullptr) {
     // Constructor's body
 }
 
@@ -21,13 +21,16 @@ void Bee::drawOn(sf::RenderTarget &target) const {
     if (velocity_.angle() >= PI/2 or velocity_.angle() <= -PI/2) beeSprite.scale(1, -1);
     beeSprite.rotate(velocity_.angle()/DEG_TO_RAD);
 
-    if (isDebugOn()) showDebugMovement(target);
+    if (isDebugOn()) {
+        showDebugMovement(target);
+        this->showSpecificDebugOptions(target);
+    }
 
     target.draw(beeSprite);
 }
 
 void Bee::update(sf::Time dt) {
-    onState(getState(), dt);
+    this->action(dt);
     updateEnergy(dt);
 }
 
@@ -47,19 +50,15 @@ void Bee::randomMove(sf::Time const& dt) {
 
     if (getAppEnv().isFlyable(newPosition)) Collider::move(velocity_*dt.asSeconds());
     else {
-        double beta(.0);
+        double beta(-PI/4);
         if (bernoulli(0.5)) beta = PI/4;
-        else beta = -PI/4;
         velocity_.rotate(beta);
     }
 }
 
-void Bee::move(const sf::Time &dt) {
-    State currentState (getState());
-    onState(currentState, dt);
-
+void Bee::move(const sf::Time &dt, Vec2d const& p) {
     if (currentMovement_ == Movement::Random) randomMove(dt);
-    else if (currentMovement_ == Movement::Target) targetMove(dt);
+    else if (currentMovement_ == Movement::Target) targetMove(dt, p);
 }
 
 bool Bee::isDead() const {
@@ -68,8 +67,30 @@ bool Bee::isDead() const {
     return (energy_ == 0);
 }
 
-void Bee::targetMove(const sf::Time &dt) {
-    // TODO : to code
+void Bee::targetMove(const sf::Time &dt, Vec2d const& p) {
+
+    if (avoidanceClock_ <= sf::Time::Zero) {
+        avoidanceClock_ = sf::Time::Zero;
+        Vec2d directionToTarget (directionTo(p));
+        double length(directionToTarget.length());
+        Vec2d unitToTarget (directionToTarget.x()/length, directionToTarget.y()/length);
+        velocity_ = velocity_.length()*unitToTarget;
+
+    } else avoidanceClock_ -= dt;
+
+    auto dx = velocity_*dt.asSeconds();
+    auto newPosition (getPosition() + dx);
+    clamping(newPosition);
+
+    if (getAppEnv().isFlyable(newPosition)) Collider::move(velocity_*dt.asSeconds());
+    else {
+        avoidanceClock_ = sf::seconds((float)getConfig()["moving behaviour"]["target"]["avoidance delay"].toDouble());
+
+        double beta(-PI/4);
+        if (bernoulli(0.5)) beta = PI/4;
+
+        velocity_.rotate(beta);
+    }
 }
 
 void Bee::updateEnergy(sf::Time const& dt) {
@@ -79,6 +100,7 @@ void Bee::updateEnergy(sf::Time const& dt) {
     // branch-less programming implementation
     energy_ -= dt.asSeconds()*idle*(currentMovement_ == Movement::Rest)
             +  dt.asSeconds()*moving*(currentMovement_ == Movement::Target or currentMovement_ == Movement::Random);
+    if (energy_ <= 0) energy_ = 0;
 }
 
 void Bee::showDebugMovement(sf::RenderTarget& target) const {
@@ -95,3 +117,19 @@ void Bee::showDebugMovement(sf::RenderTarget& target) const {
     target.draw(shape);
 }
 
+Hive* Bee::getHomeHive() const {
+    return homeHive_;
+}
+
+Vec2d const* Bee::getCollidingFlowerPosition(const Collider &body) {
+    return &body.getPosition();
+}
+
+void Bee::setCurrentMovement(Movement movement) {
+    currentMovement_ = movement;
+}
+
+void Bee::learnFlowerLocation(const Vec2d &flowerPosition) {
+    // empty. Method redefined in WorkerBee.
+    // TODO to code
+}

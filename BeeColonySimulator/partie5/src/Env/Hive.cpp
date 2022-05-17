@@ -57,8 +57,8 @@ Hive::~Hive() {
 
 void Hive::showDebugNectar(sf::RenderTarget &target) const {
     std::string toWrite (to_nice_string(nectar_));
-    Vec2d textPosition (getPosition().x(), getPosition().y()+20);
-    auto const text = buildText(toWrite, textPosition, getAppFont(), 15, sf::Color::Magenta);
+    Vec2d textPosition (getPosition().x(), getPosition().y()-20);
+    auto const text = buildText(toWrite, textPosition, getAppFont(), 15, sf::Color::Red);
     target.draw(text);
 }
 

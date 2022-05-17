@@ -34,6 +34,7 @@ public:
     void drawHiveableZone(sf::RenderTarget& target, Vec2d const& position);
     bool isHiveable(const Vec2d& p, double radius) const;
     bool isFlyable(const Vec2d& p) const;
+    const std::vector<Flower*>* getFlowers();
 
 private:
     World world_;

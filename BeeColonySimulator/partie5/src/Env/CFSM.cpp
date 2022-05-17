@@ -6,28 +6,20 @@
 #include <utility>
 
 CFSM::CFSM(States states)
-    : states_(std::move(states)), currentState_(states_.begin()) {
+    : states_(std::move(states)), currentState_(0) {
 
 }
 
 State CFSM::getState() const {
-    return *currentState_;
+    return states_.at(currentState_);
 }
 
 void CFSM::nextState() {
-    if (currentState_ == states_.end()) currentState_ = states_.begin();
+    if (currentState_ == states_.size()-1) currentState_ = 0;
     else ++currentState_;
-    onEnterState(*currentState_);
+    onEnterState(states_.at(currentState_));
 }
 
-void CFSM::onState(State const& state, sf::Time const& dt) {
-//    action(dt);
-}
-
-void CFSM::action(sf::Time const& dt) {
-
-}
-
-void CFSM::onEnterState(State const& state) {
-
+void CFSM::action(const sf::Time &dt) {
+    onState(getState(), dt);
 }

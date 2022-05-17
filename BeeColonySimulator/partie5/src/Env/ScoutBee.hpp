@@ -8,11 +8,67 @@
 
 class ScoutBee : public Bee {
 public:
+
+    /*!
+     * @brief Scout Bee Constructor
+     *
+     */
     ScoutBee(Hive* homeHive, Vec2d& position, double radius, double energy, double speed);
+
+    /*!
+     * @return The configuration of the current bee (with polymorphic behaviour)
+     *
+     */
     j::Value const& getConfig() const override;
+
+    /*!
+     * @brief Method to display debug options of a ScoutBee on the screen
+     *
+     */
+    void showSpecificDebugOptions(sf::RenderTarget& target) const override;
+
+    /*!
+     * @brief Method modeling the behaviour as a function of the current state
+     *
+     */
+    void onState(State const& state, sf::Time const& dt) override;
+
+    /*!
+     * @brief Actions that need to be taken when switching state
+     *
+     */
+    void onEnterState(State const& state) override;
+
+    /*!
+     * @brief Display the current state of a ScoutBee when debug mode is ON
+     *
+     */
+    void showDebugState(sf::RenderTarget& target) const;
+
+    /*!
+     * @brief Display the current energy of a ScoutBee when debug mode is ON
+     *
+     */
+    void showDebugEnergy(sf::RenderTarget& target) const override;
+
+    /*!
+     * @brief this method sets memory_ to the position of the flower
+     *        (in visibility range) which has the most pollen
+     */
+    bool findBestFlower();
+
+    /*!
+     * @brief Algorithm to inform worker bees about the position of a flower found by a ScoutBee
+     *
+     */
+    void informWorkerBees();
 
 private:
     static const State IN_HIVE;
+    static const State FLOWER_QUEST;
+    static const State GO_HOME;
+    double pollenMemory_;
+    size_t informedWorkerBees;
 
 };
 

@@ -14,13 +14,13 @@ public:
     explicit CFSM(States  states);
     State getState() const;
     void nextState();
-    void onState(State const& state, sf::Time const& dt);
     void action(sf::Time const& dt);
-    void onEnterState(State const& state);
+    virtual void onState(State const& state, sf::Time const& dt) = 0;
+    virtual void onEnterState(State const& state) = 0;
 
 private:
     States states_;
-    States::iterator currentState_;
+    size_t currentState_;
 };
 
 

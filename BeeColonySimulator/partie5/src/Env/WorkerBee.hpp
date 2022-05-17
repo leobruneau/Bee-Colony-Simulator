@@ -8,11 +8,70 @@
 
 class WorkerBee : public Bee {
 public:
+
+    /*!
+     * @brief
+     *
+     */
     WorkerBee(Hive* homeHive, Vec2d& position, double radius, double energy, double speed);
+
+    /*!
+     * @brief
+     *
+     */
     j::Value const& getConfig() const override;
 
+    /*!
+     * @brief
+     *
+     */
+    void onState(State const& state, sf::Time const& dt) override;
+
+    /*!
+     * @brief
+     *
+     */
+    void onEnterState(State const& state) override;
+
+    /*!
+     * @brief
+     *
+     */
+    void showSpecificDebugOptions(sf::RenderTarget& target) const override;
+
+    /*!
+     * @brief
+     *
+     */
+    void showDebugState(sf::RenderTarget& target) const;
+
+    /*!
+     * @brief
+     *
+     */
+    void showDebugEnergy(sf::RenderTarget& target) const override;
+
+    void showDebugPollen(sf::RenderTarget& target) const;
+
+    /*!
+     * @brief
+     *
+     */
+     static Flower* getFlowerAt(Vec2d const& p);
+
+    /*!
+    * @brief
+    *
+    */
+    void learnFlowerLocation(const Vec2d& flowerPosition);
+
 private:
+
+    double harvestedPollen_;
     static const State IN_HIVE;
+    static const State TOWARDS_FLOWER;
+    static const State NECTAR_HARVESTING;
+    static const State GO_HOME;
 
 };
 

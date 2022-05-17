@@ -293,6 +293,10 @@ bool Env::isFlyable(const Vec2d &p) const {
     return world_.isFlyable(p);
 }
 
+const std::vector<Flower*>* Env::getFlowers() {
+    return &flowers_;
+}
+
 
 
 
