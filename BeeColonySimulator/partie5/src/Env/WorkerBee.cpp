@@ -87,7 +87,7 @@ Flower *WorkerBee::getFlowerAt(const Vec2d &p) {
 }
 
 void WorkerBee::learnFlowerLocation(const Vec2d &flowerPosition) {
-    setMemory(const_cast<Vec2d *>(&flowerPosition));
+    setMemory(&flowerPosition);
 }
 
 void WorkerBee::showDebugState(sf::RenderTarget &target) const {
@@ -133,8 +133,15 @@ void WorkerBee::showDebugPollen(sf::RenderTarget &target) const {
     target.draw(text);
 }
 
-void WorkerBee::interact(Bee *other) { }
+void WorkerBee::interact(Bee *other) {
+    if (this->isInHive() and other->isInHive())
+        other->interactWith(this);
+}
 
 void WorkerBee::interactWith(ScoutBee *scouting) { }
 
 void WorkerBee::interactWith(WorkerBee *working) { }
+
+bool WorkerBee::isInHive() const {
+    return this->getState() == IN_HIVE;
+}

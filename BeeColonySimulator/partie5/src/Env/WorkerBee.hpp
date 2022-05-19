@@ -75,6 +75,8 @@ public:
 
     void interactWith(WorkerBee* working) override;
 
+    bool isInHive() const override;
+
 private:
 
     double harvestedPollen_;

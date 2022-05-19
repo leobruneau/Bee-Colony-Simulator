@@ -144,6 +144,6 @@ Vec2d const* Bee::getMemory() const {
     return memory_;
 }
 
-void Bee::setMemory(Vec2d* position) {
+void Bee::setMemory(Vec2d const* position) {
     memory_ = position;
 }

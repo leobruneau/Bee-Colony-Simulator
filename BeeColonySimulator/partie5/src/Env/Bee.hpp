@@ -87,7 +87,7 @@ public:
 
     const Vec2d* getMemory() const;
 
-    void setMemory(Vec2d* position);
+    void setMemory(Vec2d const* position);
 
     /*!
      *`@brief Method has been made static because it doesn't depend on existing objects. It was also made static to silence a compiler warning.
@@ -138,9 +138,15 @@ public:
      */
      virtual void interactWith(WorkerBee* working) = 0;
 
+    /*!
+    * @brief
+    *
+    */
+    virtual bool isInHive() const = 0;
+
 private:
     double energy_;
-    Vec2d const* memory_;
+    const Vec2d* memory_;
     Hive* homeHive_;
     Vec2d velocity_;
     Vec2d* currentTarget_;

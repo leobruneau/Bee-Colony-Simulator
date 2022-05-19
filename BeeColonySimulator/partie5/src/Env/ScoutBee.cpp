@@ -50,6 +50,7 @@ void ScoutBee::onEnterState(const State &state) {
     if (state == IN_HIVE) setCurrentMovement(Movement::Rest);
     if (state == FLOWER_QUEST) {
         setMemory(nullptr);
+        informedWorkerBees = 0;
         setCurrentMovement(Movement::Random);
     }
     if (state == GO_HOME) setCurrentMovement(Movement::Target);
@@ -99,32 +100,34 @@ void ScoutBee::showDebugState(sf::RenderTarget &target) const {
 bool ScoutBee::findBestFlower() {
     Flower* collidingFlower(getAppEnv().getCollidingFlower(*this));
     if (collidingFlower != nullptr) {
-        setMemory(const_cast<Vec2d *>(getCollidingFlowerPosition(*collidingFlower)));
+        setMemory(getCollidingFlowerPosition(*collidingFlower));
         return true;
     } else return false;
 
 
 // TODO TO IMPLEMENT ALGORITHM TO KEEP MEMORY ONLY OF THE BEST FLOWER
 
-//    if (collidingFlower != nullptr and memory_ != nullptr) {
+//    if (collidingFlower != nullptr) {
 //        if (collidingFlower->getPollen() >= pollenMemory_) {
 //            const Vec2d *colliderPosition(getCollidingFlowerPosition(*collidingFlower));
-//            memory_ = colliderPosition;
+//            setMemory(colliderPosition);
 //            return true;
 //        }
 //    }
 //    return false;
 }
 
-void ScoutBee::interact(Bee *other) {
-    other->interactWith(this);
-}
+void ScoutBee::interact(Bee *other) { }
 
 void ScoutBee::interactWith(ScoutBee *scouting) { }
 
 void ScoutBee::interactWith(WorkerBee *working) {
     if (getMemory()!= nullptr and (int)informedWorkerBees < getAppConfig().scout_max_sharing) working->learnFlowerLocation(*(this->getMemory()));
     ++informedWorkerBees;
+}
+
+bool ScoutBee::isInHive() const {
+    return this->getState() == IN_HIVE;
 }
 
 

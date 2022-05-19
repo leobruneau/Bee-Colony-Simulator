@@ -63,6 +63,8 @@ public:
 
     void interactWith(WorkerBee* working) override;
 
+    bool isInHive() const override;
+
 private:
     static const State IN_HIVE;
     static const State FLOWER_QUEST;
