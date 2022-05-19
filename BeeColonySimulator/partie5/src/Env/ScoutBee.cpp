@@ -3,6 +3,7 @@
 //
 
 #include "ScoutBee.hpp"
+#include "WorkerBee.hpp"
 
 State const ScoutBee::IN_HIVE = createUid();
 State const ScoutBee::FLOWER_QUEST = createUid();
@@ -22,9 +23,9 @@ j::Value const &ScoutBee::getConfig() const {
 void ScoutBee::onState(const State &state, const sf::Time &dt) {
     if (state == IN_HIVE) {
 
-        if (energy_ > getAppConfig().scout_energy_to_leave_hive) {
-            if (memory_ == nullptr or informedWorkerBees >= 1) nextState();
-            else informWorkerBees();
+        if (getEnergy() > getAppConfig().scout_energy_to_leave_hive) {
+            if (getMemory() == nullptr or informedWorkerBees >= 1) nextState();
+            else ;
         } else {
             double eatingRate (getAppConfig().scout_eating_rate);
             double qte (dt.asSeconds()*eatingRate);
@@ -34,8 +35,8 @@ void ScoutBee::onState(const State &state, const sf::Time &dt) {
 
     } else if (state == FLOWER_QUEST) {
 
-        if (energy_ > getAppConfig().scout_energy_seek_flowers) {
-            if (memory_ == nullptr) move(dt);
+        if (getEnergy() > getAppConfig().scout_energy_seek_flowers) {
+            if (getMemory() == nullptr) move(dt);
             if (findBestFlower()) nextState();
         } else nextState();
 
@@ -48,7 +49,7 @@ void ScoutBee::onState(const State &state, const sf::Time &dt) {
 void ScoutBee::onEnterState(const State &state) {
     if (state == IN_HIVE) setCurrentMovement(Movement::Rest);
     if (state == FLOWER_QUEST) {
-        memory_ = nullptr;
+        setMemory(nullptr);
         setCurrentMovement(Movement::Random);
     }
     if (state == GO_HOME) setCurrentMovement(Movement::Target);
@@ -60,7 +61,7 @@ void ScoutBee::showSpecificDebugOptions(sf::RenderTarget& target) const {
 }
 
 void ScoutBee::showDebugEnergy(sf::RenderTarget &target) const {
-    std::string energy(to_nice_string(energy_));
+    std::string energy(to_nice_string(getEnergy()));
     energy.insert(0, "Scout: energy ");
     Vec2d textPosition(getPosition().x(), getPosition().y() + 20);
     auto const text = buildText(energy, textPosition, getAppFont(), 13, sf::Color::White);
@@ -74,17 +75,17 @@ void ScoutBee::showDebugState(sf::RenderTarget &target) const {
 
     if (state == IN_HIVE) {
 
-        if (energy_ > getAppConfig().scout_energy_to_leave_hive) {
+        if (getEnergy() > getAppConfig().scout_energy_to_leave_hive) {
 
-            if (memory_ == nullptr or informedWorkerBees != 0) debugState = "in_hive_leaving";
+            if (getMemory() == nullptr or informedWorkerBees != 0) debugState = "in_hive_leaving";
             else debugState = "in_hive_sharing[" + to_nice_string((double)informedWorkerBees) + "]";
 
         } else debugState = "in_hive_eating";
 
     } else if (state == FLOWER_QUEST) {
 
-        if (energy_ > getAppConfig().scout_energy_seek_flowers)
-            if (memory_ == nullptr) debugState = "seeking_flower";
+        if (getEnergy() > getAppConfig().scout_energy_seek_flowers)
+            if (getMemory() == nullptr) debugState = "seeking_flower";
 
     } else if (state == GO_HOME) {
         debugState = "back_to_hive";
@@ -95,14 +96,10 @@ void ScoutBee::showDebugState(sf::RenderTarget &target) const {
     target.draw(text);
 }
 
-void ScoutBee::informWorkerBees() {
-    // TODO: to code
-}
-
 bool ScoutBee::findBestFlower() {
     Flower* collidingFlower(getAppEnv().getCollidingFlower(*this));
     if (collidingFlower != nullptr) {
-        memory_ = getCollidingFlowerPosition(*collidingFlower);
+        setMemory(const_cast<Vec2d *>(getCollidingFlowerPosition(*collidingFlower)));
         return true;
     } else return false;
 
@@ -119,5 +116,15 @@ bool ScoutBee::findBestFlower() {
 //    return false;
 }
 
+void ScoutBee::interact(Bee *other) {
+    other->interactWith(this);
+}
+
+void ScoutBee::interactWith(ScoutBee *scouting) { }
+
+void ScoutBee::interactWith(WorkerBee *working) {
+    if (getMemory()!= nullptr and (int)informedWorkerBees < getAppConfig().scout_max_sharing) working->learnFlowerLocation(*(this->getMemory()));
+    ++informedWorkerBees;
+}
 
 

@@ -248,3 +248,12 @@ A worker bee needs to:
    go to a flower or when, after clearing out of an obstacle, she continues going back to the hive
 The modifications above are to be made in the `onEnterState()` and the `onState()` methods.
 
+### A ICC
+It reduces the complexity because if we were to have a method in the bee class and call it, from the `Hive::update()` method, we would have more 
+for loops one inside another. Instead, by having the algorithm directly implemented from the `Hive` class, we may actually reduce the number of 
+operations done. So in average the executed code would be less complex.
+
+### A5.12
+The problem with type tests would be that the superclass would need to know about all its subclasses, which is a really cumbersome constraint put on 
+the programmer using our classes. Though I don't know why it would be dangerous. Maybe it would break encapsulation...
+

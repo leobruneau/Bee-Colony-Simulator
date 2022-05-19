@@ -57,11 +57,11 @@ public:
      */
     bool findBestFlower();
 
-    /*!
-     * @brief Algorithm to inform worker bees about the position of a flower found by a ScoutBee
-     *
-     */
-    void informWorkerBees();
+    void interact(Bee* other) override;
+
+    void interactWith(ScoutBee* scouting) override;
+
+    void interactWith(WorkerBee* working) override;
 
 private:
     static const State IN_HIVE;

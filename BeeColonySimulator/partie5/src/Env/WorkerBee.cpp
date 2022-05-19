@@ -68,7 +68,7 @@ void WorkerBee::onEnterState(const State &state) {
     if (state == NECTAR_HARVESTING) setCurrentMovement(Movement::Rest);
     if (state == GO_HOME) {
         setCurrentMovement(Movement::Target);
-        memory_ = nullptr;
+        setMemory(nullptr);
     }
 }
 
@@ -87,7 +87,7 @@ Flower *WorkerBee::getFlowerAt(const Vec2d &p) {
 }
 
 void WorkerBee::learnFlowerLocation(const Vec2d &flowerPosition) {
-    memory_ = &flowerPosition;
+    setMemory(const_cast<Vec2d *>(&flowerPosition));
 }
 
 void WorkerBee::showDebugState(sf::RenderTarget &target) const {
@@ -95,11 +95,11 @@ void WorkerBee::showDebugState(sf::RenderTarget &target) const {
     State state (getState());
     if (state == IN_HIVE) {
         if (harvestedPollen_ > 0) debugState = "in_hive_pollen";
-        else if (energy_ < getAppConfig().worker_energy_to_leave_hive) {
-            if (memory_ != nullptr) debugState = "in_hive_???";
+        else if (getEnergy() < getAppConfig().worker_energy_to_leave_hive) {
+            if (getMemory() != nullptr) debugState = "in_hive_???";
             else debugState = "in_hive_eating";
         }
-        else if (memory_ == nullptr) debugState = "in_hive_no_flower";
+        else if (getMemory() == nullptr) debugState = "in_hive_no_flower";
 
     } else if (state == TOWARDS_FLOWER) {
         debugState = "to_flower";
@@ -118,7 +118,7 @@ void WorkerBee::showDebugState(sf::RenderTarget &target) const {
 }
 
 void WorkerBee::showDebugEnergy(sf::RenderTarget &target) const {
-    std::string energy(to_nice_string(energy_));
+    std::string energy(to_nice_string(getEnergy()));
     energy.insert(0, "Worker: energy ");
     Vec2d textPosition(getPosition().x(), getPosition().y() + 20);
     auto const text = buildText(energy, textPosition, getAppFont(), 13, sf::Color::White);
@@ -132,3 +132,9 @@ void WorkerBee::showDebugPollen(sf::RenderTarget &target) const {
     auto const text = buildText(pollen, textPosition, getAppFont(), 13, sf::Color::White);
     target.draw(text);
 }
+
+void WorkerBee::interact(Bee *other) { }
+
+void WorkerBee::interactWith(ScoutBee *scouting) { }
+
+void WorkerBee::interactWith(WorkerBee *working) { }

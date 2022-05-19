@@ -51,6 +51,10 @@ public:
      */
     void showDebugEnergy(sf::RenderTarget& target) const override;
 
+    /*!
+     * @brief
+     *
+     */
     void showDebugPollen(sf::RenderTarget& target) const;
 
     /*!
@@ -63,7 +67,13 @@ public:
     * @brief
     *
     */
-    void learnFlowerLocation(const Vec2d& flowerPosition);
+    void learnFlowerLocation(const Vec2d& flowerPosition) override;
+
+    void interact(Bee* other) override;
+
+    void interactWith(ScoutBee* scouting) override;
+
+    void interactWith(WorkerBee* working) override;
 
 private:
 

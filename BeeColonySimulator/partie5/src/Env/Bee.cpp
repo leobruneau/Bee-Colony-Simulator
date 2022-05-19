@@ -129,7 +129,21 @@ void Bee::setCurrentMovement(Movement movement) {
     currentMovement_ = movement;
 }
 
-void Bee::learnFlowerLocation(const Vec2d &flowerPosition) {
-    // empty. Method redefined in WorkerBee.
-    // TODO to code
+void Bee::learnFlowerLocation(const Vec2d &flowerPosition) { }
+
+double Bee::getEnergy() const {
+    return energy_;
+}
+
+void Bee::setEnergy(double energy) {
+    energy_ = energy;
+}
+
+
+Vec2d const* Bee::getMemory() const {
+    return memory_;
+}
+
+void Bee::setMemory(Vec2d* position) {
+    memory_ = position;
 }

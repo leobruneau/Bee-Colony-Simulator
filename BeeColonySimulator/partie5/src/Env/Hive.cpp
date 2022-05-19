@@ -16,6 +16,13 @@ Hive::Hive(Vec2d const& p, double radius = getAppConfig().hive_manual_size)
 void Hive::update(sf::Time dt) {
     for (auto const& b: bees_)
         b->update(dt);
+
+    for (auto const& a : bees_) {
+        for (auto const& b : bees_) {
+            if (a != b) a->interact(b);
+        }
+    }
+
     removeDeadBees();
 }
 
@@ -102,3 +109,4 @@ Bee* Hive::addBee(double scoutProb) {
     bees_.push_back(bee);
     return bee;
 }
+

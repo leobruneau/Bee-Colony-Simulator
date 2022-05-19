@@ -11,6 +11,9 @@
 
 enum class Movement : short {Rest, Random, Target};
 
+class ScoutBee;
+class WorkerBee;
+
 class Bee : public Collider, public Drawable, public Updatable, public CFSM {
 public:
 
@@ -76,11 +79,15 @@ public:
      */
     void showDebugMovement(sf::RenderTarget& target) const;
 
-    /*!
-     * @brief
-     *
-     */
     Hive* getHomeHive() const;
+
+    double getEnergy() const;
+
+    void setEnergy(double energy);
+
+    const Vec2d* getMemory() const;
+
+    void setMemory(Vec2d* position);
 
     /*!
      *`@brief Method has been made static because it doesn't depend on existing objects. It was also made static to silence a compiler warning.
@@ -113,17 +120,32 @@ public:
      */
      virtual void learnFlowerLocation(const Vec2d& flowerPosition);
 
+    /*!
+    * @brief
+    *
+    */
+     virtual void interact(Bee* other) = 0;
+
+    /*!
+    * @brief
+    *
+    */
+    virtual void interactWith(ScoutBee* scouting) = 0;
+
+    /*!
+     * @brief
+     *
+     */
+     virtual void interactWith(WorkerBee* working) = 0;
+
 private:
+    double energy_;
+    Vec2d const* memory_;
     Hive* homeHive_;
     Vec2d velocity_;
     Vec2d* currentTarget_;
     Movement currentMovement_;
     sf::Time avoidanceClock_;
-
-protected:
-    double energy_;
-    Vec2d const* memory_;
-
 };
 
 
