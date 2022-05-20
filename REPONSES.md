@@ -257,3 +257,8 @@ operations done. So in average the executed code would be less complex.
 The problem with type tests would be that the superclass would need to know about all its subclasses, which is a really cumbersome constraint put on 
 the programmer using our classes. Though I don't know why it would be dangerous. Maybe it would break encapsulation...
 
+### A5.13
+The reproduction algorithm needs to be put inside the `Hive::update()` method since it needs access to the total number of bees, the total amount of available
+nectar and has to be executed every `dt`.
+
+
