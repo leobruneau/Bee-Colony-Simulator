@@ -33,7 +33,7 @@ public:
     /**
      *  @brief Add some data to the graph
      *
-     *  The data given as input is a dictionnary mapping the series' title to the new data.
+     *  The data given as input is a dictionary mapping the series' title to the new data.
      *
      *  @param deltaEpoch time since last update
      *  @param newData    the data for the present time

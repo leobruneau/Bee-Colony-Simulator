@@ -35,6 +35,7 @@ public:
     bool isHiveable(const Vec2d& p, double radius) const;
     bool isFlyable(const Vec2d& p) const;
     const std::vector<Flower*>* getFlowers();
+    Bee* getBeeAt(Vec2d const& p) const;
 
 private:
     World world_;

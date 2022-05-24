@@ -298,6 +298,11 @@ const std::vector<Flower*>* Env::getFlowers() {
     return &flowers_;
 }
 
+Bee *Env::getBeeAt(const Vec2d &p) const {
+    // TODO to code for extensions
+    return nullptr;
+}
+
 
 
 

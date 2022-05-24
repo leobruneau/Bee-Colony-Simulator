@@ -156,7 +156,6 @@ void World::reset(bool const& regenerate) {
     setHumidity(getAppConfig().world_humidity_init_level, getAppConfig().world_humidity_decay_rate);
 
     updateCache();
-
 }
 
 float World::getSize() const {

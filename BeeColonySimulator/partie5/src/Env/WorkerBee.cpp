@@ -45,10 +45,9 @@ void WorkerBee::onState(const State &state, const sf::Time &dt) {
         move(dt, *memory_);
 
     } else if (state == NECTAR_HARVESTING) {
-        if (harvestedPollen_ < getAppConfig().worker_pollen_capacity) {
-            Flower* targetFlower (getFlowerAt(*memory_));
-
-            if (targetFlower != nullptr and targetFlower->getPollen() > 0) {
+        Flower* targetFlower (getFlowerAt(*getMemory()));
+        if (harvestedPollen_ < getAppConfig().worker_pollen_capacity and targetFlower != nullptr) {
+            if (targetFlower->getPollen() > 0) {
                 double pGatherRate (getAppConfig().worker_harvest_rate);
                 double qte (dt.asSeconds()*pGatherRate);
                 targetFlower->takePollen(qte);
@@ -109,7 +108,6 @@ void WorkerBee::showDebugState(sf::RenderTarget &target) const {
 
     } else if (state == GO_HOME) {
         debugState = "back_to_hive";
-
     }
 
     Vec2d textPosition(getPosition().x(), getPosition().y() + 40);

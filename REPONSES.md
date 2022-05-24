@@ -261,4 +261,25 @@ the programmer using our classes. Though I don't know why it would be dangerous.
 The reproduction algorithm needs to be put inside the `Hive::update()` method since it needs access to the total number of bees, the total amount of available
 nectar and has to be executed every `dt`.
 
+## SIXTH PART (6)
+
+### A6.1 ??? (to review)
+The data structure used will be a struct containing the name of the graph and the pointer to the graph itself. Then as a final class attribute to model the 
+collection of graphs we used a vector of the struct mentioned above so that to each pair of name and pointer we have an integer as an identifier.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
