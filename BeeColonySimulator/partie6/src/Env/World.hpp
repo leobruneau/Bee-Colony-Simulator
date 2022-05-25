@@ -58,7 +58,6 @@ private:
     std::vector<sf::Vertex> rockVertexes_;
     std::vector<sf::Vertex> humidityVertexes_;
     sf::RenderTexture renderingCache_;
-    sf::RenderTexture renderingHumidity_;
     std::vector<Seed> seeds_;
     unsigned int initialWaterSeeds_;
     unsigned int initialGrassSeeds_;

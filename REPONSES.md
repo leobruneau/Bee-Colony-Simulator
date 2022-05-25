@@ -267,6 +267,11 @@ nectar and has to be executed every `dt`.
 The data structure used will be a struct containing the name of the graph and the pointer to the graph itself. Then as a final class attribute to model the 
 collection of graphs we used a vector of the struct mentioned above so that to each pair of name and pointer we have an integer as an identifier.
 
+### A6.2 
+To better modularize the code we implemented the `Env::fetchGeneralData()` to create the new_data following the scheme for the GENERAL graph.
+We also added to the Hive class 2 new attributes: currentWorkerBees and currentScoutBees to keep track (in a polymorphic way and without testing the
+types of the objects) of the number of different bees.
+
 
 
 

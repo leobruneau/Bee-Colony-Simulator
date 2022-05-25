@@ -47,7 +47,6 @@ void World::drawOn(sf::RenderTarget &target) const {
 void World::updateCache() {
     sf::RenderStates grass; sf::RenderStates water; sf::RenderStates rock;
     renderingCache_.clear();
-    renderingHumidity_.clear();
     grass.texture = &getAppTexture(getAppConfig().grass_texture);
     water.texture = &getAppTexture(getAppConfig().water_texture);
     rock.texture = &getAppTexture(getAppConfig().rock_texture);
@@ -112,7 +111,6 @@ void World::reloadCacheStructure() {
     humidityVertexes_ = grassVertexes_;
     float size = (float)nbCells_*cellSize_;
     renderingCache_.create((unsigned int)size, (unsigned int)size);
-    renderingHumidity_.create((unsigned int)size, (unsigned int)size);
 }
 
 void World::reset(bool const& regenerate) {
