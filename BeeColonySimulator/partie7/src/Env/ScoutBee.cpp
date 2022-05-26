@@ -25,8 +25,6 @@ void ScoutBee::onState(const State &state, const sf::Time &dt) {
 
         if (getEnergy() > getAppConfig().scout_energy_to_leave_hive) {
             if (getMemory() == nullptr or informedWorkerBees >= 1) nextState();
-            else//TODO ;
-            ;
         } else {
             double eatingRate (getAppConfig().scout_eating_rate);
             double qte (dt.asSeconds()*eatingRate);

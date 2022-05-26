@@ -8,3 +8,6 @@ To run the program:
    3) go in the src sub-folder
    4) load the CMakeLists.txt file
    5) run the target "application"
+
+### Comments
+Commented files are present only inside the partie7 folder (which should be final)
