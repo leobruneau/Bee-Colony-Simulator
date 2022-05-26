@@ -90,28 +90,31 @@ void Collider::move(Vec2d const& dx) {
 
 bool Collider::isColliderInside(Collider const& other) const {
 
-    if ((other.radius <= radius) and (distanceTo(other) <= (radius - other.radius))) {
-        return true;
-    } else {
-        return false;
-    }
+//    if ((other.radius <= radius) and (distanceTo(other) <= (radius - other.radius))) {
+//        return true;
+//    } else {
+//        return false;
+//    }
+    return ((other.radius <= radius) and (distanceTo(other) <= (radius - other.radius)));
 }
 
 bool Collider::isColliding(Collider const& other) const {
     double radiusSum(radius + other.radius);
-    if((distanceTo(other)) <= radiusSum) {
-        return true;
-    } else {
-        return false;
-    }
+//    if((distanceTo(other)) <= radiusSum) {
+//        return true;
+//    } else {
+//        return false;
+//    }
+    return ((distanceTo(other)) <= radiusSum);
 }
 
 bool Collider::isPointInside(const Vec2d &point) const {
-    if(distanceTo(point) <= radius) {
-        return true;
-    } else {
-        return false;
-    }
+//    if(distanceTo(point) <= radius) {
+//        return true;
+//    } else {
+//        return false;
+//    }
+    return (distanceTo(point) <= radius);
 }
 
 bool Collider::operator>(Collider const& other) const {

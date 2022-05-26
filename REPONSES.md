@@ -164,5 +164,127 @@ we want to add.
 We need to modify the `Env::drawOn()` method (that now has to draw also the hives) and the `Env::reset()` and `Env::loadWorldFromFile()` methods that 
 both need to deallocate the hives and clear their vector each time they are called.
 
+### A4.8
+The Bee class will inherit from Collider, Drawable and Updatable. Its methods will be (for now) a constructor, a `move()` method, an `isDead()` method
+(that returns true if the bee is dead and false otherwise), a `drawOn()` method and an `update()` method. 
+Its attributes will be a reference on a Hive, a double representing the energy level and a vector representing the velocity.
+
+### A4.9
+The prototype of the `Bee::getConfig()` method has to include the reserved keyword virtual at the beginning of the prototype.
+
+### A4.10
+We will create a virtual function (named `Bee::getTexture()`) which will return the texture. Because it is virtual and we work on pointer on bees we will
+be able to override the method in subclasses and obtain a polymorphic behaviour.
+
+### A4.11 ???
+([Question Q4.11] Quel est l'avantage ici d'accéder aux paramètres 
+au travers de la méthode getConfig() plutôt que par des raccourcis d'écriture permis par getAppConfig()  ?)
+
+### A4.12
+We need to modify the `Hive::update()` method that needs to call the `Bee::update()` method for each bee (in the Hive itself).
+We also need to modify the `Hive::drawOn()` method that needs to call the `Bee::drawOn()` method for each bee (in the Hive itself).
+
+
+### A4.13
+The `Hive::update()` method must be modified since it also needs to handle the deletion of dead bees. To do that (and make the code cleaner), we created
+ a method `Hive::removeDeadBees()` that, similarly as `Env::removeDeadFlowers()`, checks if a bee is dead and, if it is, it deallocates the linked memory and
+removes the pointer from the `bees_` vector.
+
+
+### A4.14
+It allows to keep encapsulation since the function returns a pointer to a Bee which is a private attribute. This way only the 
+class itself, and any subclass, can add bees to the hive.
+
+## FIFTH PART (5)
+
+### A5.1
+The modification to the method `Bee::getConfig()` will be to turn it into a virtual pure method with the following syntax:
+`virtual j::Value const& getConfig() = 0;`. This way the Bee class will become abstract and no instance of it will be able to be 
+created.
+
+### A5.2
+Because we cannot call a method on an object that doesn't exist. We can call methods of a class only when we already have an instance of it we can call them
+from.
+
+### A5.3
+We need to add a new parameter `std::vector<State>` that then needs to be used as a parameter for the constructor of the Bee class.
+In fact in this constructor, there will be a call to the constructor of the Collider class and one to the constructor
+of the CFSM class to initialize the possible states.
+
+### A5.4
+To model this behaviour of forgetting, we will use a pointer on a Vec2d so that when the position is forgotten, the pointer's value
+will be `nullptr`. Since any bee has a memory, we will implement the new attribute in the Bee class. We need to modify the
+constructor of the Bee class that needs to initialize the "memory" of the newly created bee to `nullptr`.
+
+### A5.5
+The method that needs to be redefined inside the subclasses is `j::Value const& getConfig()` which is a purely virtual method 
+inside the Bee class.
+
+### A5.6
+For the current target we use a pointer on a Vec2d type. For the type of movement the bee is currently int, we
+chose an `enum type`.
+
+### A5.7
+Because we will use the polymorphic method getConfig() to get the correct parameters for each type of Bee.
+
+### A5.8
+We need to update the constructor of the ScoutBee class with a vector containing the possible sates for a ScoutBee.
+
+### A5.9
+The scout bee needs to empty her memory when going from the "in hive" state to the "flower quest" mode.
+The scout bee needs to target the hive to move towards it during the transition from "flower quest" to "go home".
+
+### A5.10
+In the bee class we would add a method called flowersInRange() that returns the vector containing pointers to all flowers in the visibility range of the bee.
+We would also add ad method, called findBestFlower(), that sets the memory of the bee to the best possible flower encountered up until the moment she 
+needs to go back to the hive.
+
+### A5.11
+A worker bee needs to:
+ • forget the flower she had in memory once she stops harvesting pollen and starts going back home
+ • target the flower in memory when she has enough energy to leave the hive
+ • target her home hive when she stops harvesting the target flower's pollen
+ • go in random movement mode when, whilst going back, she encounters obstacles. She has to switch to target movement mode when she leaves the hive to 
+   go to a flower or when, after clearing out of an obstacle, she continues going back to the hive
+The modifications above are to be made in the `onEnterState()` and the `onState()` methods.
+
+### A ICC
+It reduces the complexity because if we were to have a method in the bee class and call it, from the `Hive::update()` method, we would have more 
+for loops one inside another. Instead, by having the algorithm directly implemented from the `Hive` class, we may actually reduce the number of 
+operations done. So in average the executed code would be less complex.
+
+### A5.12
+The problem with type tests would be that the superclass would need to know about all its subclasses, which is a really cumbersome constraint put on 
+the programmer using our classes. Though I don't know why it would be dangerous. Maybe it would break encapsulation...
+
+### A5.13
+The reproduction algorithm needs to be put inside the `Hive::update()` method since it needs access to the total number of bees, the total amount of available
+nectar and has to be executed every `dt`.
+
+## SIXTH PART (6)
+
+### A6.1 ??? (to review)
+The data structure used will be a struct containing the name of the graph and the pointer to the graph itself. Then as a final class attribute to model the 
+collection of graphs we used a vector of the struct mentioned above so that to each pair of name and pointer we have an integer as an identifier.
+
+### A6.2 
+To better modularize the code we implemented the `Env::fetchGeneralData()` to create the new_data following the scheme for the GENERAL graph.
+We also added to the Hive class 2 new attributes: currentWorkerBees and currentScoutBees to keep track (in a polymorphic way and without testing the
+types of the objects) of the number of different bees.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

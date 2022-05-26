@@ -33,6 +33,7 @@ public:
     Flower* getCollidingFlower(const Collider& body);
     void drawHiveableZone(sf::RenderTarget& target, Vec2d const& position);
     bool isHiveable(const Vec2d& p, double radius) const;
+    bool isFlyable(const Vec2d& p) const;
 
 private:
     World world_;

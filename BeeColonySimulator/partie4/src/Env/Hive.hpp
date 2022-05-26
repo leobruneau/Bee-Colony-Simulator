@@ -5,9 +5,10 @@
 #ifndef BEE_COLONY_SIMULATOR_SSV_2022_STEP4_HIVE_HPP
 #define BEE_COLONY_SIMULATOR_SSV_2022_STEP4_HIVE_HPP
 #include "Collider.hpp"
-#include "Bee.hpp"
 #include "../Interface/Updatable.hpp"
 #include "../Interface/Drawable.hpp"
+
+class Bee;
 
 class Hive : public Collider, public Updatable, public Drawable {
 public:
@@ -18,11 +19,14 @@ public:
     void update(sf::Time dt) override;
     void drawOn(sf::RenderTarget& targetWindow) const override;
     bool isColliding(const Collider& body) const override;
-    void addBee();
     void dropPollen(double qte);
     bool takeNectar(double qte);
     void showDebugNectar(sf::RenderTarget& target) const;
     double getFactor() const override;
+    void removeDeadBees();
+
+protected:
+    void addBee();
 
 private:
     std::vector<Bee*> bees_;
