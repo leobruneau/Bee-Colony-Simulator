@@ -42,7 +42,6 @@ double Collider::getRadius() const {
  * Cleaner implementation of = operator overloading since we are just copying
  * the values from one object (the source) to another (the target)
 */
-
 Collider& Collider::operator=(Collider const& source) = default;
 
 Vec2d Collider::directionTo(Vec2d const& to) const {
@@ -53,6 +52,7 @@ Vec2d Collider::directionTo(Vec2d const& to) const {
 
     Vec2d nearestTo(to);
 
+    // clamping algorithm to find the "shortest" path and thus the right direction to take
     if(delta_x < - width/2) {
         Vec2d change(width, 0);
         nearestTo += change;

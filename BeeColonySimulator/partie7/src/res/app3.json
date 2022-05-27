@@ -15,7 +15,7 @@
                         "rotation angle max" : 0.785398163
                     },
                     "target" : {
-                        "avoidance delay" : 0.2
+                        "avoidance delay" : 1.5
                     }
                 },
                 "size" : 10,
@@ -42,7 +42,7 @@
                         "comment" : "not relevant"
                     },
                     "target" : {
-                        "avoidance delay" : 0.2
+                        "avoidance delay" : 2.5
                     }
                 },
                 "size" : 15,

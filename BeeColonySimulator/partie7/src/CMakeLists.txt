@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(Bee_Colony_Simulator_SSV_2022_STEP6)
+project(Bee_Colony_Simulator_SSV_2022_STEP7)
 
 #set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_CXX_STANDARD 14)
@@ -123,7 +123,7 @@ find_package(SFML 2.5 QUIET COMPONENTS graphics window system)
             include_directories(${SFML_INCLUDE_DIR})
 	    
 	    #main application:
-            add_executable(application ${TEST_DIR}/GraphicalTests/FinalApplication.cpp ${SOURCES_GFX} Stats/Stats.cpp Stats/Stats.hpp)
+            add_executable(application ${TEST_DIR}/GraphicalTests/FinalApplication.cpp ${SOURCES_GFX} Stats/Stats.cpp Stats/Stats.hpp Env/Weather.cpp Env/Weather.hpp Env/Fog.cpp Env/Fog.hpp)
             target_link_libraries(application ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
 	    ##Units tests:

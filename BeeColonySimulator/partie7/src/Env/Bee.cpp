@@ -26,7 +26,8 @@ void Bee::drawOn(sf::RenderTarget &target) const {
         this->showSpecificDebugOptions(target);
     }
 
-    target.draw(beeSprite);
+    // Bees are to be drawn only if they are not inside the hive. If they are (like in normal life) they are no longer visible.
+    if (!isInHive()) target.draw(beeSprite);
 }
 
 void Bee::update(sf::Time dt) {
@@ -153,5 +154,5 @@ void Bee::setMemory(Vec2d const* position) {
 }
 
 Bee::~Bee() {
-
+    // default constructor
 }

@@ -62,6 +62,11 @@ void Env::saveWorldToFile() const {
 }
 
 bool Env::addFlowerAt(const Vec2d &p, bool split) {
+
+    for (auto const& _f : flowers_) {
+        if (*_f > p) return false;
+    }
+
     // checking that a flower can actually grow. Added the condition of strictly positive humidity for being able to grow
     if ((world_.isGrowable(p) and (int)flowers_.size() < getAppConfig().max_flowers) and world_.getHumidity(p) > 0) {
         double flowerSize (getAppConfig().flower_manual_size);
@@ -82,6 +87,11 @@ void Env::drawFlowerZone(sf::RenderTarget &target, const Vec2d &position) {
     sf::Color color;
     if (world_.isGrowable(position) and world_.getHumidity(position) > 0) color = sf::Color::Green;
     else color = sf::Color::Red;
+
+    for (auto const& _f : flowers_) {
+        if (*_f > position) color = sf::Color::Red;
+    }
+
     auto thickness (3.0);
 
     auto shape = buildAnnulus(position, size, color, thickness);

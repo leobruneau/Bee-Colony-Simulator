@@ -30,7 +30,7 @@ public:
     Collider(Collider const& other);
 
     /*!
-     * @brief cleaner implementation of = operator overloading since we are just copying
+     * @brief cleaner implementation of operator= overloading since we are just copying
      *        the values from one object (the source) to another (the target)
      *
      * @param source just another collider
