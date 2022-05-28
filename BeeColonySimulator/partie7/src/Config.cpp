@@ -43,15 +43,35 @@ Config::Config (const j::Value& cfg): mConfig(cfg)
 , rock_texture(mConfig["simulation"]["world"]["textures"]["rock"].toString())
 , water_texture(mConfig["simulation"]["world"]["textures"]["water"].toString())
 
-// weather
+// - - - - - - - - - - - - - - - - - - - - - - - - B O N U S - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// weather (bonus extension)
+// temperature
 , max_temperature(mConfig["simulation"]["weather"]["temperature"]["max"].toDouble())
 , min_temperature(mConfig["simulation"]["weather"]["temperature"]["min"].toDouble())
+
+// wind
 , max_wind_speed(mConfig["simulation"]["weather"]["wind"]["max speed"].toDouble())
+, wind_rotation_angle_max(mConfig["simulation"]["weather"]["wind"]["rotation angle max"].toDouble())
+, wind_rotation_probability(mConfig["simulation"]["weather"]["wind"]["max speed"].toDouble())
+
+// fog
 , fog_humidity_threshold(mConfig["simulation"]["weather"]["fog"]["humidity threshold"].toDouble())
 , fog_max_size(mConfig["simulation"]["weather"]["fog"]["max size"].toDouble())
 , fog_min_size(mConfig["simulation"]["weather"]["fog"]["min size"].toDouble())
-, fog_active_site_size(mConfig["simulation"]["weather"]["fog"]["active site size"].toDouble())
+, fog_manual_size(mConfig["simulation"]["weather"]["fog"]["manual size"].toDouble())
+, fog_active_site_factor_x(mConfig["simulation"]["weather"]["fog"]["active site factor"]["x"].toDouble())
+, fog_active_site_factor_y(mConfig["simulation"]["weather"]["fog"]["active site factor"]["y"].toDouble())
+, fog_min_density(mConfig["simulation"]["weather"]["fog"]["density"]["min"].toInt())
+, fog_max_density(mConfig["simulation"]["weather"]["fog"]["density"]["max"].toInt())
+, fog_increase_density_factor(mConfig["simulation"]["weather"]["fog"]["density"]["increase factor"].toDouble())
 , fog_texture(mConfig["simulation"]["weather"]["fog"]["texture"].toString())
+
+// fog generator
+, fog_generator_delay(mConfig["simulation"]["weather"]["fog generator"]["delay"].toDouble())
+, active_fog_generator(mConfig["simulation"]["weather"]["fog generator"]["active"].toBool())
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // flowers
 , initial_flower_count(mConfig["simulation"]["env"]["initial"]["flower"]["count"].toInt())

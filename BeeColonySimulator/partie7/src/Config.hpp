@@ -92,16 +92,35 @@ public:
   const std::string rock_texture;
   const std::string water_texture;
 
-  // weather
+  // - - - - - - - - - - - - - - - - - - - - - - - - B O N U S - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // weather (bonus extension)
+  // temperature
   const double max_temperature;
   const double min_temperature;
+
+  // wind
   const double max_wind_speed;
+  const double wind_rotation_angle_max;
+  const double wind_rotation_probability;
+
+  // fog
   const double fog_humidity_threshold;
   const double fog_max_size;
   const double fog_min_size;
-  const double fog_active_site_size;
+  const double fog_manual_size;
+  const double fog_active_site_factor_x;
+  const double fog_active_site_factor_y;
+  const int fog_min_density;
+  const int fog_max_density;
+  const double fog_increase_density_factor;
   const std::string fog_texture;
 
+  // fog generator
+  const double fog_generator_delay;
+  const bool active_fog_generator;
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // flowers
   const int initial_flower_count;
@@ -112,7 +131,7 @@ public:
   const double flower_nectar_min;
   const double flower_nectar_max;
   const double flower_growth_threshold;
-   const double flower_growth_split;
+  const double flower_growth_split;
   
   // hives
   const int initial_hive_count;

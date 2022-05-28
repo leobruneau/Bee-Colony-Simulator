@@ -22,22 +22,27 @@ Weather::~Weather() {
 void Weather::update(sf::Time dt) {
     for (auto const& _f : _fog) _f->update(dt);
     _wind._speed = getAppConfig().max_wind_speed;
+    _fogGenerator.update(dt);
 }
 
 void Weather::drawOn(sf::RenderTarget &target) const {
     for (auto const& _f : _fog)
         _f->drawOn(target);
+    if (isDebugOn()) showDebugInfo(target);
 }
 
 void Weather::showDebugInfo(sf::RenderTarget &target) const {
-
+    Vec2d position (getAppEnv().getSize() - 30, 30);
+    auto compass (buildSprite(position, 50, getAppTexture("compass.png")));
+    auto arrow (buildSprite(position, 50, getAppTexture("arrow.png")));
+    target.draw(compass);
+    target.draw(arrow);
 }
 
-bool Weather::addFogAt(const Vec2d &p) {
+void Weather::addFogAt(const Vec2d &p) {
     auto randomSize (uniform(getAppConfig().fog_min_size, getAppConfig().fog_max_size));
-    auto fog (new Fog(p, randomSize, 255));
+    auto fog (new Fog(p, randomSize, getAppConfig().fog_min_density));
     _fog.push_back(fog);
-    return true;
 }
 
 Wind Weather::getWind() const {

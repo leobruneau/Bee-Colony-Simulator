@@ -123,7 +123,7 @@ find_package(SFML 2.5 QUIET COMPONENTS graphics window system)
             include_directories(${SFML_INCLUDE_DIR})
 	    
 	    #main application:
-            add_executable(application ${TEST_DIR}/GraphicalTests/FinalApplication.cpp ${SOURCES_GFX} Stats/Stats.cpp Stats/Stats.hpp Env/Weather.cpp Env/Weather.hpp Env/Fog.cpp Env/Fog.hpp)
+            add_executable(application ${TEST_DIR}/GraphicalTests/FinalApplication.cpp ${SOURCES_GFX} Stats/Stats.cpp Stats/Stats.hpp Env/Weather.cpp Env/Weather.hpp Env/Fog.cpp Env/Fog.hpp Env/FogGenerator.cpp Env/FogGenerator.hpp)
             target_link_libraries(application ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
 	    ##Units tests:

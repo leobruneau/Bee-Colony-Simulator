@@ -226,6 +226,21 @@ public:
      */
     void decreaseTemperature();
 
+    /*!
+     * @brief checks if there is enough humidity in a given aera for fog to develop
+     *
+     * @return true if fog can develop, false otherwise
+     */
+    bool canFogSpawn(const Vec2d& position) const;
+
+    /*!
+     * @brief returns true if in the cloud active zone there is enough humidity to increase density of cloud
+     *
+     * @param position position of interest
+     * @return true if humidity is enough, false otherwise
+     */
+    bool fogHumidityThreshold(const Vec2d& position) const;
+
 private:
     World world_;
     std::vector<Flower*> flowers_;

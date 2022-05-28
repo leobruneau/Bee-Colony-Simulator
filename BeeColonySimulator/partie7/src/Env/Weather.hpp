@@ -4,7 +4,9 @@
 
 #ifndef BEE_COLONY_SIMULATOR_SSV_2022_STEP7_WEATHER_HPP
 #define BEE_COLONY_SIMULATOR_SSV_2022_STEP7_WEATHER_HPP
+
 #include "Fog.hpp"
+#include "FogGenerator.hpp"
 
 
 struct Wind {
@@ -83,7 +85,7 @@ public:
      * @param p position of interest
      * @return true if the cloud was successfully added, false otherwise
      */
-    bool addFogAt(const Vec2d& p);
+    void addFogAt(const Vec2d& p);
 
     /*!
      * @brief deallocates memory of fog clouds (i.e. removes them from weather)
@@ -113,6 +115,8 @@ private:
      * @brief collection of fog clouds
      */
     std::vector<Fog*> _fog;
+
+    FogGenerator _fogGenerator;
 };
 
 

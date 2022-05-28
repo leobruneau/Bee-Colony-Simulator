@@ -17,6 +17,14 @@ Fog::~Fog() {
 void Fog::update(sf::Time dt) {
 //    _density = 255*(_density > 255) + 255*(_density < 0);
     passiveMovement(dt);
+    bool fogUpdate (getAppEnv().fogHumidityThreshold(getPosition()));
+    _density += (fogUpdate - !fogUpdate)*getAppConfig().fog_increase_density_factor;
+    int minDensity(getAppConfig().fog_min_density);
+    int maxDensity(getAppConfig().fog_max_density);
+    bool co1 (_density > maxDensity), co2 (_density < minDensity);
+
+    _density = _density*(!co1 and !co2) + minDensity*co2 + maxDensity*co1;
+
 }
 
 void Fog::drawOn(sf::RenderTarget &target) const {
@@ -35,8 +43,9 @@ void Fog::passiveMovement(sf::Time dt) {
 }
 
 void Fog::showDebugInfo(sf::RenderTarget &target) const {
-//    auto radius (buildAnnulus(getPosition(), getRadius()*.3, sf::Color::Green, 2));
-    Vec2d factor (.3, .13);
+    double x (getAppConfig().fog_active_site_factor_x);
+    double y (getAppConfig().fog_active_site_factor_y);
+    Vec2d factor (x, y);
     Vec2d topLeft (getPosition() - factor*getRadius());
     Vec2d bottomRight (getPosition() + factor*getRadius());
     auto rect (buildRectangle(topLeft, bottomRight, sf::Color::Green, 2));

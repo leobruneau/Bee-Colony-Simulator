@@ -207,6 +207,8 @@ public:
      */
     std::vector<std::size_t> indexesForRect(sf::Vector2i const& topLeft, sf::Vector2i const& bottomRight) const;
 
+    bool canFogSpawn(const Vec2d& position) const;
+
 private:
     int nbCells_;
     float cellSize_;

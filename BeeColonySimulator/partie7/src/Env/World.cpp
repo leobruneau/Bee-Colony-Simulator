@@ -498,7 +498,7 @@ bool World::isHiveable(const Vec2d &p, double radius) const {
     if (p.y() < 0 or p.y() >= getAppEnv().getSize()) return false;
 
     double extRadius (radius*getAppConfig().hiveable_factor);
-    Vec2d temp(extRadius, extRadius), topLeftD(p-temp), bottomRightD(p + temp);
+    Vec2d temp(extRadius, extRadius), topLeftD(p - temp), bottomRightD(p + temp);
     clamping(topLeftD);
     clamping(bottomRightD);
 
@@ -565,6 +565,28 @@ bool World::isFlyable(const Vec2d &p) const {
 
     if (cells_[index] == Kind::Rocks) return false;
     else return true;
+}
+
+bool World::canFogSpawn(const Vec2d &position) const {
+
+    Vec2d factor (getAppConfig().fog_active_site_factor_x, getAppConfig().fog_active_site_factor_y);
+    Vec2d topLeftD (position - getAppConfig().fog_manual_size*factor);
+    Vec2d bottomRightD (position + getAppConfig().fog_manual_size*factor);
+
+    clamping(topLeftD);
+    clamping(bottomRightD);
+
+    sf::Vector2i topLeft(help::getX(topLeftD, cellSize_), help::getY(topLeftD, cellSize_));
+    sf::Vector2i bottomRight(help::getX(bottomRightD, cellSize_), help::getY(bottomRightD, cellSize_));
+
+    std::vector<std::size_t> humidityIndexes (indexesForRect(topLeft, bottomRight));
+
+    double totalHumidity(.0);
+    for (auto const& i : humidityIndexes) {
+        totalHumidity += cellsHumidity_[i];
+    }
+
+    return (totalHumidity > getAppConfig().fog_humidity_threshold);
 }
 
 

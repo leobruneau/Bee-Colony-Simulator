@@ -374,7 +374,8 @@ void Env::fetchHivesData(std::unordered_map<std::string, double> &map) const {
 }
 
 bool Env::addFogAt(const Vec2d &position) {
-    return weather_.addFogAt(position);
+    if (canFogSpawn(position)) weather_.addFogAt(position);
+    else return false;
 }
 
 Wind Env::getWind() const {
@@ -388,6 +389,16 @@ void Env::increaseTemperature() {
 void Env::decreaseTemperature() {
     weather_.decreaseTemperature();
 }
+
+bool Env::canFogSpawn(const Vec2d &position) const {
+    return world_.canFogSpawn(position);
+}
+
+bool Env::fogHumidityThreshold(const Vec2d &position) const {
+    return canFogSpawn(position);
+}
+
+
 
 
 
