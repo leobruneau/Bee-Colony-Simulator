@@ -91,6 +91,18 @@ public:
   const std::string grass_texture;
   const std::string rock_texture;
   const std::string water_texture;
+
+  // weather
+  const double max_temperature;
+  const double min_temperature;
+  const double max_wind_speed;
+  const double fog_humidity_threshold;
+  const double fog_max_size;
+  const double fog_min_size;
+  const double fog_active_site_size;
+  const std::string fog_texture;
+
+
   // flowers
   const int initial_flower_count;
   const int flowers_max_failures;

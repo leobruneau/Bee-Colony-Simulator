@@ -6,6 +6,22 @@
             "max dt" : 0.05,
 	    "fixed step" : 0.01
         },
+        "weather" : {
+            "temperature" : {
+                "max" : 40.0,
+                "min" : -10.0
+            },
+            "wind" : {
+                "max speed" : 35.0
+            },
+            "fog" : {
+                "humidity threshold" : 100000,
+                "max size" : 300,
+                "min size" : 125,
+                "active site size" : 70,
+                "texture" : "fog.png"
+            }
+        },
         "bees" : {
             "scout" : {
                 "visibility range" : 1,

@@ -41,6 +41,7 @@ void Env::update(sf::Time dt) {
     removeDeadFlowers();
     flowers_.insert(flowers_.end(), newFlowers_.begin(), newFlowers_.end());
     newFlowers_.clear();
+    weather_.update(dt);
 }
 
 void Env::drawOn(sf::RenderTarget &target) const {
@@ -51,6 +52,8 @@ void Env::drawOn(sf::RenderTarget &target) const {
         nf->drawOn(target);
     for (auto const& h: hives_)
         h->drawOn(target);
+
+    weather_.drawOn(target);
 }
 
 void Env::reset() {
@@ -58,6 +61,7 @@ void Env::reset() {
     hiveDestroyer();
     world_.reset(true);
     flowerGenerator_.reset();
+    weather_.reset();
 }
 
 float Env::getSize() {
@@ -72,6 +76,7 @@ void Env::loadWorldFromFile() {
     flowerDestroyer();
     hiveDestroyer();
     world_.loadFromFile();
+    weather_.reset();
 }
 
 void Env::saveWorldToFile() const {
@@ -366,6 +371,22 @@ void Env::fetchHivesData(std::unordered_map<std::string, double> &map) const {
             ++i;
         }
     }
+}
+
+bool Env::addFogAt(const Vec2d &position) {
+    return weather_.addFogAt(position);
+}
+
+Wind Env::getWind() const {
+    return weather_.getWind();
+}
+
+void Env::increaseTemperature() {
+    weather_.increaseTemperature();
+}
+
+void Env::decreaseTemperature() {
+    weather_.decreaseTemperature();
 }
 
 

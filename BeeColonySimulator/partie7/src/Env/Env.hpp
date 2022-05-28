@@ -9,6 +9,9 @@
 #include "../Interface/Updatable.hpp"
 #include "FlowerGenerator.hpp"
 #include "Hive.hpp"
+#include "Weather.hpp"
+
+struct Wind;
 
 class Env : public Drawable, public Updatable {
 public:
@@ -200,6 +203,29 @@ public:
      */
     std::vector<std::string> getHivesIds() const;
 
+    /*!
+     * @brief adds a cloud of fog at the mouse's position
+     *
+     * @param position of fog cloud
+     * @return true if the cloud was successfully added
+     */
+    bool addFogAt(Vec2d const& position);
+
+    /*!
+     * @return the wind parameter of the weather of the environment
+     */
+    Wind getWind() const;
+
+    /*!
+     * @brief increases temperature of environment (by 1 degree)
+     */
+    void increaseTemperature();
+
+    /*!
+     * @brief decreases temperature of environment (by 1 degree)
+     */
+    void decreaseTemperature();
+
 private:
     World world_;
     std::vector<Flower*> flowers_;
@@ -210,6 +236,11 @@ private:
      * @brief random flower generator
      */
     FlowerGenerator flowerGenerator_;
+
+    /*!
+     * @brief weather object to simulate atmospheric components
+     */
+    Weather weather_;
 };
 
 #endif //BEE_COLONY_SIMULATOR_SSV_2022_STEP3_ENV_HPP

@@ -73,6 +73,15 @@ void FinalApplication::onEvent(sf::Event event, sf::RenderWindow&)
             }
             break;
 
+        case sf::Keyboard::V:
+            if (getAppEnv().addFogAt(getCursorPositionInView())) {
+                std::cout << "New fog cloud created\n";
+            } else {
+                std::cout << "Couldn't create new fog cloud\n";
+            }
+            break;
+
+
         // Add hive: try to create a new one and disable "hiveable" zone
         case sf::Keyboard::H:
             mShowHiveableZone = false;

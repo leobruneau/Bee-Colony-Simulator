@@ -556,9 +556,9 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
         case sf::Keyboard::PageDown: // increase current control
 
 				switch(mCurrentControl){
-				  //case TEMPERATURE :
-				  //		mEnv->decreaseTemperature();
-				  //break;
+                    case TEMPERATURE :
+                        mEnv->decreaseTemperature();
+                        break;
 					case STATS:
 						mStats->previous(); 
 						break;
@@ -568,9 +568,9 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
 				break;
         case sf::Keyboard::PageUp: // decrease current control
 	  switch(mCurrentControl){
-	    //				case TEMPERATURE :
-	    //					mEnv->increaseTemperature();
-	    //					break;
+                    case TEMPERATURE :
+                        mEnv->increaseTemperature();
+                        break;
 					case STATS:
 						mStats->next();
 						break;

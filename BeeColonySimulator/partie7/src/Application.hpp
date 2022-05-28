@@ -149,7 +149,7 @@ public:
     Vec2d getCursorPositionInView() const;
 
 	// TODO: to adapt if new controls are added
-	enum Control { STATS, NB_CONTROLS=1	};
+	enum Control { STATS, TEMPERATURE , NB_CONTROLS=2};
 	
 protected:
 	/**
