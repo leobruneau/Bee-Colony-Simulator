@@ -106,6 +106,7 @@ public:
 
   // fog
   const double fog_humidity_threshold;
+  const double fog_spawn_probability;
   const double fog_max_size;
   const double fog_min_size;
   const double fog_manual_size;

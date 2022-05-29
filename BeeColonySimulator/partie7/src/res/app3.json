@@ -18,6 +18,7 @@
             },
             "fog" : {
                 "humidity threshold" : 1500000,
+                "spawn probability" : 0.6,
                 "max size" : 250,
                 "min size" : 150,
                 "manual size" : 180,

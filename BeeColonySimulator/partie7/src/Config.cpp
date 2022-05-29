@@ -57,6 +57,7 @@ Config::Config (const j::Value& cfg): mConfig(cfg)
 
 // fog
 , fog_humidity_threshold(mConfig["simulation"]["weather"]["fog"]["humidity threshold"].toDouble())
+, fog_spawn_probability(mConfig["simulation"]["weather"]["fog"]["spawn probability"].toDouble())
 , fog_max_size(mConfig["simulation"]["weather"]["fog"]["max size"].toDouble())
 , fog_min_size(mConfig["simulation"]["weather"]["fog"]["min size"].toDouble())
 , fog_manual_size(mConfig["simulation"]["weather"]["fog"]["manual size"].toDouble())

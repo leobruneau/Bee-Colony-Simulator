@@ -16,11 +16,12 @@ void FogGenerator::update(sf::Time dt) {
     _elapsed += dt;
     if (_elapsed > sf::seconds((float)getAppConfig().fog_generator_delay) and getAppConfig().active_fog_generator) {
         _elapsed = sf::Time::Zero;
+        if (bernoulli(getAppConfig().fog_spawn_probability)) {
+            auto randomX(uniform(.0, getApp().getEnvSize().x()));
+            auto randomY(uniform(.0, getApp().getEnvSize().y()));
+            Vec2d rPos(randomX, randomY);
 
-        auto randomX(uniform(.0, getApp().getEnvSize().x()));
-        auto randomY (uniform(.0, getApp().getEnvSize().y()));
-        Vec2d rPos(randomX, randomY);
-
-        getAppEnv().addFogAt(rPos);
+            getAppEnv().addFogAt(rPos);
+        }
     }
 }

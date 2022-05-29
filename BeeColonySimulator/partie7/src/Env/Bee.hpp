@@ -195,6 +195,9 @@ public:
     */
     virtual void decreaseNumber() const = 0;
 
+    /*!
+     * @brief handles algorithm to simulate the effects of temperature
+     */
     void temperatureEffects();
 
 

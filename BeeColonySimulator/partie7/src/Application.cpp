@@ -17,6 +17,8 @@
 #include <cassert>
 #include <Stats/Stats.hpp>
 #include "Config.hpp"
+#include "Env/HelperFunctions.hpp"
+
 namespace // anonymous
 {
 /* objects defined in anonymous namespaces cannot be used
@@ -884,6 +886,7 @@ void Application::drawOneControl(sf::RenderWindow& target
     Vec2d position (70, 160);
     auto compass (buildSprite(position, 120, getAppTexture("compass.png")));
     auto arrow (buildSprite(position, 120, getAppTexture("arrow.png")));
+    arrow.rotate((float)(help::debugWindRotation/(2*PI))*360);
     target.draw(compass);
     target.draw(arrow);
     // - - - - - - - - - - - - - - - - - - - - - - - - - -

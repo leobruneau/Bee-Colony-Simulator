@@ -5,6 +5,7 @@
 #include "Weather.hpp"
 #include "Random/Random.hpp"
 #include "Application.hpp"
+#include "HelperFunctions.hpp"
 
 Weather::Weather(double temperature, Vec2d windDirection, double windSpeed)
     : _temperature(temperature), _wind({windDirection, windSpeed}) {
@@ -21,7 +22,6 @@ Weather::~Weather() {
 
 void Weather::update(sf::Time dt) {
     for (auto const& _f : _fog) _f->update(dt);
-    _wind._speed = 20;
     _fogGenerator.update(dt);
     removeInsufficientFog();
 }
@@ -100,9 +100,13 @@ void Weather::increaseWindSpeed() {
 }
 
 void Weather::decreaseWindDirection() {
-    _wind._direction.rotate(-.25);
+    double step (-PI/16);
+    _wind._direction.rotate(step);
+    help::debugWindRotation += step;
 }
 
 void Weather::increaseWindDirection() {
-    _wind._direction.rotate(.25);
+    double step (PI/16);
+    _wind._direction.rotate(step);
+    help::debugWindRotation += step;
 }

@@ -216,6 +216,9 @@ public:
      */
     Wind getWind() const;
 
+    /*!
+     * @return current wind speed in the environment
+     */
     double getWindSpeed() const;
 
     /*!
