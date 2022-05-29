@@ -216,6 +216,8 @@ public:
      */
     Wind getWind() const;
 
+    double getWindSpeed() const;
+
     /*!
      * @brief increases temperature of environment (by 1 degree)
      */
@@ -240,6 +242,29 @@ public:
      * @return true if humidity is enough, false otherwise
      */
     bool fogHumidityThreshold(const Vec2d& position) const;
+
+    /*!
+     * @return the value of the temperature
+     */
+    double getTemperature() const;
+
+    /*!
+     * @brief decrease wind speed by 1
+     */
+    void decreaseWindSpeed();
+
+     /*!
+      * @brief increase wind speed by 1
+      */
+    void increaseWindSpeed();
+
+    void decreaseWindDirection();
+
+    void increaseWindDirection();
+
+    void temperatureEffects();
+
+    double getTemperatureFactor(double temp);
 
 private:
     World world_;

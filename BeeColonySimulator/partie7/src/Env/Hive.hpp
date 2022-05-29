@@ -126,6 +126,8 @@ public:
      */
     double getCurrentNectar() const;
 
+    void temperatureEffects();
+
 protected:
 
     /*!

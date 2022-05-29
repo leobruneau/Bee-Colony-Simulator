@@ -96,13 +96,13 @@ public:
 
   // weather (bonus extension)
   // temperature
+  const double manual_ub_temperature;
+  const double manual_lb_temperature;
   const double max_temperature;
   const double min_temperature;
 
   // wind
   const double max_wind_speed;
-  const double wind_rotation_angle_max;
-  const double wind_rotation_probability;
 
   // fog
   const double fog_humidity_threshold;
@@ -114,6 +114,7 @@ public:
   const int fog_min_density;
   const int fog_max_density;
   const double fog_increase_density_factor;
+  const double fog_decrease_density_factor;
   const std::string fog_texture;
 
   // fog generator

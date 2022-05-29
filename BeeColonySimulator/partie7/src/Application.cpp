@@ -556,6 +556,12 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
         case sf::Keyboard::PageDown: // increase current control
 
 				switch(mCurrentControl){
+                    case WIND_SPEED:
+                        mEnv->decreaseWindSpeed();
+                        break;
+                    case WIND_DIRECTION:
+                        mEnv->decreaseWindDirection();
+                        break;
                     case TEMPERATURE :
                         mEnv->decreaseTemperature();
                         break;
@@ -568,6 +574,12 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
 				break;
         case sf::Keyboard::PageUp: // decrease current control
 	  switch(mCurrentControl){
+                    case WIND_SPEED:
+                        mEnv->increaseWindSpeed();
+                        break;
+                    case WIND_DIRECTION:
+                        mEnv->increaseWindDirection();
+                        break;
                     case TEMPERATURE :
                         mEnv->increaseTemperature();
                         break;
@@ -837,10 +849,17 @@ void Application::drawOneControl(sf::RenderWindow& target
 	sf::Color color (mCurrentControl == control ? sf::Color::Red : sf::Color::White);
 	std::string text("");
 	switch (control) {
-	  //	case TEMPERATURE :
-	  //		text = "Temperature : ";
-	  //		text += to_nice_string(mEnv->getTemperature());
-	  //		break;
+        case WIND_DIRECTION:
+            text = "Wind Direction :";
+            break;
+        case WIND_SPEED:
+            text = "Wind Speed : ";
+            text += to_nice_string(mEnv->getWindSpeed());
+            break;
+	  	case TEMPERATURE :
+	  		text = "Temperature : ";
+	  		text += to_nice_string(mEnv->getTemperature());
+	  		break;
 		case STATS :
 			text = "Current stat : ";
 			text += (isStatsOn ? mStats->getCurrentTitle() : "disabled");
@@ -860,6 +879,14 @@ void Application::drawOneControl(sf::RenderWindow& target
 	legend.setColor(color);
 #endif
 	target.draw(legend);
+
+    // - - - - - - - - - - BONUS - - - - - - - - - - - - -
+    Vec2d position (70, 160);
+    auto compass (buildSprite(position, 120, getAppTexture("compass.png")));
+    auto arrow (buildSprite(position, 120, getAppTexture("arrow.png")));
+    target.draw(compass);
+    target.draw(arrow);
+    // - - - - - - - - - - - - - - - - - - - - - - - - - -
 }
 
 void Application::setResetting(bool reset){

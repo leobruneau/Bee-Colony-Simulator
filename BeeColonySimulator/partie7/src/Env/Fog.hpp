@@ -54,6 +54,8 @@ public:
      */
     void passiveMovement(sf::Time dt);
 
+    bool isDead() const;
+
 private:
 
     /*!

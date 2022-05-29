@@ -8,7 +8,7 @@
 
 Weather::Weather(double temperature, Vec2d windDirection, double windSpeed)
     : _temperature(temperature), _wind({windDirection, windSpeed}) {
-
+    // empty by default
 }
 
 Weather::~Weather() {
@@ -21,8 +21,9 @@ Weather::~Weather() {
 
 void Weather::update(sf::Time dt) {
     for (auto const& _f : _fog) _f->update(dt);
-    _wind._speed = getAppConfig().max_wind_speed;
+    _wind._speed = 20;
     _fogGenerator.update(dt);
+    removeInsufficientFog();
 }
 
 void Weather::drawOn(sf::RenderTarget &target) const {
@@ -32,11 +33,7 @@ void Weather::drawOn(sf::RenderTarget &target) const {
 }
 
 void Weather::showDebugInfo(sf::RenderTarget &target) const {
-    Vec2d position (getAppEnv().getSize() - 30, 30);
-    auto compass (buildSprite(position, 50, getAppTexture("compass.png")));
-    auto arrow (buildSprite(position, 50, getAppTexture("arrow.png")));
-    target.draw(compass);
-    target.draw(arrow);
+    // empty by default
 }
 
 void Weather::addFogAt(const Vec2d &p) {
@@ -53,12 +50,14 @@ void Weather::increaseTemperature() {
     ++_temperature;
     bool condition (_temperature < getAppConfig().max_temperature);
     _temperature = _temperature*condition + (!condition)*getAppConfig().max_temperature;
+    getAppEnv().temperatureEffects();
 }
 
 void Weather::decreaseTemperature() {
     --_temperature;
     bool condition (_temperature > getAppConfig().min_temperature);
     _temperature = _temperature*condition + (!condition)*getAppConfig().min_temperature;
+    getAppEnv().temperatureEffects();
 }
 
 void Weather::reset() {
@@ -71,4 +70,39 @@ void Weather::fogDestoryer() {
         _f = nullptr;
     }
     _fog.clear();
+}
+
+void Weather::removeInsufficientFog() {
+    for (auto& _f : _fog) {
+        if (_f -> isDead()) {
+            delete _f;
+            _f = nullptr;
+        }
+    }
+
+    _fog.erase(std::remove(_fog.begin(), _fog.end(), nullptr), _fog.end());
+}
+
+double Weather::getTemperature() const {
+    return _temperature;
+}
+
+void Weather::decreaseWindSpeed() {
+    --_wind._speed;
+    bool condition (_wind._speed > 0);
+    _wind._speed = _wind._speed*condition;
+}
+
+void Weather::increaseWindSpeed() {
+    ++_wind._speed;
+    bool condition (_wind._speed > getAppConfig().max_wind_speed);
+    _wind._speed = _wind._speed*(!condition) + getAppConfig().max_wind_speed*condition;
+}
+
+void Weather::decreaseWindDirection() {
+    _wind._direction.rotate(-.25);
+}
+
+void Weather::increaseWindDirection() {
+    _wind._direction.rotate(.25);
 }

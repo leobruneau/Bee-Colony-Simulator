@@ -145,3 +145,8 @@ double Hive::getCurrentNectar() const {
     return nectar_;
 }
 
+void Hive::temperatureEffects() {
+    for (auto& _b : bees_)
+        _b -> temperatureEffects();
+}
+

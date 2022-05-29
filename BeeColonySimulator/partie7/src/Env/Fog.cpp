@@ -17,14 +17,14 @@ Fog::~Fog() {
 void Fog::update(sf::Time dt) {
 //    _density = 255*(_density > 255) + 255*(_density < 0);
     passiveMovement(dt);
-    bool fogUpdate (getAppEnv().fogHumidityThreshold(getPosition()));
-    _density += (fogUpdate - !fogUpdate)*getAppConfig().fog_increase_density_factor;
-    int minDensity(getAppConfig().fog_min_density);
+    bool fogIncrease (getAppEnv().fogHumidityThreshold(getPosition()));
+    double incFactor (getAppConfig().fog_increase_density_factor);
+    double decFactor (getAppConfig().fog_decrease_density_factor);
+    _density += incFactor*fogIncrease - !fogIncrease*decFactor;
     int maxDensity(getAppConfig().fog_max_density);
-    bool co1 (_density > maxDensity), co2 (_density < minDensity);
+    bool co1 (_density > maxDensity), co2 (_density < 0);
 
-    _density = _density*(!co1 and !co2) + minDensity*co2 + maxDensity*co1;
-
+    _density = _density*(!co1 and !co2) + maxDensity*co1;
 }
 
 void Fog::drawOn(sf::RenderTarget &target) const {
@@ -50,4 +50,8 @@ void Fog::showDebugInfo(sf::RenderTarget &target) const {
     Vec2d bottomRight (getPosition() + factor*getRadius());
     auto rect (buildRectangle(topLeft, bottomRight, sf::Color::Green, 2));
     target.draw(rect);
+}
+
+bool Fog::isDead() const {
+    return _density < getAppConfig().fog_min_density;
 }

@@ -107,6 +107,24 @@ public:
      */
     void decreaseTemperature();
 
+    /*!
+     * @brief removes clouds whose density is below a certain threshold
+     */
+    void removeInsufficientFog();
+
+    /*!
+     * @return value of temperature
+     */
+    double getTemperature() const;
+
+    void decreaseWindSpeed();
+
+    void increaseWindSpeed();
+
+    void decreaseWindDirection();
+
+    void increaseWindDirection();
+
 private:
     double _temperature;
     Wind _wind;

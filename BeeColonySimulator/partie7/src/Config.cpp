@@ -47,13 +47,13 @@ Config::Config (const j::Value& cfg): mConfig(cfg)
 
 // weather (bonus extension)
 // temperature
+, manual_ub_temperature(mConfig["simulation"]["weather"]["temperature"]["manual ub"].toDouble())
+, manual_lb_temperature(mConfig["simulation"]["weather"]["temperature"]["manual lb"].toDouble())
 , max_temperature(mConfig["simulation"]["weather"]["temperature"]["max"].toDouble())
 , min_temperature(mConfig["simulation"]["weather"]["temperature"]["min"].toDouble())
 
 // wind
 , max_wind_speed(mConfig["simulation"]["weather"]["wind"]["max speed"].toDouble())
-, wind_rotation_angle_max(mConfig["simulation"]["weather"]["wind"]["rotation angle max"].toDouble())
-, wind_rotation_probability(mConfig["simulation"]["weather"]["wind"]["max speed"].toDouble())
 
 // fog
 , fog_humidity_threshold(mConfig["simulation"]["weather"]["fog"]["humidity threshold"].toDouble())
@@ -65,6 +65,7 @@ Config::Config (const j::Value& cfg): mConfig(cfg)
 , fog_min_density(mConfig["simulation"]["weather"]["fog"]["density"]["min"].toInt())
 , fog_max_density(mConfig["simulation"]["weather"]["fog"]["density"]["max"].toInt())
 , fog_increase_density_factor(mConfig["simulation"]["weather"]["fog"]["density"]["increase factor"].toDouble())
+, fog_decrease_density_factor(mConfig["simulation"]["weather"]["fog"]["density"]["decrease factor"].toDouble())
 , fog_texture(mConfig["simulation"]["weather"]["fog"]["texture"].toString())
 
 // fog generator

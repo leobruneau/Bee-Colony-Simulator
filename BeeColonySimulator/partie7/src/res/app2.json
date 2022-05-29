@@ -17,7 +17,7 @@
                 "rotation probability" : 0.3
             },
             "fog" : {
-                "humidity threshold" : 250000,
+                "humidity threshold" : 350000,
                 "max size" : 300,
                 "min size" : 125,
                 "manual size" : 180,

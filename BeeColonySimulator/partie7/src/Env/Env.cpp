@@ -398,6 +398,44 @@ bool Env::fogHumidityThreshold(const Vec2d &position) const {
     return canFogSpawn(position);
 }
 
+double Env::getTemperature() const {
+    return weather_.getTemperature();
+}
+
+void Env::decreaseWindSpeed() {
+    weather_.decreaseWindSpeed();
+}
+
+void Env::increaseWindSpeed() {
+    weather_.increaseWindSpeed();
+}
+
+void Env::decreaseWindDirection() {
+    weather_.decreaseWindDirection();
+}
+
+void Env::increaseWindDirection() {
+    weather_.increaseWindDirection();
+}
+
+double Env::getWindSpeed() const {
+    return getWind()._speed;
+}
+
+void Env::temperatureEffects() {
+    for (auto const& _h : hives_)
+        _h -> temperatureEffects();
+}
+
+double Env::getTemperatureFactor(double temp) {
+    double temperatureFactor (.0);
+    double ubTemp (getAppConfig().manual_ub_temperature);
+    double lbTemp (getAppConfig().manual_lb_temperature);
+
+    if (temp <= ubTemp and temp >= lbTemp) temperatureFactor = 1;
+    else if (temp > ubTemp) temperatureFactor = pow(M_E, -temp);
+}
+
 
 
 

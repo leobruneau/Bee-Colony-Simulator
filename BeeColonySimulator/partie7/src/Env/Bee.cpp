@@ -156,3 +156,12 @@ void Bee::setMemory(Vec2d const* position) {
 Bee::~Bee() {
     // default constructor
 }
+
+void Bee::temperatureEffects() {
+    double speed (velocity_.length());
+    Vec2d direction (velocity_/speed);
+    double tempFactor (getAppEnv().getTemperatureFactor(getAppEnv().getTemperature()));
+
+    double newSpeed (getConfig()["speed"].toDouble() * tempFactor);
+    velocity_ = newSpeed*direction;
+}

@@ -195,6 +195,8 @@ public:
     */
     virtual void decreaseNumber() const = 0;
 
+    void temperatureEffects();
+
 
 
 private:
