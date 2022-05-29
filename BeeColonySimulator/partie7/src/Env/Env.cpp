@@ -428,12 +428,12 @@ void Env::temperatureEffects() {
 }
 
 double Env::getTemperatureFactor(double temp) {
-    double temperatureFactor (.0);
-    double ubTemp (getAppConfig().manual_ub_temperature);
-    double lbTemp (getAppConfig().manual_lb_temperature);
-
-    if (temp <= ubTemp and temp >= lbTemp) temperatureFactor = 1;
-    else if (temp > ubTemp) temperatureFactor = pow(M_E, -temp);
+//    double temperatureFactor (.0);
+//    double ubTemp (getAppConfig().manual_ub_temperature);
+//    double lbTemp (getAppConfig().manual_lb_temperature);
+//
+//    if (temp <= ubTemp and temp >= lbTemp) temperatureFactor = 1;
+//    else if (temp > ubTemp) temperatureFactor = pow(M_E, -temp);
 }
 
 
