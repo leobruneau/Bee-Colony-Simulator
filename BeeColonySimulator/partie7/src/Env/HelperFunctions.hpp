@@ -5,6 +5,7 @@
 #ifndef BEE_COLONY_SIMULATOR_SSV_2022_STEP3_HELPERFUNCTIONS_HPP
 #define BEE_COLONY_SIMULATOR_SSV_2022_STEP3_HELPERFUNCTIONS_HPP
 #include "Utility/Vec2d.hpp"
+#include <cmath>
 
 namespace help {
 
