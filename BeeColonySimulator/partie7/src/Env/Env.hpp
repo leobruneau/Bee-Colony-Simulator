@@ -171,9 +171,9 @@ public:
     const std::vector<Flower*>* getFlowers();
 
     /*!
-     * @brief empty function. Still to be coded
+     * @brief empty function. Still to be coded (is bonus)
      */
-    Bee* getBeeAt(Vec2d const& p) const;
+//    Bee* getBeeAt(Vec2d const& p) const;
 
     /*!
      * @brief returns an unordered map containing the new data points for the stats
@@ -261,13 +261,34 @@ public:
       */
     void increaseWindSpeed();
 
+    /*!
+     * @brief decreases wind direction's angle
+     */
     void decreaseWindDirection();
 
+    /*!
+     * @brief increases wind direction's angle
+     */
     void increaseWindDirection();
 
+    /*!
+     * @brief calls the temperatureEffects() methods for all interested objects in the environment
+     */
     void temperatureEffects();
 
-    double getTemperatureFactor(double temp);
+    /*!
+     * @brief calculates the factor of influence of temperature (follows the curves displayed in a .png file
+     * inside the res folder)
+     *
+     * @param temp current temperature of the environment
+     * @return specific influence factor
+     */
+    static double getTemperatureFactor(double temp);
+
+    /*!
+     * @return the current wind velocity (i.e. _speed * _direction)
+     */
+    Vec2d getWindVelocity() const;
 
 private:
     World world_;

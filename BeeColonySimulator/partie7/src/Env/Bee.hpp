@@ -32,7 +32,7 @@ public:
     /*!
      * @brief User defined destructor (which is default)
      */
-    virtual ~Bee();
+    ~Bee() override;
 
     /*!
      * @brief Method for drawing the bees on the screen

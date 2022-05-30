@@ -207,6 +207,10 @@ public:
      */
     std::vector<std::size_t> indexesForRect(sf::Vector2i const& topLeft, sf::Vector2i const& bottomRight) const;
 
+    /*!
+     * @brief checks if the humidity level around a given position is sufficient
+     * for a fog cloud to spawn
+     */
     bool canFogSpawn(const Vec2d& position) const;
 
 private:

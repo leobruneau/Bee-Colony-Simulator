@@ -54,6 +54,9 @@ public:
      */
     void passiveMovement(sf::Time dt);
 
+    /*!
+     * @return true if density attribute is below a critical threshold (defined inside .json file), false otherwise
+     */
     bool isDead() const;
 
 private:

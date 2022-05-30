@@ -21,6 +21,11 @@ public:
     ScoutBee(Hive* homeHive, Vec2d& position, double radius, double energy, double speed);
 
     /*!
+     * @brief default constructor
+     */
+    ~ScoutBee() override;
+
+    /*!
      * @return The configuration of the current bee (with polymorphic behaviour)
      */
     j::Value const& getConfig() const override;

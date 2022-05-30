@@ -46,7 +46,9 @@ public:
      * @param windDirection varies during simulation
      * @param windSpeed varies during simulation
      */
-    Weather(double temperature = 25.0, Vec2d windDirection = {1, 0}, double windSpeed = 0);
+    Weather(double temperature, Vec2d windDirection, double windSpeed);
+
+    Weather();
 
     /*!
      * @brief user defined destructor
@@ -71,13 +73,6 @@ public:
      * @param target main window
      */
     void drawOn(sf::RenderTarget& target) const override;
-
-    /*!
-     * @brief displays debug information about the weather
-     *
-     * @param target main window
-     */
-    void showDebugInfo(sf::RenderTarget& target) const;
 
     /*!
      * @brief adds a fog cloud at a given position p
@@ -117,12 +112,24 @@ public:
      */
     double getTemperature() const;
 
+    /*!
+     * @brief decreases wind speed by 1
+     */
     void decreaseWindSpeed();
 
+    /*!
+     * @brief increases wind speed by 1
+     */
     void increaseWindSpeed();
 
+    /*!
+     * @brief decreases wind direction's angle
+     */
     void decreaseWindDirection();
 
+    /*!
+     * @brief increases wind direction's angle
+     */
     void increaseWindDirection();
 
 private:

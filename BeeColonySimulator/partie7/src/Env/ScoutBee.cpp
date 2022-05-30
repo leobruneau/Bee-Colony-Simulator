@@ -61,8 +61,8 @@ void ScoutBee::onEnterState(const State &state) {
 }
 
 void ScoutBee::showSpecificDebugOptions(sf::RenderTarget& target) const {
-//    showDebugEnergy(target);
-//    showDebugState(target);
+    showDebugEnergy(target);
+    showDebugState(target);
 }
 
 void ScoutBee::showDebugEnergy(sf::RenderTarget &target) const {
@@ -121,9 +121,9 @@ bool ScoutBee::findBestFlower() {
     return false;
 }
 
-void ScoutBee::interact(Bee *other) { }
+void ScoutBee::interact(Bee *other) { } // empty by default
 
-void ScoutBee::interactWith(ScoutBee *scouting) { }
+void ScoutBee::interactWith(ScoutBee *scouting) { } // empty by default
 
 void ScoutBee::interactWith(WorkerBee *working) {
     if (getMemory()!= nullptr and (int)informedWorkerBees < getAppConfig().scout_max_sharing) working->learnFlowerLocation(*(this->getMemory()));
@@ -137,5 +137,7 @@ bool ScoutBee::isInHive() const {
 void ScoutBee::decreaseNumber() const {
     getHomeHive()->decreaseScouts();
 }
+
+ScoutBee::~ScoutBee() { } // default
 
 

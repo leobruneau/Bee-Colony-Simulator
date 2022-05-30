@@ -105,7 +105,6 @@ bool Env::addFlowerAt(const Vec2d &p, bool split) {
         for (auto const& h: hives_) {
             if (*h > *toAdd) {
                 delete toAdd;
-                toAdd = nullptr;
                 return false;
             }
         }
@@ -115,17 +114,12 @@ bool Env::addFlowerAt(const Vec2d &p, bool split) {
     if ((world_.isGrowable(p) and (int)flowers_.size() < getAppConfig().max_flowers) and world_.getHumidity(p) > 0) {
 
         // Dynamically allocating memory on the heap for a newly created flower
-        if (split) {
-            newFlowers_.push_back(toAdd);
-            toAdd = nullptr;
-        } else {
-            flowers_.push_back(toAdd);
-            toAdd = nullptr;
-        }
+        if (split) newFlowers_.push_back(toAdd);
+        else flowers_.push_back(toAdd);
+
         return true;
     } else { // deallocating memory if the flower cannot be added
         delete toAdd;
-        toAdd = nullptr;
         return false;
     }
 }
@@ -150,7 +144,6 @@ void Env::drawFlowerZone(sf::RenderTarget &target, const Vec2d &position) {
     target.draw(shape);
 
     delete toAdd;
-    toAdd = nullptr;
 }
 
 void Env::flowerDestroyer() {
@@ -166,7 +159,7 @@ void Env::flowerDestroyer() {
 }
 
 double Env::getCellHumidity(Vec2d const& position) {
-    return world_.getHumidity(position);;
+    return world_.getHumidity(position);
 }
 
 void Env::removeDeadFlowers() {
@@ -275,7 +268,7 @@ bool Env::isHiveable(const Vec2d &position, double radius) const {
             if (!flowers_.empty()) {
                 for (auto const& f: flowers_) {
                     if (toAdd->isColliding(*f)) {
-                        delete toAdd; toAdd = nullptr;
+                        delete toAdd;
                         return false;
                     }
                 }
@@ -284,7 +277,7 @@ bool Env::isHiveable(const Vec2d &position, double radius) const {
             if (!newFlowers_.empty()) {
                 for (auto const& nf: newFlowers_) {
                     if (toAdd->isColliding(*nf)) {
-                        delete toAdd; toAdd = nullptr;
+                        delete toAdd;
                         return false;
                     }
                 }
@@ -293,14 +286,13 @@ bool Env::isHiveable(const Vec2d &position, double radius) const {
             if (!hives_.empty()) {
                 for (auto const& h: hives_) {
                     if (toAdd->isColliding(*h)) {
-                        delete toAdd; toAdd = nullptr;
+                        delete toAdd;
                         return false;
                     }
                 }
             }
 
             delete toAdd;
-            toAdd = nullptr;
             return true;
 
         } else return false;
@@ -315,10 +307,9 @@ const std::vector<Flower*>* Env::getFlowers() {
     return &flowers_;
 }
 
-Bee *Env::getBeeAt(const Vec2d &p) const {
-    // TODO to code for extensions
-    return nullptr;
-}
+//Bee *Env::getBeeAt(const Vec2d &p) const {
+//    return nullptr;
+//}
 
 std::unordered_map<std::string, double> Env::fetchData(const std::string &title) const {
     std::unordered_map<std::string, double> newData;
@@ -355,7 +346,7 @@ std::vector<std::string> Env::getHivesIds() const {
         std::vector<std::string> hivesIds_(hives_.size(), "hive #");
 
         for (size_t i(0); i < hives_.size(); ++i)
-            (hivesIds_.at(i)).append(to_nice_string(i));
+            (hivesIds_.at(i)).append(to_nice_string((double)i));
 
         return hivesIds_;
     }
@@ -374,7 +365,10 @@ void Env::fetchHivesData(std::unordered_map<std::string, double> &map) const {
 }
 
 bool Env::addFogAt(const Vec2d &position) {
-    if (canFogSpawn(position)) weather_.addFogAt(position);
+    if (canFogSpawn(position)) {
+        weather_.addFogAt(position);
+        return true;
+    }
     else return false;
 }
 
@@ -437,6 +431,10 @@ double Env::getTemperatureFactor(double temp) {
     else if (temp > ubTemp) temperatureFactor = help::temperatureFunction2(temp);
 
     return temperatureFactor;
+}
+
+Vec2d Env::getWindVelocity() const {
+    return getWind()._direction * getWind()._speed;
 }
 
 

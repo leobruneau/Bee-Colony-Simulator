@@ -106,7 +106,7 @@ void FinalApplication::onDraw(sf::RenderTarget& target)
     if (mShowHiveableZone) {
         auto pos = getCursorPositionInView();
 	// UNCOMMENT IF CODED
-        //getEnv().drawHiveableZone(target, pos);
+        getEnv().drawHiveableZone(target, pos);
     }
 }
 

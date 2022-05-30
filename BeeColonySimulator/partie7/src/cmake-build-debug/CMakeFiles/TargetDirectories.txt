@@ -1,8 +1,13 @@
 /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/application-run.dir
 /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/application.dir
 /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/colliderTest.dir
+/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/jsonTest.dir
+/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/vec2dTest.dir
 /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/worldTest.dir
 /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/flowerTest.dir
 /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/hiveTest.dir
+/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/workerTest.dir
+/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/scoutTest.dir
+/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/collaborationTest.dir
 /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/edit_cache.dir
 /Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie7/src/cmake-build-debug/CMakeFiles/rebuild_cache.dir

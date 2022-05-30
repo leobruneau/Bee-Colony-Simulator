@@ -4,15 +4,17 @@
 
 #include "WorkerBee.hpp"
 
-State const WorkerBee::IN_HIVE = createUid();
-State const WorkerBee::TOWARDS_FLOWER = createUid();
-State const WorkerBee::NECTAR_HARVESTING = createUid();
-State const WorkerBee::GO_HOME = createUid();
+State const WorkerBee::IN_HIVE = createUid(); // NOLINT(cert-err58-cpp)
+State const WorkerBee::TOWARDS_FLOWER = createUid(); // NOLINT(cert-err58-cpp)
+State const WorkerBee::NECTAR_HARVESTING = createUid(); // NOLINT(cert-err58-cpp)
+State const WorkerBee::GO_HOME = createUid(); // NOLINT(cert-err58-cpp)
 
 WorkerBee::WorkerBee(Hive *homeHive, Vec2d &position, double radius, double energy, double speed)
     : Bee(homeHive,position, radius, energy, speed, {IN_HIVE, TOWARDS_FLOWER, NECTAR_HARVESTING, GO_HOME}), harvestedPollen_(.0) {
 
 }
+
+WorkerBee::~WorkerBee() { } // default
 
 j::Value const &WorkerBee::getConfig() const {
     return getValueConfig()["simulation"]["bees"]["worker"];
@@ -73,9 +75,9 @@ void WorkerBee::onEnterState(const State &state) {
 }
 
 void WorkerBee::showSpecificDebugOptions(sf::RenderTarget &target) const {
-//    showDebugEnergy(target);
-//    showDebugPollen(target);
-//    showDebugState(target);
+    showDebugEnergy(target);
+    showDebugPollen(target);
+    showDebugState(target);
 }
 
 Flower *WorkerBee::getFlowerAt(const Vec2d &p) {
@@ -138,9 +140,9 @@ void WorkerBee::interact(Bee *other) {
         other->interactWith(this);
 }
 
-void WorkerBee::interactWith(ScoutBee *scouting) { }
+void WorkerBee::interactWith(ScoutBee *scouting) { } // empty by default
 
-void WorkerBee::interactWith(WorkerBee *working) { }
+void WorkerBee::interactWith(WorkerBee *working) { } // empty by default
 
 bool WorkerBee::isInHive() const {
     return this->getState() == IN_HIVE;

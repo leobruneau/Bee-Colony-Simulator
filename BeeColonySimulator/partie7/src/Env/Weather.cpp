@@ -29,11 +29,6 @@ void Weather::update(sf::Time dt) {
 void Weather::drawOn(sf::RenderTarget &target) const {
     for (auto const& _f : _fog)
         _f->drawOn(target);
-    if (isDebugOn()) showDebugInfo(target);
-}
-
-void Weather::showDebugInfo(sf::RenderTarget &target) const {
-    // empty by default
 }
 
 void Weather::addFogAt(const Vec2d &p) {
@@ -100,13 +95,18 @@ void Weather::increaseWindSpeed() {
 }
 
 void Weather::decreaseWindDirection() {
-    double step (-PI/16);
+    float step ((float)(-PI)/16);
     _wind._direction.rotate(step);
     help::debugWindRotation += step;
 }
 
 void Weather::increaseWindDirection() {
-    double step (PI/16);
+    float step ((float)(PI)/16);
     _wind._direction.rotate(step);
     help::debugWindRotation += step;
+}
+
+Weather::Weather()
+    : Weather (25, {1,0}, 0) {
+    // Done.
 }

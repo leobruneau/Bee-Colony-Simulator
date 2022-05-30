@@ -8,23 +8,25 @@
         },
         "weather" : {
             "temperature" : {
+                "manual ub" : 25,
+                "manual lb" : 10,
                 "max" : 40.0,
                 "min" : -10.0
             },
             "wind" : {
-                "max speed" : 45.0,
-                "rotation angle max" : 0.8,
-                "rotation probability" : 0.3
+                "max speed" : 45.0
             },
             "fog" : {
-                "humidity threshold" : 350000,
-                "max size" : 1500,
-                "min size" : 800,
+                "humidity threshold" : 1500000,
+                "spawn probability" : 0.6,
+                "max size" : 800,
+                "min size" : 300,
                 "manual size" : 180,
                 "density" : {
                     "min" : 50,
                     "max" : 255,
-                    "increase factor" : 0.06
+                    "increase factor" : 0.04,
+                    "decrease factor" : 0.11
                 },
                 "active site factor" : {
                     "x" : 0.3,
