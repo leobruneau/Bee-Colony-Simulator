@@ -1,5 +1,7 @@
 # PROJECT ANSWERS
 
+## ANSWERS of group 4 (Domingos Loïc & Bruneau Léo)
+
 ##  FIRST PART (1)
 
 ### A1.1
@@ -176,18 +178,18 @@ The prototype of the `Bee::getConfig()` method has to include the reserved keywo
 We will create a virtual function (named `Bee::getTexture()`) which will return the texture. Because it is virtual and we work on pointer on bees we will
 be able to override the method in subclasses and obtain a polymorphic behaviour.
 
-### A4.11 ???
-([Question Q4.11] Quel est l'avantage ici d'accéder aux paramètres 
-au travers de la méthode getConfig() plutôt que par des raccourcis d'écriture permis par getAppConfig()  ?)
+### A4.11
+It is necessary to have polymorphic behaviour and obtain the specific configurations for each type of bee without needing to write
+an overly verbose line of code with the use of getAppConfig().*
 
 ### A4.12
-We need to modify the `Hive::update()` method that needs to call the `Bee::update()` method for each bee (in the Hive itself).
+We need to modify the `Hive::update()` method that needs to call the `Bee::update()` method for each bee (in the Hive itself). 
 We also need to modify the `Hive::drawOn()` method that needs to call the `Bee::drawOn()` method for each bee (in the Hive itself).
 
 
 ### A4.13
 The `Hive::update()` method must be modified since it also needs to handle the deletion of dead bees. To do that (and make the code cleaner), we created
- a method `Hive::removeDeadBees()` that, similarly as `Env::removeDeadFlowers()`, checks if a bee is dead and, if it is, it deallocates the linked memory and
+a method `Hive::removeDeadBees()` that, similarly as `Env::removeDeadFlowers()`, checks if a bee is dead and, if it is, it deallocates the linked memory and
 removes the pointer from the `bees_` vector.
 
 
@@ -263,14 +265,15 @@ nectar and has to be executed every `dt`.
 
 ## SIXTH PART (6)
 
-### A6.1 ??? (to review)
-The data structure used will be a struct containing the name of the graph and the pointer to the graph itself. Then as a final class attribute to model the 
-collection of graphs we used a vector of the struct mentioned above so that to each pair of name and pointer we have an integer as an identifier.
+### A6.1
+The data structure used is an ordered map of the form `std::map<int, std::pair<std::string, std::unique_ptr<Graph>>>`. We thus have, for each element of the map,
+an integer unique identifier and a pair containing the corresponding title of the graph and its unique pointer.
 
 ### A6.2 
 To better modularize the code we implemented the `Env::fetchGeneralData()` to create the new_data following the scheme for the GENERAL graph.
 We also added to the Hive class 2 new attributes: currentWorkerBees and currentScoutBees to keep track (in a polymorphic way and without testing the
 types of the objects) of the number of different bees.
+We similarly added the `Env::fecthHivesData()` method for the hives graph.
 
 
 

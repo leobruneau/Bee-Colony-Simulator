@@ -9,9 +9,20 @@ int help::getIndex(const Vec2d &p, float const& size, int const& nb) {
 }
 
 int help::getX(const Vec2d &p, const float &size) {
-    return trunc(p.x()/size);
+    return (int)trunc(p.x()/size);
 }
 
 int help::getY(const Vec2d &p, const float &size) {
-    return trunc(p.y()/size);
+    return (int)trunc(p.y()/size);
+}
+
+double help::temperatureFunction1(double temp) {
+    using namespace help;
+    return ALPHA - BETA*(1 - pow(M_E, GAMMA*temp));
+}
+
+double help::temperatureFunction2(double temp) {
+    using namespace help;
+    double r (35*GAMMA);
+    return ALPHA - BETA*(1 - pow(M_E, (-GAMMA*temp + r)));
 }

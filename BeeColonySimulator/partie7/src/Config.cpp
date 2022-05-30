@@ -9,7 +9,7 @@ Config::Config (const j::Value& cfg): mConfig(cfg)
 , window_simulation_width(mConfig["window"]["simulation"]["size"].toDouble())
 , window_simulation_height(mConfig["window"]["simulation"]["size"].toDouble())
 , window_stats_height(mConfig["window"]["stats"]["height"].toDouble())
- , window_control_width(mConfig["window"]["control"]["width"].toDouble())
+, window_control_width(mConfig["window"]["control"]["width"].toDouble())
 , window_title(mConfig["window"]["title"].toString())
 , window_antialiasing_level(mConfig["window"]["antialiasing level"].toInt())
  
@@ -25,7 +25,7 @@ Config::Config (const j::Value& cfg): mConfig(cfg)
 				   //, simulation_debug_background(mConfig["simulation"]["debug background"].toString())
 				   //, simulation_size(mConfig["simulation"]["world"]["default size"].toInt())								   
 // world
- , world_init_file(mConfig["simulation"]["world"]["file"].toString())
+, world_init_file(mConfig["simulation"]["world"]["file"].toString())
 , world_cells(mConfig["simulation"]["world"]["default cells"].toInt())
 , world_size(mConfig["simulation"]["world"]["default size"].toInt())
 , world_nb_grass_seeds(mConfig["simulation"]["world"]["seeds"]["grass"].toInt())
@@ -34,12 +34,46 @@ Config::Config (const j::Value& cfg): mConfig(cfg)
 , world_humidity_init_level(mConfig["simulation"]["world"]["generation"]["humidity"]["initial level"].toDouble())
 , world_humidity_decay_rate(mConfig["simulation"]["world"]["generation"]["humidity"]["initial level"].toDouble())
 , world_humidity_threshold(mConfig["simulation"]["world"]["generation"]["humidity"]["threshold"].toDouble())				   
-  ,world_generation_steps(mConfig["simulation"]["world"]["generation"]["steps"].toInt())
-  ,world_generation_smoothness_level(mConfig["simulation"]["world"]["generation"]["smoothness"]["level"].toInt())
-  ,water_seeds_teleport_proba(mConfig["simulation"]["world"]["seeds"]["water teleport probability"].toDouble())
-  ,smoothness_water_neighbor_ratio(mConfig["simulation"]["world"]["generation"]["smoothness"]["water neighbourhood ratio"].toDouble())
-  ,smoothness_grass_neighbor_ratio(mConfig["simulation"]["world"]["generation"]["smoothness"]["grass neighbourhood ratio"].toDouble())
- ,grass_texture(mConfig["simulation"]["world"]["textures"]["grass"].toString())	 ,rock_texture(mConfig["simulation"]["world"]["textures"]["rock"].toString())	,water_texture(mConfig["simulation"]["world"]["textures"]["water"].toString())
+, world_generation_steps(mConfig["simulation"]["world"]["generation"]["steps"].toInt())
+, world_generation_smoothness_level(mConfig["simulation"]["world"]["generation"]["smoothness"]["level"].toInt())
+, water_seeds_teleport_proba(mConfig["simulation"]["world"]["seeds"]["water teleport probability"].toDouble())
+, smoothness_water_neighbor_ratio(mConfig["simulation"]["world"]["generation"]["smoothness"]["water neighbourhood ratio"].toDouble())
+, smoothness_grass_neighbor_ratio(mConfig["simulation"]["world"]["generation"]["smoothness"]["grass neighbourhood ratio"].toDouble())
+, grass_texture(mConfig["simulation"]["world"]["textures"]["grass"].toString())
+, rock_texture(mConfig["simulation"]["world"]["textures"]["rock"].toString())
+, water_texture(mConfig["simulation"]["world"]["textures"]["water"].toString())
+
+// - - - - - - - - - - - - - - - - - - - - - - - - B O N U S - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// weather (bonus extension)
+// temperature
+, manual_ub_temperature(mConfig["simulation"]["weather"]["temperature"]["manual ub"].toDouble())
+, manual_lb_temperature(mConfig["simulation"]["weather"]["temperature"]["manual lb"].toDouble())
+, max_temperature(mConfig["simulation"]["weather"]["temperature"]["max"].toDouble())
+, min_temperature(mConfig["simulation"]["weather"]["temperature"]["min"].toDouble())
+
+// wind
+, max_wind_speed(mConfig["simulation"]["weather"]["wind"]["max speed"].toDouble())
+
+// fog
+, fog_humidity_threshold(mConfig["simulation"]["weather"]["fog"]["humidity threshold"].toDouble())
+, fog_spawn_probability(mConfig["simulation"]["weather"]["fog"]["spawn probability"].toDouble())
+, fog_max_size(mConfig["simulation"]["weather"]["fog"]["max size"].toDouble())
+, fog_min_size(mConfig["simulation"]["weather"]["fog"]["min size"].toDouble())
+, fog_manual_size(mConfig["simulation"]["weather"]["fog"]["manual size"].toDouble())
+, fog_active_site_factor_x(mConfig["simulation"]["weather"]["fog"]["active site factor"]["x"].toDouble())
+, fog_active_site_factor_y(mConfig["simulation"]["weather"]["fog"]["active site factor"]["y"].toDouble())
+, fog_min_density(mConfig["simulation"]["weather"]["fog"]["density"]["min"].toInt())
+, fog_max_density(mConfig["simulation"]["weather"]["fog"]["density"]["max"].toInt())
+, fog_increase_density_factor(mConfig["simulation"]["weather"]["fog"]["density"]["increase factor"].toDouble())
+, fog_decrease_density_factor(mConfig["simulation"]["weather"]["fog"]["density"]["decrease factor"].toDouble())
+, fog_texture(mConfig["simulation"]["weather"]["fog"]["texture"].toString())
+
+// fog generator
+, fog_generator_delay(mConfig["simulation"]["weather"]["fog generator"]["delay"].toDouble())
+, active_fog_generator(mConfig["simulation"]["weather"]["fog generator"]["active"].toBool())
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // flowers
 , initial_flower_count(mConfig["simulation"]["env"]["initial"]["flower"]["count"].toInt())
@@ -57,12 +91,12 @@ Config::Config (const j::Value& cfg): mConfig(cfg)
 , hive_min_size(mConfig["simulation"]["env"]["initial"]["hive"]["size"]["min"].toDouble())
 , hive_max_size(mConfig["simulation"]["env"]["initial"]["hive"]["size"]["max"].toDouble())
 , hive_manual_size(mConfig["simulation"]["env"]["initial"]["hive"]["size"]["manual"].toDouble())
-,hiveable_factor(mConfig["simulation"]["env"]["initial"]["hive"]["hiveable factor"].toDouble())
-,hive_initial_nectar(mConfig["simulation"]["hive"]["initial"]["nectar"].toDouble())
-,hive_texture(mConfig["simulation"]["hive"]["texture"].toString())
-,hive_reproduction_nectar_threshold(mConfig["simulation"]["hive"]["reproduction"]["nectar threshold"].toDouble())
-,hive_reproduction_max_bees(mConfig["simulation"]["hive"]["reproduction"]["max bees"].toInt())				   
-,hive_reproduction_scout_proba(mConfig["simulation"]["hive"]["reproduction"]["scout probability"].toDouble())	
+, hiveable_factor(mConfig["simulation"]["env"]["initial"]["hive"]["hiveable factor"].toDouble())
+, hive_initial_nectar(mConfig["simulation"]["hive"]["initial"]["nectar"].toDouble())
+, hive_texture(mConfig["simulation"]["hive"]["texture"].toString())
+, hive_reproduction_nectar_threshold(mConfig["simulation"]["hive"]["reproduction"]["nectar threshold"].toDouble())
+, hive_reproduction_max_bees(mConfig["simulation"]["hive"]["reproduction"]["max bees"].toInt())
+, hive_reproduction_scout_proba(mConfig["simulation"]["hive"]["reproduction"]["scout probability"].toDouble())
   // env
 , max_flowers(mConfig["simulation"]["env"]["max flowers"].toInt())
 

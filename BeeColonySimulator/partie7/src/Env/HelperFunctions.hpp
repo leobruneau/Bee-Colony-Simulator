@@ -5,8 +5,17 @@
 #ifndef BEE_COLONY_SIMULATOR_SSV_2022_STEP3_HELPERFUNCTIONS_HPP
 #define BEE_COLONY_SIMULATOR_SSV_2022_STEP3_HELPERFUNCTIONS_HPP
 #include "Utility/Vec2d.hpp"
+#include <cmath>
 
 namespace help {
+
+    /*!
+     * @brief set of constants needed for the functions simulating the effects of temperature on the environment
+     */
+    const double ALPHA (0.4579537);
+    const double BETA (0.02364845 / 0.1483637);
+    const double GAMMA (0.1483637);
+    inline float debugWindRotation(.0);
 
     /*!
      * @param p position of cursor
@@ -34,6 +43,23 @@ namespace help {
      * @return y coordinate, on the plane, of the cell containing p
      */
     int getY(Vec2d const& p, float const& size);
+
+
+    /*!
+     * @brief first mathematical function used to simulate the effects of temperature on the environment
+     *
+     * @param temp of the environment
+     * @return specific influence factor (depends on temperature of course)
+     */
+    double temperatureFunction1(double temp);
+
+    /*!
+     * @brief second mathematical function used to simulate the effects of temperature on the environment
+     *
+     * @param temp of the environment
+     * @return specific influence factor (depends on temperature of course)
+     */
+    double temperatureFunction2(double temp);
 
 };
 

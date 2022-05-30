@@ -32,7 +32,7 @@ public:
     /*!
      * @brief User defined destructor (which is default)
      */
-    virtual ~Bee();
+    ~Bee() override;
 
     /*!
      * @brief Method for drawing the bees on the screen
@@ -194,6 +194,11 @@ public:
     * Need to see stats from the main program window
     */
     virtual void decreaseNumber() const = 0;
+
+    /*!
+     * @brief handles algorithm to simulate the effects of temperature
+     */
+    void temperatureEffects();
 
 
 

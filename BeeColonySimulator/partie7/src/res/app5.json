@@ -6,6 +6,39 @@
             "max dt" : 0.05,
 	     "fixed step" : 0.01
         },
+        "weather" : {
+            "temperature" : {
+                "manual ub" : 25,
+                "manual lb" : 10,
+                "max" : 40.0,
+                "min" : -10.0
+            },
+            "wind" : {
+                "max speed" : 45.0
+            },
+            "fog" : {
+                "humidity threshold" : 150000,
+                "spawn probability" : 0.6,
+                "max size" : 450,
+                "min size" : 250,
+                "manual size" : 180,
+                "density" : {
+                    "min" : 50,
+                    "max" : 255,
+                    "increase factor" : 0.04,
+                    "decrease factor" : 0.11
+                },
+                "active site factor" : {
+                    "x" : 0.3,
+                    "y" : 0.13
+                },
+                "texture" : "fog.png"
+            },
+            "fog generator" : {
+                "active" : true,
+                "delay" : 25.0
+            }
+        },
         "bees" : {
             "scout" : {
                 "visibility range" : 1,
@@ -21,7 +54,7 @@
                 "size" : 10,
                 "energy" : {
                     "initial" : 10,
-                    "to leave hive" : 1,
+                    "to leave hive" : 3,
                     "to seek flowers" : 2,
                     "consumption rates" : {
                        "idle" :  0.01,

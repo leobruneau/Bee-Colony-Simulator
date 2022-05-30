@@ -19,14 +19,15 @@ void Bee::drawOn(sf::RenderTarget &target) const {
     auto beeSprite(buildSprite(getPosition(), getRadius(), getAppTexture(getConfig()["texture"].toString())));
 
     if (velocity_.angle() >= PI/2 or velocity_.angle() <= -PI/2) beeSprite.scale(1, -1);
-    beeSprite.rotate(velocity_.angle()/DEG_TO_RAD);
+    beeSprite.rotate((float)velocity_.angle()/(float)DEG_TO_RAD);
 
-    if (isDebugOn()) {
-        showDebugMovement(target);
-        this->showSpecificDebugOptions(target);
-    }
+//    if (isDebugOn()) {
+//        showDebugMovement(target);
+//        this->showSpecificDebugOptions(target);
+//    }
 
-    target.draw(beeSprite);
+    // Bees are to be drawn only if they are not inside the hive. If they are (like in normal life) they are no longer visible.
+    if (!isInHive()) target.draw(beeSprite);
 }
 
 void Bee::update(sf::Time dt) {
@@ -43,6 +44,9 @@ void Bee::randomMove(sf::Time const& dt) {
         alpha = uniform(-alpha_max, alpha_max);
         velocity_.rotate(alpha);
     }
+
+    // Added wind's perturbation
+//    Vec2d wind (getAppEnv().getWindVelocity());
 
     auto dx = velocity_*dt.asSeconds();
     auto newPosition (getPosition() + dx);
@@ -77,6 +81,9 @@ void Bee::targetMove(const sf::Time &dt, Vec2d const& p) {
         velocity_ = velocity_.length()*unitToTarget;
 
     } else avoidanceClock_ -= dt;
+
+    // Added wind's perturbation
+//    Vec2d wind (getAppEnv().getWindVelocity());
 
     auto dx = velocity_*dt.asSeconds();
     auto newPosition (getPosition() + dx);
@@ -152,6 +159,13 @@ void Bee::setMemory(Vec2d const* position) {
     memory_ = position;
 }
 
-Bee::~Bee() {
+void Bee::temperatureEffects() {
+    double speed (velocity_.length());
+    Vec2d direction (velocity_/speed);
+    double tempFactor (Env::getTemperatureFactor(getAppEnv().getTemperature()));
 
+    double newSpeed (getConfig()["speed"].toDouble() * tempFactor);
+    velocity_ = newSpeed*direction;
 }
+
+Bee::~Bee() { } // default

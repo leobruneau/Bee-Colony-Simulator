@@ -21,7 +21,7 @@ void Flower::takePollen(double qte) {
 void Flower::drawOn(sf::RenderTarget &target) const {
     auto flowerSprite = buildSprite(getPosition(), getRadius(), texture_);
     target.draw(flowerSprite);
-    if (isDebugOn()) showDebugPollen(target);
+//    if (isDebugOn()) showDebugPollen(target);
 }
 
 void Flower::update(sf::Time dt) {
@@ -50,10 +50,10 @@ double Flower::getFactor() const {
 }
 
 void Flower::showDebugPollen(sf::RenderTarget &target) const {
-//    std::string pollen(to_nice_string(pollen_));
-//    pollen.insert(0, "Flower: pollen ");
-//    Vec2d textPosition(getPosition().x(), getPosition().y() + 10);
-//    auto const text = buildText(pollen, textPosition, getAppFont(), 13, sf::Color::White);
-//    target.draw(text);
+    std::string pollen(to_nice_string(pollen_));
+    pollen.insert(0, "Flower: pollen ");
+    Vec2d textPosition(getPosition().x(), getPosition().y() + 10);
+    auto const text = buildText(pollen, textPosition, getAppFont(), 13, sf::Color::White);
+    target.draw(text);
 }
 

@@ -41,6 +41,7 @@ void Env::update(sf::Time dt) {
     removeDeadFlowers();
     flowers_.insert(flowers_.end(), newFlowers_.begin(), newFlowers_.end());
     newFlowers_.clear();
+    weather_.update(dt);
 }
 
 void Env::drawOn(sf::RenderTarget &target) const {
@@ -51,6 +52,8 @@ void Env::drawOn(sf::RenderTarget &target) const {
         nf->drawOn(target);
     for (auto const& h: hives_)
         h->drawOn(target);
+
+    weather_.drawOn(target);
 }
 
 void Env::reset() {
@@ -58,6 +61,7 @@ void Env::reset() {
     hiveDestroyer();
     world_.reset(true);
     flowerGenerator_.reset();
+    weather_.reset();
 }
 
 float Env::getSize() {
@@ -72,6 +76,7 @@ void Env::loadWorldFromFile() {
     flowerDestroyer();
     hiveDestroyer();
     world_.loadFromFile();
+    weather_.reset();
 }
 
 void Env::saveWorldToFile() const {
@@ -100,7 +105,6 @@ bool Env::addFlowerAt(const Vec2d &p, bool split) {
         for (auto const& h: hives_) {
             if (*h > *toAdd) {
                 delete toAdd;
-                toAdd = nullptr;
                 return false;
             }
         }
@@ -110,17 +114,12 @@ bool Env::addFlowerAt(const Vec2d &p, bool split) {
     if ((world_.isGrowable(p) and (int)flowers_.size() < getAppConfig().max_flowers) and world_.getHumidity(p) > 0) {
 
         // Dynamically allocating memory on the heap for a newly created flower
-        if (split) {
-            newFlowers_.push_back(toAdd);
-            toAdd = nullptr;
-        } else {
-            flowers_.push_back(toAdd);
-            toAdd = nullptr;
-        }
+        if (split) newFlowers_.push_back(toAdd);
+        else flowers_.push_back(toAdd);
+
         return true;
     } else { // deallocating memory if the flower cannot be added
         delete toAdd;
-        toAdd = nullptr;
         return false;
     }
 }
@@ -145,7 +144,6 @@ void Env::drawFlowerZone(sf::RenderTarget &target, const Vec2d &position) {
     target.draw(shape);
 
     delete toAdd;
-    toAdd = nullptr;
 }
 
 void Env::flowerDestroyer() {
@@ -161,7 +159,7 @@ void Env::flowerDestroyer() {
 }
 
 double Env::getCellHumidity(Vec2d const& position) {
-    return world_.getHumidity(position);;
+    return world_.getHumidity(position);
 }
 
 void Env::removeDeadFlowers() {
@@ -270,7 +268,7 @@ bool Env::isHiveable(const Vec2d &position, double radius) const {
             if (!flowers_.empty()) {
                 for (auto const& f: flowers_) {
                     if (toAdd->isColliding(*f)) {
-                        delete toAdd; toAdd = nullptr;
+                        delete toAdd;
                         return false;
                     }
                 }
@@ -279,7 +277,7 @@ bool Env::isHiveable(const Vec2d &position, double radius) const {
             if (!newFlowers_.empty()) {
                 for (auto const& nf: newFlowers_) {
                     if (toAdd->isColliding(*nf)) {
-                        delete toAdd; toAdd = nullptr;
+                        delete toAdd;
                         return false;
                     }
                 }
@@ -288,14 +286,13 @@ bool Env::isHiveable(const Vec2d &position, double radius) const {
             if (!hives_.empty()) {
                 for (auto const& h: hives_) {
                     if (toAdd->isColliding(*h)) {
-                        delete toAdd; toAdd = nullptr;
+                        delete toAdd;
                         return false;
                     }
                 }
             }
 
             delete toAdd;
-            toAdd = nullptr;
             return true;
 
         } else return false;
@@ -310,10 +307,9 @@ const std::vector<Flower*>* Env::getFlowers() {
     return &flowers_;
 }
 
-Bee *Env::getBeeAt(const Vec2d &p) const {
-    // TODO to code for extensions
-    return nullptr;
-}
+//Bee *Env::getBeeAt(const Vec2d &p) const {
+//    return nullptr;
+//}
 
 std::unordered_map<std::string, double> Env::fetchData(const std::string &title) const {
     std::unordered_map<std::string, double> newData;
@@ -337,10 +333,10 @@ void Env::fetchGeneralData(std::unordered_map<std::string, double>& map) const {
         currentScoutBees += h_->getCurrentScouts();
     }
 
-    map.insert({"flowers", currentFlowers});
-    map.insert({"hives", currentHives});
-    map.insert( {"worker bees", currentWorkerBees});
-    map.insert({"scout bees", currentScoutBees});
+    map.insert({s::FLOWERS, currentFlowers});
+    map.insert({s::HIVES, currentHives});
+    map.insert( { s::WORKERS, currentWorkerBees});
+    map.insert({s::SCOUTS, currentScoutBees});
 }
 
 std::vector<std::string> Env::getHivesIds() const {
@@ -350,7 +346,7 @@ std::vector<std::string> Env::getHivesIds() const {
         std::vector<std::string> hivesIds_(hives_.size(), "hive #");
 
         for (size_t i(0); i < hives_.size(); ++i)
-            (hivesIds_.at(i)).append(to_nice_string(i));
+            (hivesIds_.at(i)).append(to_nice_string((double)i));
 
         return hivesIds_;
     }
@@ -367,6 +363,81 @@ void Env::fetchHivesData(std::unordered_map<std::string, double> &map) const {
         }
     }
 }
+
+bool Env::addFogAt(const Vec2d &position) {
+    if (canFogSpawn(position)) {
+        weather_.addFogAt(position);
+        return true;
+    }
+    else return false;
+}
+
+Wind Env::getWind() const {
+    return weather_.getWind();
+}
+
+void Env::increaseTemperature() {
+    weather_.increaseTemperature();
+}
+
+void Env::decreaseTemperature() {
+    weather_.decreaseTemperature();
+}
+
+bool Env::canFogSpawn(const Vec2d &position) const {
+    return world_.canFogSpawn(position);
+}
+
+bool Env::fogHumidityThreshold(const Vec2d &position) const {
+    return canFogSpawn(position);
+}
+
+double Env::getTemperature() const {
+    return weather_.getTemperature();
+}
+
+void Env::decreaseWindSpeed() {
+    weather_.decreaseWindSpeed();
+}
+
+void Env::increaseWindSpeed() {
+    weather_.increaseWindSpeed();
+}
+
+void Env::decreaseWindDirection() {
+    weather_.decreaseWindDirection();
+}
+
+void Env::increaseWindDirection() {
+    weather_.increaseWindDirection();
+}
+
+double Env::getWindSpeed() const {
+    return getWind()._speed;
+}
+
+void Env::temperatureEffects() {
+    for (auto const& _h : hives_)
+        _h -> temperatureEffects();
+}
+
+double Env::getTemperatureFactor(double temp) {
+    double temperatureFactor (.0);
+    double ubTemp (getAppConfig().manual_ub_temperature);
+    double lbTemp (getAppConfig().manual_lb_temperature);
+
+    if (temp <= ubTemp and temp >= lbTemp) temperatureFactor = 1;
+    else if (temp < lbTemp) temperatureFactor = help::temperatureFunction1(temp);
+    else if (temp > ubTemp) temperatureFactor = help::temperatureFunction2(temp);
+
+    return temperatureFactor;
+}
+
+Vec2d Env::getWindVelocity() const {
+    return getWind()._direction * getWind()._speed;
+}
+
+
 
 
 

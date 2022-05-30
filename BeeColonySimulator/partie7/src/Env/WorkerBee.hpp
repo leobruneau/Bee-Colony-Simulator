@@ -21,6 +21,11 @@ public:
     WorkerBee(Hive* homeHive, Vec2d& position, double radius, double energy, double speed);
 
     /*!
+     * @brief default destructor
+     */
+    ~WorkerBee() override;
+
+    /*!
      * @brief The configuration of the current bee (with polymorphic behaviour)
      */
     j::Value const& getConfig() const override;

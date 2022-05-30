@@ -9,6 +9,9 @@
 #include "../Interface/Updatable.hpp"
 #include "FlowerGenerator.hpp"
 #include "Hive.hpp"
+#include "Weather.hpp"
+
+struct Wind;
 
 class Env : public Drawable, public Updatable {
 public:
@@ -168,9 +171,9 @@ public:
     const std::vector<Flower*>* getFlowers();
 
     /*!
-     * @brief empty function. Still to be coded
+     * @brief empty function. Still to be coded (is bonus)
      */
-    Bee* getBeeAt(Vec2d const& p) const;
+//    Bee* getBeeAt(Vec2d const& p) const;
 
     /*!
      * @brief returns an unordered map containing the new data points for the stats
@@ -200,6 +203,93 @@ public:
      */
     std::vector<std::string> getHivesIds() const;
 
+    /*!
+     * @brief adds a cloud of fog at the mouse's position
+     *
+     * @param position of fog cloud
+     * @return true if the cloud was successfully added
+     */
+    bool addFogAt(Vec2d const& position);
+
+    /*!
+     * @return the wind parameter of the weather of the environment
+     */
+    Wind getWind() const;
+
+    /*!
+     * @return current wind speed in the environment
+     */
+    double getWindSpeed() const;
+
+    /*!
+     * @brief increases temperature of environment (by 1 degree)
+     */
+    void increaseTemperature();
+
+    /*!
+     * @brief decreases temperature of environment (by 1 degree)
+     */
+    void decreaseTemperature();
+
+    /*!
+     * @brief checks if there is enough humidity in a given aera for fog to develop
+     *
+     * @return true if fog can develop, false otherwise
+     */
+    bool canFogSpawn(const Vec2d& position) const;
+
+    /*!
+     * @brief returns true if in the cloud active zone there is enough humidity to increase density of cloud
+     *
+     * @param position position of interest
+     * @return true if humidity is enough, false otherwise
+     */
+    bool fogHumidityThreshold(const Vec2d& position) const;
+
+    /*!
+     * @return the value of the temperature
+     */
+    double getTemperature() const;
+
+    /*!
+     * @brief decrease wind speed by 1
+     */
+    void decreaseWindSpeed();
+
+     /*!
+      * @brief increase wind speed by 1
+      */
+    void increaseWindSpeed();
+
+    /*!
+     * @brief decreases wind direction's angle
+     */
+    void decreaseWindDirection();
+
+    /*!
+     * @brief increases wind direction's angle
+     */
+    void increaseWindDirection();
+
+    /*!
+     * @brief calls the temperatureEffects() methods for all interested objects in the environment
+     */
+    void temperatureEffects();
+
+    /*!
+     * @brief calculates the factor of influence of temperature (follows the curves displayed in a .png file
+     * inside the res folder)
+     *
+     * @param temp current temperature of the environment
+     * @return specific influence factor
+     */
+    static double getTemperatureFactor(double temp);
+
+    /*!
+     * @return the current wind velocity (i.e. _speed * _direction)
+     */
+    Vec2d getWindVelocity() const;
+
 private:
     World world_;
     std::vector<Flower*> flowers_;
@@ -210,6 +300,11 @@ private:
      * @brief random flower generator
      */
     FlowerGenerator flowerGenerator_;
+
+    /*!
+     * @brief weather object to simulate atmospheric components
+     */
+    Weather weather_;
 };
 
 #endif //BEE_COLONY_SIMULATOR_SSV_2022_STEP3_ENV_HPP

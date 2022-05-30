@@ -337,10 +337,10 @@ void Env::fetchGeneralData(std::unordered_map<std::string, double>& map) const {
         currentScoutBees += h_->getCurrentScouts();
     }
 
-    map.insert({"flowers", currentFlowers});
-    map.insert({"hives", currentHives});
-    map.insert( {"worker bees", currentWorkerBees});
-    map.insert({"scout bees", currentScoutBees});
+    map.insert({s::FLOWERS, currentFlowers});
+    map.insert({s::HIVES, currentHives});
+    map.insert( {s::WORKERS, currentWorkerBees});
+    map.insert({s::SCOUTS, currentScoutBees});
 }
 
 std::vector<std::string> Env::getHivesIds() const {

@@ -11,7 +11,9 @@
 Hive::Hive(Vec2d const& p, double radius = getAppConfig().hive_manual_size)
     : Collider(p, radius),
       nectar_ (getAppConfig().hive_initial_nectar),
-      sizeFactor_ (getAppConfig().hiveable_factor) {}
+      sizeFactor_ (getAppConfig().hiveable_factor),
+      currentWorkers_ (0),
+      currentScouts_ (0) {}
 
 void Hive::update(sf::Time dt) {
     for (auto const& b: bees_)
@@ -143,5 +145,10 @@ void Hive::decreaseScouts() {
 
 double Hive::getCurrentNectar() const {
     return nectar_;
+}
+
+void Hive::temperatureEffects() {
+    for (auto& _b : bees_)
+        _b -> temperatureEffects();
 }
 
