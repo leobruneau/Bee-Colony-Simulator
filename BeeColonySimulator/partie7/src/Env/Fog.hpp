@@ -9,6 +9,11 @@
 #include "../Utility/Utility.hpp"
 #include "Collider.hpp"
 
+struct TopLeftBottomRight {
+    Vec2d _topLeft;
+    Vec2d _bottomRight;
+};
+
 class Fog : public Updatable, public Drawable, public Collider {
 public:
 
@@ -57,7 +62,20 @@ public:
     /*!
      * @return true if density attribute is below a critical threshold (defined inside .json file), false otherwise
      */
-    bool isDead() const;
+    [[nodiscard]] bool isDead() const;
+
+    /*!
+     * @brief checks if the given point is inside cloud's active rectangle
+     *
+     * @param p position of interest
+     * @return true if point is inside, false otherwise
+     */
+    [[nodiscard]] bool isPointInsideActiveZone(const Vec2d& p) const;
+
+    /*!
+     * @return the corners of the cloud's active zone
+     */
+    [[nodiscard]] TopLeftBottomRight findCloudCorners() const;
 
 private:
 

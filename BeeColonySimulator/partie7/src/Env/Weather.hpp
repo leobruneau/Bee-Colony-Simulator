@@ -132,6 +132,14 @@ public:
      */
     void increaseWindDirection();
 
+    /*!
+     * @brief checks if point is inside a fog cloud
+     *
+     * @param p position of interest
+     * @return true if point is inside, false otherwise
+     */
+    [[nodiscard]] bool isPointInsideCloud(const Vec2d& p) const;
+
 private:
     double _temperature;
     Wind _wind;

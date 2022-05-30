@@ -290,6 +290,14 @@ public:
      */
     Vec2d getWindVelocity() const;
 
+    /*!
+     * @brief checks if the given point is inside a cloud or not
+     *
+     * @param p position of interest
+     * @return true if the point is inside a cloud, false otherwise
+     */
+    bool isPointInsideCloud(const Vec2d& p) const;
+
 private:
     World world_;
     std::vector<Flower*> flowers_;

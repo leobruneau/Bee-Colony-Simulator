@@ -110,3 +110,10 @@ Weather::Weather()
     : Weather (25, {1,0}, 0) {
     // Done.
 }
+
+bool Weather::isPointInsideCloud(const Vec2d &p) const {
+    for (auto const& _f : _fog) {
+        return _f->isPointInsideActiveZone(p);
+    }
+    return false;
+}

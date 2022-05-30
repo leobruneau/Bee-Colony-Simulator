@@ -17,7 +17,7 @@
                 "max speed" : 45.0
             },
             "fog" : {
-                "humidity threshold" : 10000000,
+                "humidity threshold" : 7000000,
                 "spawn probability" : 0.8,
                 "max size" : 250,
                 "min size" : 150,

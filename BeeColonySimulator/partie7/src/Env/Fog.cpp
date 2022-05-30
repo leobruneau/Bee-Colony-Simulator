@@ -43,15 +43,33 @@ void Fog::passiveMovement(sf::Time dt) {
 }
 
 void Fog::showDebugInfo(sf::RenderTarget &target) const {
-    double x (getAppConfig().fog_active_site_factor_x);
-    double y (getAppConfig().fog_active_site_factor_y);
-    Vec2d factor (x, y);
-    Vec2d topLeft (getPosition() - factor*getRadius());
-    Vec2d bottomRight (getPosition() + factor*getRadius());
-    auto rect (buildRectangle(topLeft, bottomRight, sf::Color::Green, 2));
+    TopLeftBottomRight corners (findCloudCorners());
+    auto rect (buildRectangle(corners._topLeft, corners._bottomRight, sf::Color::Green, 2));
     target.draw(rect);
 }
 
 bool Fog::isDead() const {
     return _density < getAppConfig().fog_min_density;
+}
+
+bool Fog::isPointInsideActiveZone(const Vec2d &p) const {
+    TopLeftBottomRight corners (findCloudCorners());
+
+    if (p.x() >= corners._topLeft.x() and p.x() <= corners._bottomRight.x()) {
+        if (p.y() >= corners._topLeft.y() and p.y() <= corners._bottomRight.y()) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+TopLeftBottomRight Fog::findCloudCorners() const {
+    double x (getAppConfig().fog_active_site_factor_x);
+    double y (getAppConfig().fog_active_site_factor_y);
+    Vec2d factor (x, y);
+    Vec2d topLeft (getPosition() - factor*getRadius());
+    Vec2d bottomRight (getPosition() + factor*getRadius());
+    TopLeftBottomRight temp({topLeft, bottomRight});
+    return temp;
 }
