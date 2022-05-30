@@ -437,6 +437,10 @@ Vec2d Env::getWindVelocity() const {
     return getWind()._direction * getWind()._speed;
 }
 
+bool Env::isPointInsideCloud(const Vec2d &p) const {
+    return weather_.isPointInsideCloud(p);
+}
+
 
 
 

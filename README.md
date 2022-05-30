@@ -30,7 +30,8 @@ The whole program relies on a specific configuration file (*.json) whose paramet
    8) `application` -> this is the target used to run the final application
 
 ## Comments
-Commented files are present only inside the partie7 folder (which should be final)
+Commented files are present only inside the partie7 folder (which should be final).
+The useful keyboard keys are displayed in a side panel that appears on a grey background once the program has started running.
 
 ## Configuration files modifications
 Inside `partie7`, we change the `avoidance delay` constant inside the `app3.json` file to `2.5` (for worker bees) and `1.5` (for scout bees).
@@ -39,3 +40,11 @@ This gives the bees enough time to find a better way to go back to the hive (or 
 ## Extensions (inside `partie7` folder)
    1) The `Bee.cpp` file was modified in order to display bees only when they are not inside the hive.
    2) A new `*.png` file was added for the hives (looks better)
+   3) We added some new classes to simulate diverse weather conditions: we added a Fog() and a FogGenerator() class to be able to create fog clouds as a function of humidity. We also added temperature controls
+        and its effects on the environment. Finally, we added also the wind. Unfortunately the time wasn't enough to code the algorithms to simulate the effects of fog and wind on the bees and other elements of the environment,
+        but we managed to add variable transparency to clouds and passive movement depending on the wind.
+   4) We also added the possibility of manually adding a cloud by pressing the 'v' key on the keyboard. The cloud will be added only if there is enough humidity in the area.
+   5) To simulate the effects of temperature on the environment we built a function (displayed in a given .png file inside the res folder of partie7) that, for a given temperature,
+        returns the influence factor (a double ranging from .3 to 1, where 1 means there are no effects);
+   6) In order to build those functions we use some curve-fitting software. The constants in the .json file regarding the min and max temperature should not be changed
+        since we weren't able (not enough time) to create a function that dynamically adapts to those parameters.

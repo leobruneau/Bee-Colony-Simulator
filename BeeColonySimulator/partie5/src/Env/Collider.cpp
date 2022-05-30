@@ -127,7 +127,7 @@ bool Collider::operator>(Vec2d const& point) const {
 }
 
 Collider& Collider::operator+=(Vec2d const& dx) {
-    position = position + dx;
+    position += dx;
     return *this;
 }
 

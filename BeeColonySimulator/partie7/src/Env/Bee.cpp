@@ -45,9 +45,6 @@ void Bee::randomMove(sf::Time const& dt) {
         velocity_.rotate(alpha);
     }
 
-    // Added wind's perturbation
-//    Vec2d wind (getAppEnv().getWindVelocity());
-
     auto dx = velocity_*dt.asSeconds();
     auto newPosition (getPosition() + dx);
     clamping(newPosition);
@@ -82,9 +79,6 @@ void Bee::targetMove(const sf::Time &dt, Vec2d const& p) {
 
     } else avoidanceClock_ -= dt;
 
-    // Added wind's perturbation
-//    Vec2d wind (getAppEnv().getWindVelocity());
-
     auto dx = velocity_*dt.asSeconds();
     auto newPosition (getPosition() + dx);
     clamping(newPosition);
@@ -111,6 +105,7 @@ void Bee::updateEnergy(sf::Time const& dt) {
 }
 
 void Bee::showDebugMovement(sf::RenderTarget& target) const {
+
     sf::Color color (sf::Color::Black);
     unsigned int thickness (0);
 
@@ -120,7 +115,7 @@ void Bee::showDebugMovement(sf::RenderTarget& target) const {
         thickness = 3;
     }
 
-    auto shape = buildAnnulus(getPosition(), getRadius()*getAppConfig().hiveable_factor, color, thickness);
+    auto shape = buildAnnulus(getPosition(), getRadius() * getAppConfig().hiveable_factor, color, thickness);
     target.draw(shape);
 }
 
@@ -169,3 +164,20 @@ void Bee::temperatureEffects() {
 }
 
 Bee::~Bee() { } // default
+
+void Bee::windEffects() {
+    double speed (velocity_.length());
+    Vec2d direction (velocity_/speed);
+
+    Vec2d newSpeed (getConfig()["speed"].toDouble()*direction + getAppEnv().getWindVelocity());
+    velocity_ = newSpeed;
+}
+
+void Bee::fogEffects() {
+    double speed (velocity_.length());
+    Vec2d direction (velocity_/speed);
+
+    double newSpeed (getConfig()["speed"].toDouble() * 0.7);
+    velocity_ = newSpeed*direction;
+}
+

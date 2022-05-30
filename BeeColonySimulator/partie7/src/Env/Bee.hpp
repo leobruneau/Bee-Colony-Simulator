@@ -200,7 +200,15 @@ public:
      */
     void temperatureEffects();
 
+    /*!
+     * @brief handles algorithm to simulate the effects of wind
+     */
+    void windEffects();
 
+    /*!
+     * @brief handles algorithm to simulate the effects of fog
+     */
+    void fogEffects();
 
 private:
     double energy_;

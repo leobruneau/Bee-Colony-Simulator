@@ -10,7 +10,7 @@ State const WorkerBee::NECTAR_HARVESTING = createUid();
 State const WorkerBee::GO_HOME = createUid();
 
 WorkerBee::WorkerBee(Hive *homeHive, Vec2d &position, double radius, double energy, double speed)
-    : Bee(homeHive,position, radius, energy, speed) {
+    : Bee(homeHive,position, radius, energy, speed, {IN_HIVE, TOWARDS_FLOWER, NECTAR_HARVESTING, GO_HOME}), harvestedPollen_(.0) {
 
 }
 
@@ -31,18 +31,22 @@ void WorkerBee::onState(const State &state, const sf::Time &dt) {
             harvestedPollen_ = (harvestedPollen_ > 0)*harvestedPollen_;
 
         } else {
-            if (energy_ > getAppConfig().worker_energy_to_leave_hive) {
-                if (memory_ != nullptr) nextState();
+            if (getEnergy() > getAppConfig().worker_energy_to_leave_hive) {
+                if (getMemory() != nullptr) nextState();
             } else {
                 double eatingRate (getAppConfig().worker_eating_rate);
                 double qte (dt.asSeconds()*eatingRate);
                 getHomeHive()->takeNectar(qte);
-                energy_ += qte;
+                setEnergy(getEnergy()+qte);
             }
         }
     } else if (state == TOWARDS_FLOWER) {
-        if (*this > *memory_) nextState();
-        move(dt, *memory_);
+        if (*this > *getMemory()) nextState();
+        if (getFlowerAt(*getMemory()) == nullptr) {
+            nextState();
+            nextState();
+        }
+        move(dt, *getMemory());
 
     } else if (state == NECTAR_HARVESTING) {
         Flower* targetFlower (getFlowerAt(*getMemory()));

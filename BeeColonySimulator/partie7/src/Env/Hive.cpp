@@ -148,7 +148,10 @@ double Hive::getCurrentNectar() const {
 }
 
 void Hive::temperatureEffects() {
-    for (auto& _b : bees_)
-        _b -> temperatureEffects();
+    for (auto& _b : bees_) {
+        _b->temperatureEffects();
+//        _b->windEffects();
+//        _b->fogEffects();
+    }
 }
 
