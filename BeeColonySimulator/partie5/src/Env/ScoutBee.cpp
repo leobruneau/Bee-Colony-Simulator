@@ -29,7 +29,7 @@ void ScoutBee::onState(const State &state, const sf::Time &dt) {
             double eatingRate (getAppConfig().scout_eating_rate);
             double qte (dt.asSeconds()*eatingRate);
             getHomeHive()->takeNectar(qte);
-            energy_ += qte;
+            setEnergy(getEnergy() + qte);
         }
 
     } else if (state == FLOWER_QUEST) {
