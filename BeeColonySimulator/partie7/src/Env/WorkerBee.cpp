@@ -43,8 +43,13 @@ void WorkerBee::onState(const State &state, const sf::Time &dt) {
             }
         }
     } else if (state == TOWARDS_FLOWER) {
-        if (*this > *getMemory()) nextState();
-        move(dt, *getMemory());
+        if (getEnergy() > getAppConfig().worker_energy_to_stay_out) {
+            if (*this > *getMemory()) nextState();
+            move(dt, *getMemory());
+        } else {
+            nextState();
+            nextState();
+        }
 
     } else if (state == NECTAR_HARVESTING) {
         if (harvestedPollen_ < getAppConfig().worker_pollen_capacity) {

@@ -33,7 +33,8 @@ void Weather::drawOn(sf::RenderTarget &target) const {
 
 void Weather::addFogAt(const Vec2d &p) {
     auto randomSize (uniform(getAppConfig().fog_min_size, getAppConfig().fog_max_size));
-    auto fog (new Fog(p, randomSize, getAppConfig().fog_min_density));
+    auto randomDensity (uniform(getAppConfig().fog_min_density, getAppConfig().fog_max_density));
+    auto fog (new Fog(p, randomSize, randomDensity));
     _fog.push_back(fog);
 }
 

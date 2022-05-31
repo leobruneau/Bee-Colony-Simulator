@@ -165,6 +165,7 @@ public:
   const double worker_speed;
   const double scout_speed;
   const double worker_energy_to_leave_hive;
+  const double worker_energy_to_stay_out;
   const double scout_energy_to_leave_hive;
   const double worker_transfer_rate;
   const double worker_eating_rate;

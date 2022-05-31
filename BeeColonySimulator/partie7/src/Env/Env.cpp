@@ -29,13 +29,11 @@ Env::~Env() {
 }
 
 void Env::update(sf::Time dt) {
-    for (auto& f: flowers_) {
+    for (auto& f: flowers_)
         f->update(dt);
-    }
 
-    for (auto& h: hives_) {
+    for (auto& h: hives_)
         h->update(dt);
-    }
 
     flowerGenerator_.update(dt);
     removeDeadFlowers();

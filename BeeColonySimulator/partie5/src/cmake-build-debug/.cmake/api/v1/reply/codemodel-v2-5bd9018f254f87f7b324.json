@@ -1,0 +1,132 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Bee_Colony_Simulator_SSV_2022_STEP5",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "application::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-application-Debug-27e5a8b6477bd4f20eeb.json",
+					"name" : "application",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "application-run::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-application-run-Debug-4ee57b89cda87c510641.json",
+					"name" : "application-run",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "collaborationTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-collaborationTest-Debug-d390de449913990dfe97.json",
+					"name" : "collaborationTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "colliderTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-colliderTest-Debug-e0cec477e6260238dbda.json",
+					"name" : "colliderTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "flowerTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-flowerTest-Debug-82bcdd3373e453f70819.json",
+					"name" : "flowerTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hiveTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hiveTest-Debug-1b058b4301d9209938a7.json",
+					"name" : "hiveTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "scoutTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-scoutTest-Debug-5117061bb7886d702bc5.json",
+					"name" : "scoutTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "workerTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-workerTest-Debug-c18a6c5050d46d9470fc.json",
+					"name" : "workerTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "worldTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-worldTest-Debug-4ebd82ef26a1c2c50a62.json",
+					"name" : "worldTest",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src/cmake-build-debug",
+		"source" : "/Users/naulitus/Documents/Naulitus/EPFL/BA2/OOP/Bee-Colony-Simulator/BeeColonySimulator/partie5/src"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

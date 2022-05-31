@@ -17,7 +17,7 @@
                 "max speed" : 45.0
             },
             "fog" : {
-                "humidity threshold" : 7000000,
+                "humidity threshold" : 6000000,
                 "spawn probability" : 0.8,
                 "max size" : 250,
                 "min size" : 150,
@@ -25,8 +25,8 @@
                 "density" : {
                     "min" : 50,
                     "max" : 255,
-                    "increase factor" : 0.04,
-                    "decrease factor" : 0.11
+                    "increase factor" : 0.05,
+                    "decrease factor" : 0.08
                 },
                 "active site factor" : {
                     "x" : 0.3,
@@ -81,7 +81,8 @@
                 "size" : 15,
                 "energy" : {
                     "initial" : 20,
-                    "to leave hive" : 1,
+                    "to leave hive" : 5,
+                    "to stay out" : 3,
                     "consumption rates" : {
                        "idle" :  0.015,
                        "moving": 0.06,
