@@ -151,7 +151,7 @@ Application::Application(int argc, char const** argv)
 
     // Load the font
 	//if (graphic and !mFont.loadFromFile(mAppDirectory + "../res/sansation.ttf")) {
-		if (!mFont.loadFromFile(mAppDirectory + "../res/sansation.ttf")) {
+		if (!mFont.loadFromFile(mAppDirectory + APP_FONT_LOCATION)) {
         std::cerr << "Couldn't load " << APP_FONT_LOCATION << std::endl;
     }
 	
